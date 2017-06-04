@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPopup;
-import com.jfoenix.controls.JFXRippler;
-import com.jfoenix.controls.JFXToolbar;
+import com.jfoenix.controls.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -35,7 +35,11 @@ import javafx.util.Duration;
  * @author danml
  */
 public class DashboardController implements Initializable {
+    @FXML
+    private JFXDrawer drawer;
 
+    @FXML
+    private JFXHamburger hamburger;
     private Label lblDash;
     @FXML
     private StackPane stackPane;
@@ -61,7 +65,9 @@ public class DashboardController implements Initializable {
     @FXML
     private ToggleButton menuLogg;
 
-    private AnchorPane home, add, list;
+    private static StackPane maps, deviceInfo;
+
+    private AnchorPane list;
     @FXML
     private JFXButton btnLogOut;
     @FXML
@@ -69,14 +75,18 @@ public class DashboardController implements Initializable {
     @FXML
     private JFXButton btnHome;
     @FXML
-    private JFXButton btnAdd;
+    private JFXButton btnOpenMap;
     @FXML
     private JFXButton btnView;
     @FXML
     private JFXButton btnLogout;
     @FXML
     private JFXButton btnClose;
+
     JFXRippler fXRippler, fXRippler2;
+
+    public static StackPane rootP;
+
     /**
      * Initializes the controller class.
      *
@@ -85,13 +95,32 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         fXRippler = new JFXRippler(lblDash);
         fXRippler2 = new JFXRippler(lblMenu);
         fXRippler2.setMaskType((JFXRippler.RipplerMask.RECT));
         sideAnchor.getChildren().add(fXRippler);
         toolBarRight.getChildren().add(fXRippler2);
         openMenus();
-//        createPages();
+        createPages();
+        try {
+            VBox box = FXMLLoader.load(getClass().getResource("fxml/menu.fxml"));
+            drawer.setSidePane(box);
+        } catch (IOException ex) {
+            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)->{
+            transition.setRate(transition.getRate()*-1);
+            transition.play();
+
+            if(drawer.isShown())
+            {
+                drawer.close();
+            }else
+                drawer.open();
+        });
 
     }
 
@@ -107,7 +136,7 @@ public class DashboardController implements Initializable {
     }
 
     //Set selected node to a content holder
-    private void setNode(Node node) {
+    public void setNode(Node node) {
         holderPane.getChildren().clear();
         holderPane.getChildren().add((Node) node);
 
@@ -123,12 +152,14 @@ public class DashboardController implements Initializable {
     //Load all fxml files to a cahce for swapping
     private void createPages() {
         try {
-            home = FXMLLoader.load(getClass().getResource("/modules/Overview.fxml"));
-            list = FXMLLoader.load(getClass().getResource("/modules/Profile.fxml"));
-            add = FXMLLoader.load(getClass().getResource("/modules/Register.fxml"));
+            maps = FXMLLoader.load(getClass().getResource("/fxml/map.fxml"));
+
+//            maps = FXMLLoader.load(getClass().getResource("/modules/Overview.fxml"));
+//            list = FXMLLoader.load(getClass().getResource("/modules/Profile.fxml"));
+            deviceInfo = FXMLLoader.load(getClass().getResource("/fxml/device_info.fxml"));
 
             //set up default node on page load
-            setNode(home);
+            setNode(maps);
         } catch (IOException ex) {
             Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -136,13 +167,13 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    private void openHome(ActionEvent event) {
-        setNode(home);
+    private void openMap(ActionEvent event) {
+        setNode(maps);
     }
 
     @FXML
-    private void openAddStudent(ActionEvent event) {
-        setNode(add);
+    private void openDeviceInfo(ActionEvent event) {
+        setNode(deviceInfo);
     }
 
     @FXML

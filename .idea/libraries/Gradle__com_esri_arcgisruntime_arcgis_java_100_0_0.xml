@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.esri.arcgisruntime:arcgis-java:100.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.esri.arcgisruntime/arcgis-java/100.0.0/9ed31e32407eafc18391c0b9b4b1bad4782e18f2/arcgis-java-100.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.esri.arcgisruntime/arcgis-java/100.0.0/41f28df88058e3d25775d8a2251a08c8ac84e47e/arcgis-java-100.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

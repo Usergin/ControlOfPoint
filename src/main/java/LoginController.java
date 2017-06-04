@@ -1,4 +1,6 @@
+import com.esri.arcgisruntime.mapping.view.MapView;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -6,11 +8,9 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
+
 import javafx.animation.PauseTransition;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,14 +19,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import org.apache.log4j.Logger;
-import sun.security.util.Resources;
-import sun.util.resources.ru.LocaleNames_ru;
 
 /**
  * Created by oldman on 02.06.17.
@@ -44,6 +43,7 @@ public class LoginController implements Initializable {
     private StackPane rootPane;
     @FXML
     private ImageView imgProgress;
+    private MapView mapView;
 
     private static final Logger LOG = Logger.getLogger(LoginController.class);
     private ResourceBundle bundle;
@@ -64,7 +64,7 @@ public class LoginController implements Initializable {
 
         imgProgress.setVisible(true);
         PauseTransition pauseTransition = new PauseTransition();
-        pauseTransition.setDuration(Duration.seconds(3));
+        pauseTransition.setDuration(Duration.seconds(1));
         pauseTransition.setOnFinished(ev -> {
             completeLogin();
 
@@ -74,19 +74,18 @@ public class LoginController implements Initializable {
 
     private void handleValidation() {
         RequiredFieldValidator fieldValidator = new RequiredFieldValidator();
-//        fieldValidator.setMessage(bundle.getString("input_required"));
-        fieldValidator.setIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES));
         txtUsername.getValidators().add(fieldValidator);
-        txtUsername.focusedProperty().addListener((ObservableValue<? extends Boolean> o, Boolean oldVal, Boolean newVal) -> {
+        fieldValidator.setMessage("Введите данные");
+        fieldValidator.setIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES));
+         txtUsername.focusedProperty().addListener((ObservableValue<? extends Boolean> o, Boolean oldVal, Boolean newVal) -> {
             if (!newVal) {
                 txtUsername.validate();
-
             }
         });
         RequiredFieldValidator fieldValidator2 = new RequiredFieldValidator();
-        fieldValidator2.setMessage("Input required");
-        fieldValidator2.setIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES));
         txtPassword.getValidators().add(fieldValidator2);
+        fieldValidator2.setMessage("Введите данные");
+        fieldValidator2.setIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES));
         txtPassword.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (!newValue) {
                 txtPassword.validate();
@@ -99,15 +98,48 @@ public class LoginController implements Initializable {
         btnLogin.getScene().getWindow().hide();
         try {
             imgProgress.setVisible(false);
+            Parent root = FXMLLoader.load(getClass().getResource("fxml/dashboard.fxml"));
+
             Stage dashboardStage = new Stage();
             dashboardStage.setTitle("");
-            Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
-            Scene scene = new Scene(root);
+            dashboardStage.getIcons().add(new Image(getClass().getResourceAsStream("drawables/logo-vs-rf.png")));
+
+            JFXDecorator decorator = new JFXDecorator(dashboardStage, root, false , false,true);
+            Scene scene = new Scene(decorator);
             dashboardStage.setScene(scene);
-            dashboardStage.show();
+            dashboardStage.setResizable(false);
+            dashboardStage.show();  // layer
+
         } catch (IOException ex) {
             LOG.error(null, ex);      }
 
+//        new Thread(() -> {
+//            try {
+//                SVGGlyphLoader.loadGlyphsFont(LoginController.class.getResourceAsStream("/fonts/icomoon.svg"),
+//                        "icomoon.svg");
+//            } catch (IOException ioExc) {
+//                ioExc.printStackTrace();
+//            }
+//        }).start();
+
+//        Flow flow = new Flow(MainController.class);
+//        DefaultFlowContainer container = new DefaultFlowContainer();
+//        flowContext = new ViewFlowContext();
+//        flowContext.register("Stage", stage);
+//        flow.createHandler(flowContext).start(container);
+//
+//        JFXDecorator decorator = new JFXDecorator(stage, container.getView());
+//        decorator.setCustomMaximize(true);
+//        Scene scene = new Scene(decorator, 800, 850);
+//        final ObservableList<String> stylesheets = scene.getStylesheets();
+//        stylesheets.addAll(LoginController.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+//                LoginController.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+//                LoginController.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
+//        stage.setMinWidth(700);
+//        stage.setMinHeight(800);
+//        stage.setScene(scene);
+//        stage.show();
     }
+
 
 }
