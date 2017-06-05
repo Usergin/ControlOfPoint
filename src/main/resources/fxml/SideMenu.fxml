@@ -9,9 +9,7 @@
         <String fx:value="side-menu"/>
     </styleClass>
     <JFXListView fx:id="sideList">
-        <Label fx:id="map">gui.fragment_controllers.MapController</Label>
-        <Label fx:id="device_info">Device info</Label>
-        <Label fx:id="log_out">Log out</Label>
-        <Label fx:id="exit">Exit</Label>
+        <Label fx:id="button">Buttons</Label>
+        <Label fx:id="map">Map</Label>
     </JFXListView>
 </StackPane>

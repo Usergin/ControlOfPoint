@@ -1,3 +1,5 @@
+include 'main_project'
+include 'library_project'
+
 rootProject.name = 'control_of_point'
 
-include 'main_project', 'library_project'

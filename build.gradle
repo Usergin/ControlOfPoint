@@ -1,3 +1,4 @@
+group 'ControlOfPoint'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'idea'
@@ -7,6 +8,9 @@ apply plugin: 'application'
 apply plugin: 'com.esri.arcgisruntime.java'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
 
 buildscript {
     repositories {
@@ -29,13 +33,13 @@ dependencies {
         compile 'de.jensd:fontawesomefx:8.9'
         compile 'com.squareup.retrofit2:retrofit:2.3.0'
         compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-//        compile 'io.datafx:datafx:8.0.1'
-//        compile 'io.datafx:flow:8.0.1'
+        compile 'io.datafx:datafx:8.0.1'
+        compile 'io.datafx:flow:8.0.1'
 }
 arcgis.version = '100.0.0'
 //
 idea.module.downloadJavadoc = true
 //
 //run {
-//    mainClassName 'Main'
+    mainClassName 'Main'
 //}

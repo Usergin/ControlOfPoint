@@ -1,4 +1,4 @@
-/*
+package gui.fragment_controllers;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -21,10 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -41,47 +38,47 @@ public class DashboardController implements Initializable {
     @FXML
     private JFXHamburger hamburger;
     private Label lblDash;
-    @FXML
-    private StackPane stackPane;
-
-    @FXML
-    private AnchorPane holderPane;
-    @FXML
-    private AnchorPane sideAnchor;
-    @FXML
-    private Label lblMenu;
-    @FXML
-    private JFXToolbar toolBar;
-    @FXML
-    private HBox toolBarRight;
-    @FXML
-    private VBox overflowContainer;
-    @FXML
-    private ToggleButton menuHome;
-    @FXML
-    private ToggleButton menuAdd;
-    @FXML
-    private ToggleButton menuList;
-    @FXML
-    private ToggleButton menuLogg;
-
-    private static StackPane maps, deviceInfo;
-
-    private AnchorPane list;
-    @FXML
-    private JFXButton btnLogOut;
-    @FXML
-    private JFXButton btnExit;
-    @FXML
-    private JFXButton btnHome;
-    @FXML
-    private JFXButton btnOpenMap;
-    @FXML
-    private JFXButton btnView;
-    @FXML
-    private JFXButton btnLogout;
-    @FXML
-    private JFXButton btnClose;
+//    @FXML
+//    private StackPane stackPane;
+//
+//    @FXML
+//    private AnchorPane holderPane;
+//    @FXML
+//    private AnchorPane sideAnchor;
+//    @FXML
+//    private Label lblMenu;
+//    @FXML
+//    private JFXToolbar toolBar;
+//    @FXML
+//    private HBox toolBarRight;
+//    @FXML
+//    private VBox overflowContainer;
+//    @FXML
+//    private ToggleButton menuHome;
+//    @FXML
+//    private ToggleButton menuAdd;
+//    @FXML
+//    private ToggleButton menuList;
+//    @FXML
+//    private ToggleButton menuLogg;
+//
+//    private static StackPane maps, deviceInfo;
+//
+//    private AnchorPane list;
+//    @FXML
+//    private JFXButton btnLogOut;
+//    @FXML
+//    private JFXButton btnExit;
+//    @FXML
+//    private JFXButton btnHome;
+//    @FXML
+//    private JFXButton btnOpenMap;
+//    @FXML
+//    private JFXButton btnView;
+//    @FXML
+//    private JFXButton btnLogout;
+//    @FXML
+//    private JFXButton btnClose;
 
     JFXRippler fXRippler, fXRippler2;
 
@@ -97,10 +94,10 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         fXRippler = new JFXRippler(lblDash);
-        fXRippler2 = new JFXRippler(lblMenu);
-        fXRippler2.setMaskType((JFXRippler.RipplerMask.RECT));
-        sideAnchor.getChildren().add(fXRippler);
-        toolBarRight.getChildren().add(fXRippler2);
+//        fXRippler2 = new JFXRippler(lblMenu);
+//        fXRippler2.setMaskType((JFXRippler.RipplerMask.RECT));
+//        sideAnchor.getChildren().add(fXRippler);
+//        toolBarRight.getChildren().add(fXRippler2);
         openMenus();
         createPages();
         try {
@@ -127,18 +124,18 @@ public class DashboardController implements Initializable {
     private void openMenus() {
         JFXPopup popup = new JFXPopup();
 //        popup.setContent(overflowContainer);
-        popup.setPopupContent(stackPane);
+//        popup.setPopupContent(stackPane);
 //        popup.setSource(lblMenu);
-        lblMenu.setOnMouseClicked((MouseEvent e) -> {
-            popup.show(fXRippler, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.RIGHT, -10, 40);
-        });
+//        lblMenu.setOnMouseClicked((MouseEvent e) -> {
+//            popup.show(fXRippler, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.RIGHT, -10, 40);
+//        });
 
     }
 
     //Set selected node to a content holder
     public void setNode(Node node) {
-        holderPane.getChildren().clear();
-        holderPane.getChildren().add((Node) node);
+//        holderPane.getChildren().clear();
+//        holderPane.getChildren().add((Node) node);
 
         FadeTransition ft = new FadeTransition(Duration.millis(1500));
         ft.setNode(node);
@@ -151,35 +148,35 @@ public class DashboardController implements Initializable {
 
     //Load all fxml files to a cahce for swapping
     private void createPages() {
-        try {
-            maps = FXMLLoader.load(getClass().getResource("/fxml/map.fxml"));
-
-//            maps = FXMLLoader.load(getClass().getResource("/modules/Overview.fxml"));
-//            list = FXMLLoader.load(getClass().getResource("/modules/Profile.fxml"));
-            deviceInfo = FXMLLoader.load(getClass().getResource("/fxml/device_info.fxml"));
-
-            //set up default node on page load
-            setNode(maps);
-        } catch (IOException ex) {
-            Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            maps = FXMLLoader.load(getClass().getResource("/fxml/fragment_controllers.fxml"));
+//
+////            maps = FXMLLoader.load(getClass().getResource("/modules/Overview.fxml"));
+////            list = FXMLLoader.load(getClass().getResource("/modules/Profile.fxml"));
+//            deviceInfo = FXMLLoader.load(getClass().getResource("/fxml/device_info.fxml"));
+//
+//            //set up default node on page load
+//            setNode(maps);
+//        } catch (IOException ex) {
+//            Logger.getLogger(gui.fragment_controllers.DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 
-    @FXML
-    private void openMap(ActionEvent event) {
-        setNode(maps);
-    }
-
-    @FXML
-    private void openDeviceInfo(ActionEvent event) {
-        setNode(deviceInfo);
-    }
-
-    @FXML
-    private void openListStudent(ActionEvent event) {
-        setNode(list);
-    }
+//    @FXML
+//    private void openMap(ActionEvent event) {
+//        setNode(maps);
+//    }
+//
+//    @FXML
+//    private void openDeviceInfo(ActionEvent event) {
+//        setNode(deviceInfo);
+//    }
+//
+//    @FXML
+//    private void openListStudent(ActionEvent event) {
+//        setNode(list);
+//    }
 
     @FXML
     private void logOff(ActionEvent event) {
