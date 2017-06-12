@@ -1,0 +1,75 @@
+.title-label {
+    -fx-font-size: 16px;
+    -fx-padding: 14px;
+    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
+}
+
+.jfx-tool-bar {
+    -fx-font-size: 20.0;
+    -fx-font-weight: BOLD;
+    -fx-background-color: #0288D1;
+    -fx-pref-width: 100.0%;
+    -fx-pref-height: 64.0px;
+}
+
+.jfx-tool-bar HBox {
+    -fx-alignment: center;
+    -fx-spacing: 25.0;
+    -fx-padding: 0.0 10.0;
+}
+
+.jfx-tool-bar Label {
+    -fx-text-fill: WHITE;
+}
+
+.jfx-tool-bar .jfx-options-burger {
+    -fx-padding: 22px;
+}
+
+.jfx-tool-bar .jfx-options-burger StackPane {
+    -fx-pref-width: 4px;
+}
+
+.jfx-tool-bar .jfx-rippler {
+    -jfx-rippler-fill: WHITE;
+}
+
+.option-list-view {
+    -fx-pref-width: 180px;
+    -fx-background-color: WHITE;
+}
+
+.option-jfx-list-view-icon {
+    -fx-fill: #5264AE;
+    -fx-padding: 0.0 10.0 0.0 5.0;
+    -fx-cursor: hand;
+}
+/*!********************************************************************************/
+/**                                                                              **/
+/** JFX Decorator                                                                **/
+/**                                                                              **/
+/********************************************************************************!*/
+
+.jfx-decorator {
+    -fx-decorator-color: derive(#00AACF, -30%);
+}
+
+.jfx-decorator .jfx-decorator-buttons-container {
+    -fx-background-color: -fx-decorator-color;
+}
+
+.jfx-decorator .resize-border {
+    -fx-border-color: -fx-decorator-color;
+    -fx-border-width: 0 4 4 4;
+}
+/*!********************************************************************************/
+/**                                                                              **/
+/** Background                                                           **/
+/**                                                                              **/
+/********************************************************************************!*/
+
+.custom-jfx-root .title-label {
+    -fx-background-color: #00AACF;
+    -fx-effect:dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5);
+    -fx-background-radius: 3;
+}

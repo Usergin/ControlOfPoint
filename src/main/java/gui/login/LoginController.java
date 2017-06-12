@@ -7,11 +7,15 @@ import com.jfoenix.validation.RequiredFieldValidator;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import gui.fragment_controllers.ControlPanelController;
+import io.datafx.controller.ViewController;
+import io.datafx.controller.ViewNode;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.animation.PauseTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +32,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.log4j.Logger;
 
+import javax.annotation.PostConstruct;
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,47 +41,70 @@ import java.util.ResourceBundle;
 /**
  * Created by oldman on 02.06.17.
  */
-public class LoginController implements Initializable {
+
+@ViewController(value = "/fxml/login.fxml")
+public class LoginController {
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
 
     private Label label;
-    @FXML
+    @ViewNode
     private JFXTextField txtUsername;
-    @FXML
+    @ViewNode
     private JFXPasswordField txtPassword;
-    @FXML
+    @ViewNode
     private JFXButton btnLogin;
-    @FXML
-    private StackPane rootPane;
-    @FXML
+    @ViewNode
     private ImageView imgProgress;
-    private MapView mapView;
 
     private static final Logger LOG = Logger.getLogger(LoginController.class);
     private ResourceBundle bundle;
+    private StringProperty username = new SimpleStringProperty();
+    private StringProperty password = new SimpleStringProperty();
 
     private void handleButtonAction(ActionEvent event) {
         LOG.info("handleButtonAction!");
         label.setText("Hello World!");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    @PostConstruct
+    public void init() throws Exception  {
 //        bundle = ResourceBundle.getBundle("resources/string", Locale.getDefault());
         handleValidation();
         imgProgress.setVisible(false);
+        username.bind(txtUsername.textProperty());
+        password.bind(txtPassword.textProperty());
     }
 
+    private void clearAfterLogout() {
+        ImageView userImageView = (ImageView)flowContext.getRegisteredObject("userImageView");
+        userImageView.setImage(new Image("icon.png"));
+
+        Label userLabel = (Label) flowContext.getRegisteredObject("userLabel");
+        userLabel.setText("Username");
+
+        JFXButton homeButton = (JFXButton)flowContext.getRegisteredObject("homeButton");
+        if (homeButton != null) {
+            homeButton.setVisible(false);
+        }
+
+        JFXListView sideBarList = (JFXListView) flowContext.getRegisteredObject("sideBarList");
+        if (sideBarList != null) {
+            sideBarList.getItems().clear();
+            Label loginLabel = (Label) flowContext.getRegisteredObject("loginLabel");
+            Label signupLabel = (Label) flowContext.getRegisteredObject("signupLabel");
+            sideBarList.getItems().addAll(loginLabel,signupLabel);
+        }
+    }
     @FXML
     private void login(ActionEvent event) {
+        LOG.info(username.get() + password.get());;
 
         imgProgress.setVisible(true);
         PauseTransition pauseTransition = new PauseTransition();
         pauseTransition.setDuration(Duration.seconds(1));
         pauseTransition.setOnFinished(ev -> {
             completeLogin();
-
         });
         pauseTransition.play();
     }
@@ -85,6 +114,7 @@ public class LoginController implements Initializable {
         txtUsername.getValidators().add(fieldValidator);
         fieldValidator.setMessage("Введите данные");
         fieldValidator.setIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES));
+
         txtUsername.focusedProperty().addListener((ObservableValue<? extends Boolean> o, Boolean oldVal, Boolean newVal) -> {
             if (!newVal) {
                 txtUsername.validate();
@@ -106,23 +136,8 @@ public class LoginController implements Initializable {
         btnLogin.getScene().getWindow().hide();
         imgProgress.setVisible(false);
         try {
-
-//            Parent root = FXMLLoader.load(getClass().getResource("fxml/dashboard.fxml"));
-//
             Stage dashboardStage = new Stage();
             dashboardStage.setTitle("");
-//            dashboardStage.getIcons().add(new Image(getClass().getResourceAsStream("drawables/logo-vs-rf.png")));
-//
-//            JFXDecorator decorator = new JFXDecorator(dashboardStage, root, false , true,true);
-//            Scene scene = new Scene(decorator);
-//            final ObservableList<String> stylesheets = scene.getStylesheets();
-//            stylesheets.addAll(LoginController.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
-//                    LoginController.class.getResource("/css/jfoenix-design.css").toExternalForm(),
-//                    LoginController.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
-//           dashboardStage.setScene(scene);
-//            dashboardStage.setResizable(false);
-//            dashboardStage.show();  // layer
-//
             new Thread(() -> {
                 try {
                     SVGGlyphLoader.loadGlyphsFont(gui.login.LoginController.class.getResourceAsStream("/fonts/icomoon.svg"),
@@ -131,20 +146,6 @@ public class LoginController implements Initializable {
                     ioExc.printStackTrace();
                 }
             }).start();
-
-            JFXHamburger show = new JFXHamburger();
-            show.setPadding(new Insets(10, 5, 10, 5));
-            JFXRippler rippler = new JFXRippler(show, JFXRippler.RipplerMask.CIRCLE, JFXRippler.RipplerPos.BACK);
-
-            JFXListView<Label> list = new JFXListView<>();
-            for (int i = 1; i < 5; i++) {
-                list.getItems().add(new Label("Item " + i));
-            }
-
-            AnchorPane anchorPane = new AnchorPane();
-            anchorPane.getChildren().add(rippler);
-            AnchorPane.setLeftAnchor(rippler, 200.0);
-            AnchorPane.setTopAnchor(rippler, 210.0);
 
             Flow flow = new Flow(ControlPanelController.class);
             DefaultFlowContainer container = new DefaultFlowContainer();
@@ -155,13 +156,13 @@ public class LoginController implements Initializable {
 
             JFXDecorator decorator = new JFXDecorator(dashboardStage, container.getView());
             decorator.setCustomMaximize(true);
-            Scene scene = new Scene(decorator, 800, 850);
+            Scene scene = new Scene(decorator, 1024, 600);
             final ObservableList<String> stylesheets = scene.getStylesheets();
-            stylesheets.addAll(gui.login.LoginController.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
-                    gui.login.LoginController.class.getResource("/css/jfoenix-design.css").toExternalForm(),
-                    gui.login.LoginController.class.getResource("/css/main.css").toExternalForm());
-            dashboardStage.setMinWidth(700);
-            dashboardStage.setMinHeight(800);
+            stylesheets.addAll(ControlPanelController.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                    ControlPanelController.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                    ControlPanelController.class.getResource("/css/main.css").toExternalForm());
+            dashboardStage.setMinWidth(640);
+            dashboardStage.setMinHeight(480);
             dashboardStage.setScene(scene);
             dashboardStage.show();
         }

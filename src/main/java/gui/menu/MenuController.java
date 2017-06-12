@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 /**
  * Created by OldMan on 04.06.2017.
  */
-@ViewController(value = "/fxml/menu.fxml", title = "Material Design Example")
+//@ViewController(value = "/fxml/menu.fxml", title = "Material Design Example")
 public class MenuController {
     @FXMLViewFlowContext
     private ViewFlowContext context;
@@ -67,16 +67,16 @@ public class MenuController {
         System.exit(0);
     }
 
-    @PostConstruct
-    public void init() {
-        Objects.requireNonNull(context, "context");
-        FlowHandler contentFlowHandler = (FlowHandler) context.getRegisteredObject("ContentFlowHandler");
+//    @PostConstruct
+//    public void init() {
+//        Objects.requireNonNull(context, "context");
+//        FlowHandler contentFlowHandler = (FlowHandler) context.getRegisteredObject("ContentFlowHandler");
+//
+//        Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
+//        bindNodeToController(button, ButtonController.class, contentFlow, contentFlowHandler);
+//        bindNodeToController(map, MapController.class, contentFlow, contentFlowHandler);
 
-        Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
-        bindNodeToController(button, ButtonController.class, contentFlow, contentFlowHandler);
-        bindNodeToController(map, MapController.class, contentFlow, contentFlowHandler);
-
-    }
+//    }
 
     private void bindNodeToController(Node node, Class<?> controllerClass, Flow flow, FlowHandler flowHandler) {
         flow.withGlobalLink(node.getId(), controllerClass);

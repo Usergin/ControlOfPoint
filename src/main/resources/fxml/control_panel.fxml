@@ -27,29 +27,13 @@
             </VBox>
         </top>
 
-        <!-- Content Area -->
-        <!--<center>-->
-        <!--<JFXDrawer fx:id="drawer" defaultDrawerSize="250" direction="LEFT">-->
-        <!--<styleClass>-->
-        <!--<String fx:value="body"/>-->
-        <!--</styleClass>-->
-        <!--</JFXDrawer>-->
-        <!--</center>-->
         <AnchorPane styleClass="animated-burgers">
-            <JFXRippler fx:id="rippler1" maskType="CIRCLE"
-                        AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="100.0">
-                <JFXHamburger fx:id="burger1" style="-fx-padding:15;">
+            <JFXRippler fx:id="ripple_device_menu" maskType="CIRCLE"
+                        AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0">
+                <JFXHamburger fx:id="device_menu" style="-fx-padding:15;">
                 </JFXHamburger>
             </JFXRippler>
-            <!--<JFXRippler maskType="CIRCLE" style="-fx-ripple-color:WHITE;">-->
-                    <!--<StackPane fx:id="titleBurgerContainer" >-->
-                        <!--<JFXHamburger fx:id="titleBurger" BorderPane.alignment="TOP_LEFT">-->
-                            <!--<HamburgerBackArrowBasicTransition/>-->
-                        <!--</JFXHamburger>-->
-                    <!--</StackPane>-->
-                <!--</JFXRippler>-->
-                <!--<JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutX="210.0" layoutY="-3.0" prefHeight="684.0" prefWidth="791.0" />-->
-            </AnchorPane>
+        </AnchorPane>
 
     </BorderPane>
 </StackPane>
