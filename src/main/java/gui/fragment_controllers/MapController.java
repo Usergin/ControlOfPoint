@@ -18,10 +18,10 @@ import java.util.ResourceBundle;
  * Created by OldMan on 04.06.2017.
  */
 
-//@ViewController(value = "/fxml/map.fxml", title = "Material Design Example")
-public class MapController implements Initializable {
-    @FXMLViewFlowContext
-    private ViewFlowContext context;
+@ViewController(value = "/fxml/map.fxml", title = "Material Design Example")
+public class  MapController{
+//    @FXMLViewFlowContext
+//    private ViewFlowContext context;
 
 //        @FXML
 //    private StackPane stackPane;
@@ -29,23 +29,22 @@ public class MapController implements Initializable {
     @FXML
     private MapView mapView;
 //
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ArcGISMap map = new ArcGISMap(Basemap.Type.NATIONAL_GEOGRAPHIC, 56.075844, -2.681572, 10);
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//        ArcGISMap map = new ArcGISMap(Basemap.Type.NATIONAL_GEOGRAPHIC, 56.075844, -2.681572, 10);
+//        // create the MapView
+//        mapView.setMap(map);
+//        StackPane stackPane = new StackPane();
+//        stackPane.getChildren().add(mapView);
+//
+//    }
+    @PostConstruct
+    public void init() {
+        ArcGISMap map = new ArcGISMap(Basemap.Type.TOPOGRAPHIC, 59.961697, 30.278961, 10);
 
-        // create the MapView
+//        // create the MapView
         mapView.setMap(map);
 //        StackPane stackPane = new StackPane();
 //        stackPane.getChildren().add(mapView);
-
     }
-//    @PostConstruct
-//    public void init() {
-//        ArcGISMap map = new ArcGISMap(Basemap.Type.NATIONAL_GEOGRAPHIC, 56.075844, -2.681572, 10);
-////
-////        // create the MapView
-////        mapView.setMap(map);
-//        StackPane stackPane = new StackPane();
-//        stackPane.getChildren().add(mapView);
-//    }
 }

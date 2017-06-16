@@ -26,20 +26,47 @@ buildscript {
 }
 
 dependencies {
-        testCompile group: 'junit', name: 'junit', version: '4.12'
-        compile 'com.jfoenix:jfoenix:1.4.0'
-        compile "log4j:log4j:1.2.17"
-        // https://mvnrepository.com/artifact/de.jensd/fontawesomefx
-        compile 'de.jensd:fontawesomefx:8.9'
-        compile 'com.squareup.retrofit2:retrofit:2.3.0'
-        compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-        compile 'io.datafx:datafx:8.0.1'
-        compile 'io.datafx:flow:8.0.1'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.jfoenix:jfoenix:1.4.0'
+    compile "log4j:log4j:1.2.17"
+    // https://mvnrepository.com/artifact/de.jensd/fontawesomefx
+    compile 'de.jensd:fontawesomefx:8.9'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'io.datafx:datafx:8.0.1'
+    compile 'io.datafx:flow:8.0.1'
+    compile 'commons-io:commons-io:2.4'
 }
 arcgis.version = '100.0.0'
 //
 idea.module.downloadJavadoc = true
-//
-//run {
-    mainClassName 'Main'
-//}
+
+mainClassName 'Main'
+
+task downloadData {
+    description = "Downloads data from AGOL for samples with offline data"
+
+    def rootDir = "./"
+    def dataZip = rootDir + 'data.zip'
+    def samplesData = rootDir + 'samples-data'
+
+    if (!file(samplesData).exists()) {
+        ant.get(src: 'https://arcgisruntime.maps.arcgis' +
+                '.com/sharing/rest/content/items/8b10b52320464b1bb728e552cfa6cb50/data', dest: dataZip)
+        copy {
+            from zipTree(dataZip)
+            into(rootDir)
+        }
+        delete(dataZip)
+    }
+}
+
+run {
+    mainClassName = project.hasProperty("main") ? mainClass : 'src.main.java.Main'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
+
+run.dependsOn downloadData

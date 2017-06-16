@@ -31,7 +31,8 @@
         </Separator>
         <AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT"
                     prefHeight="410.0" prefWidth="400.0"
-                    style="-fx-background-color: rgb(255, 255, 255);-fx-effect:                             dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5); -fx-background-radius: 3;"
+                    style="-fx-background-color: rgb(255, 255, 255);-fx-effect:
+                     dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5); -fx-background-radius: 3;"
                     StackPane.alignment="TOP_CENTER">
             <children>
                 <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="160.0" layoutY="21.0" pickOnBounds="true"
