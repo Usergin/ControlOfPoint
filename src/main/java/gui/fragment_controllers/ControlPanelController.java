@@ -9,18 +9,14 @@ import io.datafx.controller.flow.container.AnimatedFlowContainer;
 import io.datafx.controller.flow.container.ContainerAnimations;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
-
-import static io.datafx.controller.flow.container.ContainerAnimations.SWIPE_LEFT;
 
 /**
  * Created by OldMan on 04.06.2017.
@@ -35,8 +31,6 @@ public class ControlPanelController {
     @FXML
     private StackPane centerPane;
 
-//    @FXML
-//    private StackPane titleBurgerContainer;
     @FXML
     private JFXHamburger device_menu;
 
@@ -44,8 +38,6 @@ public class ControlPanelController {
     private StackPane optionsBurger;
     @FXML
     private JFXRippler ripple_device_menu;
-//    @FXML
-//    private JFXDrawer drawer;
 
     private JFXPopup toolbarPopup;
     private JFXPopup popup;
@@ -65,7 +57,7 @@ public class ControlPanelController {
         ripple_device_menu.setOnMouseClicked(e -> popup.show(device_menu, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT));
 
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui/MainMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui/main_menu.fxml"));
         loader.setController(new MainMenuController());
         toolbarPopup = new JFXPopup(loader.load());
 

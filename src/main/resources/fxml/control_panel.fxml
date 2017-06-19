@@ -1,57 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import com.jfoenix.controls.JFXHamburger?>
-<?import com.jfoenix.controls.JFXRippler?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<StackPane fx:id="root" prefHeight="248.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.layout.*?>
+<StackPane fx:id="root" prefHeight="248.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8"
+           xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <!--Header-->
-        <!--<BorderPane maxHeight="-Infinity" minHeight="-Infinity" StackPane.alignment="TOP_CENTER">-->
-            <!--<top>-->
-                <VBox spacing="20">
-           <!--<children>-->
-                       <JFXToolbar>
-                           <!--<leftItems>-->
-                           <!--<Label>Material Design</Label>-->
-                           <!--</leftItems>-->
-                           <rightItems>
-                               <JFXRippler fx:id="updateRippel" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
-                                   <StackPane fx:id="updateBurger">
-                                       <JFXButton fx:id="btnLogout" onAction="#update">
-                                           <graphic>
-                                               <FontAwesomeIconView fill="#FFFFFF" glyphName="REFRESH" size="18px" />
-                                           </graphic>
-                                       </JFXButton>
-                                   </StackPane>
-                               <!--</JFXRippler>-->
-                               <JFXRippler fx:id="optionsRippler" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
-                          <control>
-                                      <StackPane fx:id="optionsBurger">
-                                         <children>
-                                             <JFXHamburger styleClass="jfx-options-burger">
-                                    </JFXHamburger>
-                                         </children>
-                                      </StackPane>
-                          </control>
-                               </JFXRippler>
-           <!--</children>-->
-                        </rightItems>
-                    </JFXToolbar>
-                </VBox>
-            <!--</top>-->
-            <!--<center>-->
-                <AnchorPane styleClass="animated-burgers" BorderPane.alignment="CENTER">
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <center>
+
+                <AnchorPane styleClass="animated-burgers">
                     <children>
-                        <StackPane fx:id="centerPane" layoutY="26.0" prefHeight="222.0" prefWidth="388.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0" />
-                        <JFXRippler fx:id="ripple_device_menu" maskType="CIRCLE" styleClass="animated-burgers" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+                        <StackPane fx:id="centerPane" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0"/>
+                        <JFXRippler fx:id="ripple_device_menu" maskType="CIRCLE" styleClass="animated-burgers"
+                                    AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
                             <control>
                                 <JFXHamburger fx:id="device_menu" style="-fx-padding:15;">
                                 </JFXHamburger>
@@ -59,9 +22,32 @@
                         </JFXRippler>
                     </children>
                 </AnchorPane>
-            <!--</center>-->
-        <!--</BorderPane>-->
-
+            </center>
+            <top>
+                <JFXToolbar BorderPane.alignment="TOP_CENTER">
+                    <rightItems>
+                        <JFXRippler fx:id="updateRippel" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
+                            <StackPane fx:id="updateBurger">
+                                <JFXButton fx:id="btnLogout" onAction="#update">
+                                    <graphic>
+                                        <FontAwesomeIconView fill="#FFFFFF" glyphName="REFRESH" size="18px"/>
+                                    </graphic>
+                                </JFXButton>
+                            </StackPane>
+                        </JFXRippler>
+                        <JFXRippler fx:id="optionsRippler" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
+                            <control>
+                                <StackPane fx:id="optionsBurger">
+                                    <children>
+                                        <JFXHamburger styleClass="jfx-options-burger">
+                                        </JFXHamburger>
+                                    </children>
+                                </StackPane>
+                            </control>
+                        </JFXRippler>
+                    </rightItems>
+                </JFXToolbar>
+            </top>
+        </BorderPane>
     </children>
-    <!--<AnchorPane prefHeight="200.0" prefWidth="200.0"/>-->
 </StackPane>

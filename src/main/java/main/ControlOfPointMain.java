@@ -1,47 +1,54 @@
+package main;
+
+import com.gluonhq.ignite.dagger.DaggerContext;
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyphLoader;
+import dagger.Injector;
+import dagger.application.AppModule;
+import dagger.network.NetworkModule;
 import gui.fragment_controllers.ControlPanelController;
 import gui.login.LoginController;
-import gui.main.MainController;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Arrays;
 
 /**
  * Created by oldman on 02.06.17.
  */
-public class Main extends Application {
-    private static final Logger LOG = Logger.getLogger(Main.class);
+@Singleton
+public class ControlOfPointMain extends Application {
+    private static final Logger LOG = Logger.getLogger(ControlOfPointMain.class);
     @FXMLViewFlowContext
-    private ViewFlowContext viewFlowContext;
+    @Inject
+    ViewFlowContext viewFlowContext;
     private final int MIN_WIDTH = 850;
     private final int MIN_HEIGHT = 600;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         LOG.info("Application started");
-
-        new Thread(()->{
+        Injector.inject(this, Arrays.asList(new AppModule()));
+        new Thread(() -> {
             try {
                 //he just loaded some svg from a font file
-                SVGGlyphLoader.loadGlyphsFont(Main.class.getResourceAsStream("/fonts/icomoon.svg"),"icomoon.svg");
+                SVGGlyphLoader.loadGlyphsFont(ControlOfPointMain.class.getResourceAsStream("/fonts/icomoon.svg"), "icomoon.svg");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }).start();
+        LOG.info("Application started" + viewFlowContext);
 
-        viewFlowContext = new ViewFlowContext();
         viewFlowContext.register("stage", primaryStage);
 
         Flow flow = new Flow(LoginController.class);
@@ -66,5 +73,4 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 }

@@ -1,9 +1,12 @@
 package gui.login;
 
-import com.esri.arcgisruntime.mapping.view.MapView;
+import business.login.LoginInteractor;
+import business.login.LoginInteractorImpl;
 import com.jfoenix.controls.*;
 import com.jfoenix.svg.SVGGlyphLoader;
 import com.jfoenix.validation.RequiredFieldValidator;
+import data.remote.model.request.Authentication;
+import data.remote.model.response.UserResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import gui.fragment_controllers.ControlPanelController;
@@ -13,41 +16,41 @@ import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
+import io.reactivex.schedulers.Schedulers;
 import javafx.animation.PauseTransition;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.swing.*;
+import javax.inject.Singleton;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.security.MessageDigest;
+import java.util.Base64;
 
 /**
  * Created by oldman on 02.06.17.
  */
 
 @ViewController(value = "/fxml/login.fxml")
+@Singleton
 public class LoginController {
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
-
-    private Label label;
+    @ViewNode
+    private StackPane rootPane;
     @ViewNode
     private JFXTextField txtUsername;
     @ViewNode
@@ -56,57 +59,75 @@ public class LoginController {
     private JFXButton btnLogin;
     @ViewNode
     private ImageView imgProgress;
+    LoginInteractor loginInteractor;
 
     private static final Logger LOG = Logger.getLogger(LoginController.class);
-    private ResourceBundle bundle;
     private StringProperty username = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
-
-    private void handleButtonAction(ActionEvent event) {
-        LOG.info("handleButtonAction!");
-        label.setText("Hello World!");
-    }
+    BooleanBinding booleanBind = Bindings.or(username.isEmpty(),
+            password.isEmpty());
 
     @PostConstruct
-    public void init() throws Exception  {
-//        bundle = ResourceBundle.getBundle("resources/string", Locale.getDefault());
+    public void init() throws Exception {
         handleValidation();
         imgProgress.setVisible(false);
+        btnLogin.disableProperty().bind(booleanBind);
         username.bind(txtUsername.textProperty());
         password.bind(txtPassword.textProperty());
+        loginInteractor = new LoginInteractorImpl(this);
     }
 
-    private void clearAfterLogout() {
-        ImageView userImageView = (ImageView)flowContext.getRegisteredObject("userImageView");
-        userImageView.setImage(new Image("icon.png"));
-
-        Label userLabel = (Label) flowContext.getRegisteredObject("userLabel");
-        userLabel.setText("Username");
-
-        JFXButton homeButton = (JFXButton)flowContext.getRegisteredObject("homeButton");
-        if (homeButton != null) {
-            homeButton.setVisible(false);
-        }
-
-        JFXListView sideBarList = (JFXListView) flowContext.getRegisteredObject("sideBarList");
-        if (sideBarList != null) {
-            sideBarList.getItems().clear();
-            Label loginLabel = (Label) flowContext.getRegisteredObject("loginLabel");
-            Label signupLabel = (Label) flowContext.getRegisteredObject("signupLabel");
-            sideBarList.getItems().addAll(loginLabel,signupLabel);
-        }
+    private void errorAuthentication(String message) {
+        LOG.info("errorAuthentication " + message);
+        imgProgress.setVisible(false);
+        btnLogin.setVisible(true);
+        JFXSnackbar jfxSnackbar = new JFXSnackbar(rootPane);
+        jfxSnackbar.show("Ошибка: " + message, 5000);
     }
+
     @FXML
     private void login(ActionEvent event) {
-        LOG.info(username.get() + password.get());;
-
         imgProgress.setVisible(true);
+        btnLogin.setVisible(false);
+//        loginInteractor.getUser(new Authentication(username.get(), getHashedValue(password.get())));
+        loginInteractor.getUser(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="))
+                .subscribeOn(Schedulers.io())
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::handleSuccess, this::handleError);
+    }
+
+    private void handleSuccess(UserResponse userResponse) {
+        JFXSnackbar jfxSnackbar = new JFXSnackbar(rootPane);
+        jfxSnackbar.show("Добро пожаловать: " + userResponse.getUser().getRank()
+                + " " +userResponse.getUser().getUsername(), 2000);
         PauseTransition pauseTransition = new PauseTransition();
-        pauseTransition.setDuration(Duration.seconds(1));
+        pauseTransition.setDuration(Duration.seconds(2));
         pauseTransition.setOnFinished(ev -> {
             completeLogin();
         });
         pauseTransition.play();
+    }
+
+
+    private void handleError(Throwable throwable) {
+        LOG.info("handleError " + throwable);
+        errorAuthentication(throwable.getLocalizedMessage());
+    }
+
+
+    private String getHashedValue(String inputData) {
+        String sResp = null;
+        try {
+            byte byteHash[];
+            MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+            sha1.update(inputData.getBytes("utf-8"));
+            byteHash = sha1.digest();
+            sha1.reset();
+            return Base64.getEncoder().encodeToString(byteHash);
+        } catch (Exception e) {
+            System.err.println("getHashedValue failed: " + e.getMessage());
+            return null;
+        }
     }
 
     private void handleValidation() {
@@ -129,10 +150,9 @@ public class LoginController {
                 txtPassword.validate();
             }
         });
-
     }
 
-    private void completeLogin() {
+    public void completeLogin() {
         btnLogin.getScene().getWindow().hide();
         imgProgress.setVisible(false);
         try {
@@ -165,10 +185,7 @@ public class LoginController {
             dashboardStage.setMinHeight(480);
             dashboardStage.setScene(scene);
             dashboardStage.show();
-        }
-//        } catch (IOException ex) {
-//            LOG.error(null, ex);      }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             LOG.error(null, ex);
         }
 

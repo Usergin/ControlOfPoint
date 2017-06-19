@@ -31,17 +31,33 @@ dependencies {
     compile "log4j:log4j:1.2.17"
     // https://mvnrepository.com/artifact/de.jensd/fontawesomefx
     compile 'de.jensd:fontawesomefx:8.9'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
     compile 'io.datafx:datafx:8.0.1'
     compile 'io.datafx:flow:8.0.1'
     compile 'commons-io:commons-io:2.4'
+    //network
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    //Dependency Injection
+    compile 'com.gluonhq:ignite-dagger:1.0.2'
+    compile 'javax.inject:javax.inject:1'
+//    annotationProcessor "com.google.dagger:dagger-compiler:2.11"
+//    provided 'javax.annotation:jsr250-api:1.0'
+
+    //rx
+//    findanddelete  "io.reactivex.rxjava2:rxjava:2.1.0"
+    findanddelete  'io.reactivex.rxjava2:rxjavafx:2.0.2'
+    findanddelete  'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 }
+
 arcgis.version = '100.0.0'
 //
 idea.module.downloadJavadoc = true
+ext.buildTimestamp = new Date().format('yyyy-MM-dd HH:mm:ss')
 
-mainClassName 'Main'
+mainClassName ='main.ControlOfPointMain'
 
 task downloadData {
     description = "Downloads data from AGOL for samples with offline data"
