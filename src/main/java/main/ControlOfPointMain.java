@@ -1,11 +1,9 @@
 package main;
 
-import com.gluonhq.ignite.dagger.DaggerContext;
 import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyphLoader;
 import dagger.Injector;
 import dagger.application.AppModule;
-import dagger.network.NetworkModule;
 import gui.fragment_controllers.ControlPanelController;
 import gui.login.LoginController;
 import io.datafx.controller.flow.Flow;
