@@ -4,7 +4,7 @@ import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyphLoader;
 import dagger.Injector;
 import dagger.application.AppModule;
-import gui.fragment_controllers.ControlPanelController;
+import gui.control_panel.ControlPanelController;
 import gui.login.LoginController;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.container.DefaultFlowContainer;

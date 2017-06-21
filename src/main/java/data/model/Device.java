@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlType;
  * Created by OldMan on 12.06.2017.
  */
 
-@XmlRootElement(name = "device")
+@XmlRootElement(name = "control_panel")
 @XmlType(propOrder = {"id", "imei", "model", "version_os", "longitude", "latitude"})
 public class Device {
     @SerializedName("id")

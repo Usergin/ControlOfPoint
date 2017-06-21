@@ -1,5 +1,6 @@
 package dagger.network;
 
+import business.control_panel.ControlPanelInteractor;
 import business.login.LoginInteractor;
 import dagger.Module;
 import dagger.Provides;
@@ -12,7 +13,7 @@ import javax.inject.Singleton;
  * Created by OldMan on 18.06.2017.
  */
 
-@Module( library = true, injects = {LoginInteractor.class}, complete = false, includes = {ServerApiModule.class})
+@Module( library = true, injects = {LoginInteractor.class, ControlPanelInteractor.class}, complete = false, includes = {ServerApiModule.class})
 public class NetworkModule {
     @Provides
     @Singleton

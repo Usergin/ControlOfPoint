@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import com.esri.arcgisruntime.mapping.view.MapView?>
-<?import javafx.scene.layout.AnchorPane?>
-
-<!--fx:controller="gui.fragment_controllers.MapController"-->
-<!--prefHeight="400.0" prefWidth="600.0"-->
-
-<?import javafx.geometry.Insets?>
-<MapView fx:id="mapView" minHeight="480.0" minWidth="640.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" >
+<MapView fx:id="mapView" minHeight="480.0" minWidth="640.0" xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1">
     <!--<padding><Insets top="100"/></padding>-->
 
 </MapView>

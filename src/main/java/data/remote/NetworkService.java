@@ -1,6 +1,8 @@
 package data.remote;
 
 import data.remote.model.request.Authentication;
+import data.remote.model.response.DeviceListResponse;
+import data.remote.model.response.DeviceResponse;
 import data.remote.model.response.UserResponse;
 import io.reactivex.Single;
 import main.ControlOfPointMain;
@@ -22,11 +24,24 @@ public class NetworkService {
     }
 
     /**
-     * Create trip - clientServer_userWantsToOrderTaxi_agree
+     * Get user - login&password
      */
     public Single<UserResponse> getUser(Authentication authentication) {
         LOG.info(authentication.getLogin() + authentication.getPassword());
         return serverApi.getUser(authentication);
     }
 
+
+    /**
+     * Get user - login&password
+     */
+    public Single<DeviceListResponse> getDevices() {
+        LOG.info("getDevices");
+        return serverApi.getDevices();
+    }
+
+    public Single<DeviceResponse> getDeviceById(int id) {
+        LOG.info("getDevices");
+        return serverApi.getDeviceById(id);
+    }
 }

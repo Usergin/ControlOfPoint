@@ -1,5 +1,8 @@
 package dagger.application;
 
+import business.control_panel.ControlPanelInteractor;
+import business.control_panel.ControlPanelInteractorImpl;
+import business.login.LoginInteractor;
 import business.login.LoginInteractorImpl;
 import dagger.Module;
 import dagger.Provides;
@@ -12,19 +15,19 @@ import main.ControlOfPointMain;
  * Created by OldMan on 18.06.2017.
  */
 
-@Module( library = true, injects = {ControlOfPointMain.class, LoginInteractorImpl.class}, complete = false)
+@Module(library = true, injects = {ControlOfPointMain.class, LoginInteractorImpl.class, ControlPanelInteractorImpl.class}, complete = false)
 public class AppModule {
-//    @Provides
+    //    @Provides
 //    FXMLLoader provideFxmlLoader(){
 //        return new FXMLLoader();
 //    }
     @Provides
-    ViewFlowContext provideViewFlowContext(){
+    ViewFlowContext provideViewFlowContext() {
         return new ViewFlowContext();
     }
 
     @Provides
-    Parser provideParser(){
+    Parser provideParser() {
         return new ParserImpl();
     }
 }

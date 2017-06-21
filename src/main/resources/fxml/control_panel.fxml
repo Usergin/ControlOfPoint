@@ -3,7 +3,7 @@
 <?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.layout.*?>
-<StackPane fx:id="root" prefHeight="248.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8"
+<StackPane fx:id="rootPane" prefHeight="248.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8"
            xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -25,14 +25,17 @@
             </center>
             <top>
                 <JFXToolbar BorderPane.alignment="TOP_CENTER">
+                    <leftItems>
+                        <JFXRippler fx:id="back" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
+                            <!--<StackPane fx:id="back" >-->
+                                        <FontAwesomeIconView fill="#FFFFFF" glyphName="LONG_ARROW_LEFT" size="2em" styleClass="icon"/>
+                             <!--</StackPane>-->
+                        </JFXRippler>
+                    </leftItems>
                     <rightItems>
                         <JFXRippler fx:id="updateRippel" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
-                            <StackPane fx:id="updateBurger">
-                                <JFXButton fx:id="btnLogout" onAction="#update">
-                                    <graphic>
-                                        <FontAwesomeIconView fill="#FFFFFF" glyphName="REFRESH" size="18px"/>
-                                    </graphic>
-                                </JFXButton>
+                            <StackPane fx:id="update" >
+                                         <FontAwesomeIconView fill="#FFFFFF" glyphName="REFRESH" size="2em" styleClass="icon"/>
                             </StackPane>
                         </JFXRippler>
                         <JFXRippler fx:id="optionsRippler" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">

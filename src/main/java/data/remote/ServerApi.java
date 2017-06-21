@@ -1,7 +1,9 @@
 package data.remote;
 
-import data.remote.model.request.Authentication;
 import data.remote.model.information.Settings;
+import data.remote.model.request.Authentication;
+import data.remote.model.response.DeviceListResponse;
+import data.remote.model.response.DeviceResponse;
 import data.remote.model.response.UserResponse;
 import io.reactivex.Single;
 import retrofit2.http.*;
@@ -11,7 +13,6 @@ import retrofit2.http.*;
  */
 public interface ServerApi {
     @Headers({"Accept: application/json"})
-//    @FormUrlEncoded
     @POST("user")
     Single<UserResponse> getUser(@Body Authentication authentication);
 
@@ -19,88 +20,85 @@ public interface ServerApi {
     @FormUrlEncoded
     @POST("/setting")
     Single<UserResponse> setSettingsDevice(@Field("imei") String imei,
-                                         @Field("device") int device,
-                                         @Field("settings") Settings settings);
+                                           @Field("control_panel") int device,
+                                           @Field("settings") Settings settings);
 
     @Headers({"Accept: application/json"})
-    @FormUrlEncoded
     @GET("/devices")
-    Single<UserResponse> getDevices();
+    Single<DeviceListResponse> getDevices();
 
 
     @Headers({"Accept: application/json"})
-    @FormUrlEncoded
-    @GET("/device/{id}")
-    Single<UserResponse> getDeviceById(@Path("id") int device_id);
+    @GET("/control_panel/{id}")
+    Single<DeviceResponse> getDeviceById(@Path("id") int device_id);
 
 
     @Headers({"Accept: application/json"})
-    @FormUrlEncoded
-    @GET("/device/{id}/rm")
+    @GET("/control_panel/{id}/rm")
     Single<UserResponse> rmDeviceById(@Path("id") int device_id);
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/all_rm")
+    @GET("/control_panel/all_rm")
     Single<UserResponse> rmAllDevice();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/settings")
+    @GET("/control_panel/{id}/settings")
     Single<UserResponse> getSettingsDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/apps")
+    @GET("/control_panel/{id}/apps")
     Single<UserResponse> getInstallAppsDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/battery_status")
+    @GET("/control_panel/{id}/battery_status")
     Single<UserResponse> getBatteryStatsDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/calls")
+    @GET("/control_panel/{id}/calls")
     Single<UserResponse> getCallsDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/contacts")
+    @GET("/control_panel/{id}/contacts")
     Single<UserResponse> getContactsDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/status")
+    @GET("/control_panel/{id}/status")
     Single<UserResponse> getStatusDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/info")
+    @GET("/control_panel/{id}/info")
     Single<UserResponse> getInfoDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/locations")
+    @GET("/control_panel/{id}/locations")
     Single<UserResponse> getLocationsDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/messages")
+    @GET("/control_panel/{id}/messages")
     Single<UserResponse> getMessagesDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/network")
+    @GET("/control_panel/{id}/network")
     Single<UserResponse> getNetworkDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/service")
+    @GET("/control_panel/{id}/service")
     Single<UserResponse> getServiceDeviceById();
 
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
-    @GET("/device/{id}/battery")
+    @GET("/control_panel/{id}/battery")
     Single<UserResponse> getBatteryDeviceById();
 }

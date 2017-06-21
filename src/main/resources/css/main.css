@@ -94,14 +94,14 @@
     -fx-background-color: transparent;
 }
 
-/*.jfx-popup-container {*/
-    /*-fx-background-color: WHITE;*/
-    /*-fx-pref-width: 151.0px;*/
-/*}*/
+.jfx-popup-container {
+    -fx-background-color: white;
+    -fx-pref-width: 201px;
+}
 
-/*.popup-list-view {*/
-    /*-fx-pref-width: 150.0px;*/
-/*}*/
+.popup-list-view {
+    -fx-pref-width: 200px;
+}
 
 .jfx-snackbar-content {
     -fx-background-color: #323232;
@@ -122,7 +122,7 @@
  /*******************************************************************************!*/
 
 .icon {
-    -fx-fill: #FE774D;
+    -fx-fill: #FFFFFF;
     -fx-padding: 10.0;
     -fx-cursor: hand;
 }
@@ -424,6 +424,9 @@
 
 .jfx-text-area .viewport {
     -fx-background-color: #F4F4F4;
+}
+jfx-decorator {
+    -fx-decorator-color: RED;
 }
 
 /*!********************************************************************************/
@@ -756,6 +759,16 @@
     -fx-stroke: #d50000;
 }
 
+.materialDesign-spinner1 .arc {
+    -fx-stroke: #00796B;
+}
+.materialDesign-spinner2 .arc {
+    -fx-stroke: #00897B;
+}
+.materialDesign-spinner3 .arc {
+    -fx-stroke: #009688;
+}
+
 /*!********************************************************************************/
 /**                                                                              **/
 /** JFX Combo Box                                                                **/
@@ -1009,7 +1022,7 @@
 
 .jfx-text-field .error-icon, .jfx-password-field .error-icon, .jfx-text-area .error-icon {
     -fx-fill: #D34336;
-    -fx-font-size: 1.0em;
+    -fx-font-size: 1em;
 }
 
 /*.jfx-scroll-pane .main-header {*/

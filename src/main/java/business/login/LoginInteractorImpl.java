@@ -22,6 +22,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     NetworkService networkService;
     @Inject
     Parser parser;
+
     private LoginController loginController;
     private static final Logger LOG = Logger.getLogger(LoginInteractorImpl.class);
 

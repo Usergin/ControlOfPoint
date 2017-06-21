@@ -7,9 +7,10 @@ import com.jfoenix.svg.SVGGlyphLoader;
 import com.jfoenix.validation.RequiredFieldValidator;
 import data.remote.model.request.Authentication;
 import data.remote.model.response.UserResponse;
+import de.jensd.fx.glyphs.GlyphsBuilder;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import gui.fragment_controllers.ControlPanelController;
+import gui.control_panel.ControlPanelController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.ViewNode;
 import io.datafx.controller.flow.Flow;
@@ -59,6 +60,9 @@ public class LoginController {
     private JFXButton btnLogin;
     @ViewNode
     private ImageView imgProgress;
+    private static final String ERROR = "error";
+    private static final String EM1 = "1em";
+
     LoginInteractor loginInteractor;
 
     private static final Logger LOG = Logger.getLogger(LoginController.class);
@@ -69,12 +73,22 @@ public class LoginController {
 
     @PostConstruct
     public void init() throws Exception {
-        handleValidation();
+        txtUsername.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) {
+                txtUsername.validate();
+            }
+        });
+        txtPassword.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) {
+                txtPassword.validate();
+            }
+        });
         imgProgress.setVisible(false);
-        btnLogin.disableProperty().bind(booleanBind);
+//        btnLogin.disableProperty().bind(booleanBind);
         username.bind(txtUsername.textProperty());
         password.bind(txtPassword.textProperty());
         loginInteractor = new LoginInteractorImpl(this);
+
     }
 
     private void errorAuthentication(String message) {
@@ -90,10 +104,11 @@ public class LoginController {
         imgProgress.setVisible(true);
         btnLogin.setVisible(false);
 //        loginInteractor.getUser(new Authentication(username.get(), getHashedValue(password.get())));
-        loginInteractor.getUser(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="))
-                .subscribeOn(Schedulers.io())
-                .observeOn(JavaFxScheduler.platform())
-                .subscribe(this::handleSuccess, this::handleError);
+//        loginInteractor.getUser(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(JavaFxScheduler.platform())
+//                .subscribe(this::handleSuccess, this::handleError);
+        completeLogin();
     }
 
     private void handleSuccess(UserResponse userResponse) {
@@ -130,29 +145,7 @@ public class LoginController {
         }
     }
 
-    private void handleValidation() {
-        RequiredFieldValidator fieldValidator = new RequiredFieldValidator();
-        txtUsername.getValidators().add(fieldValidator);
-        fieldValidator.setMessage("Введите данные");
-        fieldValidator.setIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES));
-
-        txtUsername.focusedProperty().addListener((ObservableValue<? extends Boolean> o, Boolean oldVal, Boolean newVal) -> {
-            if (!newVal) {
-                txtUsername.validate();
-            }
-        });
-        RequiredFieldValidator fieldValidator2 = new RequiredFieldValidator();
-        txtPassword.getValidators().add(fieldValidator2);
-        fieldValidator2.setMessage("Введите данные");
-        fieldValidator2.setIcon(new FontAwesomeIconView(FontAwesomeIcon.TIMES));
-        txtPassword.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if (!newValue) {
-                txtPassword.validate();
-            }
-        });
-    }
-
-    public void completeLogin() {
+    private void completeLogin() {
         btnLogin.getScene().getWindow().hide();
         imgProgress.setVisible(false);
         try {
