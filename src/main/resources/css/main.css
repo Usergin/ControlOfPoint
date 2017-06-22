@@ -1046,3 +1046,10 @@ jfx-decorator {
 /*.jfx-scroll-pane .condensed-header {*/
 /*-fx-background-image: url("../bg4.jpg");*/
 /*}*/
+.map-icon-label .map-icon {
+    font-size: 24px;
+    color: #FFFFFF;
+    line-height: 48px;
+    text-align: center;
+    white-space: nowrap;
+}

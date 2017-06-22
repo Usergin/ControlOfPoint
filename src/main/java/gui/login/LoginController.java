@@ -47,7 +47,7 @@ import java.util.Base64;
 
 @ViewController(value = "/fxml/login.fxml")
 @Singleton
-public class LoginController {
+public class LoginController implements LoginView {
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
     @ViewNode
@@ -84,51 +84,46 @@ public class LoginController {
             }
         });
         imgProgress.setVisible(false);
-//        btnLogin.disableProperty().bind(booleanBind);
+        btnLogin.disableProperty().bind(booleanBind);
         username.bind(txtUsername.textProperty());
         password.bind(txtPassword.textProperty());
         loginInteractor = new LoginInteractorImpl(this);
-
+        //ToDO delete this
+        loginInteractor.onAuthentication(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="));
     }
 
-    private void errorAuthentication(String message) {
-        LOG.info("errorAuthentication " + message);
-        imgProgress.setVisible(false);
-        btnLogin.setVisible(true);
+
+    @Override
+    public void showSnackBar(String message) {
         JFXSnackbar jfxSnackbar = new JFXSnackbar(rootPane);
-        jfxSnackbar.show("Ошибка: " + message, 5000);
+        jfxSnackbar.show(message, 3000);
     }
 
     @FXML
     private void login(ActionEvent event) {
-        imgProgress.setVisible(true);
-        btnLogin.setVisible(false);
-//        loginInteractor.getUser(new Authentication(username.get(), getHashedValue(password.get())));
-//        loginInteractor.getUser(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="))
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(JavaFxScheduler.platform())
-//                .subscribe(this::handleSuccess, this::handleError);
-        completeLogin();
+//        loginInteractor.onAuthentication(new Authentication(username.get(), getHashedValue(password.get())));
     }
 
-    private void handleSuccess(UserResponse userResponse) {
-        JFXSnackbar jfxSnackbar = new JFXSnackbar(rootPane);
-        jfxSnackbar.show("Добро пожаловать: " + userResponse.getUser().getRank()
-                + " " +userResponse.getUser().getUsername(), 2000);
+    @Override
+    public void onAuthenticationSuccess() {
         PauseTransition pauseTransition = new PauseTransition();
-        pauseTransition.setDuration(Duration.seconds(2));
+        //ToDo change second
+        pauseTransition.setDuration(Duration.seconds(0));
         pauseTransition.setOnFinished(ev -> {
             completeLogin();
         });
         pauseTransition.play();
     }
 
-
-    private void handleError(Throwable throwable) {
-        LOG.info("handleError " + throwable);
-        errorAuthentication(throwable.getLocalizedMessage());
+    @Override
+    public void showProgress(boolean val) {
+        imgProgress.setVisible(false);
     }
 
+    @Override
+    public void showBtnLogin(boolean val) {
+        btnLogin.setVisible(false);
+    }
 
     private String getHashedValue(String inputData) {
         String sResp = null;

@@ -15,8 +15,8 @@ import java.util.function.Supplier;
 public class Injector {
     private static  DaggerContext context;
 
-    public static void setContext(DaggerContext context) {
-
+    public static void setContext(DaggerContext localContext) {
+        context = localContext;
     }
 
     public static void inject(Object object,  List<Object> modules) {

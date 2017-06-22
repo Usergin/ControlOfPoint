@@ -8,5 +8,5 @@ import io.reactivex.Single;
  * Created by OldMan on 18.06.2017.
  */
 public interface LoginInteractor {
-    Single<UserResponse> getUser(Authentication authentication);
+   void onAuthentication(Authentication authentication);
 }

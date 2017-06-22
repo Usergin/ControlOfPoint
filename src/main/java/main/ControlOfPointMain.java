@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyphLoader;
 import dagger.Injector;
 import dagger.application.AppModule;
+import dagger.network.NetworkModule;
 import gui.control_panel.ControlPanelController;
 import gui.login.LoginController;
 import io.datafx.controller.flow.Flow;
@@ -35,7 +36,7 @@ public class ControlOfPointMain extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         LOG.info("Application started");
-        Injector.inject(this, Arrays.asList(new AppModule()));
+        Injector.inject(this, Arrays.asList(new AppModule(), new NetworkModule() ));
         new Thread(() -> {
             try {
                 //he just loaded some svg from a font file
@@ -71,4 +72,10 @@ public class ControlOfPointMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    @Override
+    public void stop() throws Exception {
+        LOG.info("Application stop");
+
+    }
+
 }
