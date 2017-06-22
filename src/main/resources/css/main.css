@@ -3,7 +3,7 @@
  */
 
 /*.root {*/
-    /*-fx-font-family: "Roboto";*/
+/*-fx-font-family: "Roboto";*/
 /*}*/
 
 .side-menu {
@@ -26,10 +26,10 @@
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** JFX Drawer                                                                  **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** JFX Drawer                                                                  **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .jfx-drawer-overlay-pane {
     -fx-background-color: rgba(0.0, 0.0, 0.0, 0.1)
@@ -40,10 +40,10 @@
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** JFX Dialog Layout                                                           **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** JFX Dialog Layout                                                           **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .jfx-dialog-overlay-pane {
     -fx-background-color: rgba(0.0, 0.0, 0.0, 0.1);
@@ -85,10 +85,10 @@
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** JFX Pop Up                                                                  **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** JFX Pop Up                                                                  **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .jfx-popup-overlay-pane {
     -fx-background-color: transparent;
@@ -116,10 +116,10 @@
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** JFX Icons                                                                   **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** JFX Icons                                                                   **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .icon {
     -fx-fill: #FFFFFF;
@@ -184,10 +184,10 @@
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** JFX Tool Bar                                                                **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** JFX Tool Bar                                                                **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .jfx-tool-bar {
     -fx-font-size: 20.0;
@@ -232,10 +232,10 @@
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** JFX Radio Button                                                            **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** JFX Radio Button                                                            **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .jfx-radio-button .radio {
     -fx-stroke-width: 2.0px;
@@ -274,10 +274,10 @@
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** JFX Slider                                                                  **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** JFX Slider                                                                  **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .svg-slider .thumb {
     -fx-stroke: black;
@@ -322,8 +322,8 @@
 /********************************************************************************!*/
 
 .jfx-rippler {
-	-fx-rippler-fill: #009688;
-	-fx-mask-type: RECT;
+    -fx-rippler-fill: #009688;
+    -fx-mask-type: RECT;
 }
 .jfx-rippler:hover {
     -fx-cursor: hand;
@@ -429,6 +429,7 @@ jfx-decorator {
     -fx-decorator-color: RED;
 }
 
+
 /*!********************************************************************************/
 /**                                                                              **/
 /** JFX List View                                                                **/
@@ -443,6 +444,7 @@ jfx-decorator {
 .jfx-list-cell:odd,
 .jfx-list-cell:even {
     -fx-background-color: WHITE;
+
 }
 
 .jfx-list-cell:filled:hover,
@@ -466,7 +468,28 @@ jfx-decorator {
     -jfx-vertical-gap: 10.0;
     -jfx-expanded: false;
 }
+.raw-primary-label {
+    -fx-font-size: 14px;
+    -fx-padding: 0px 0px 0px 10px;
+    -fx-prompt-text-fill: #808080;
+    -fx-alignment: top-left;
+    -jfx-focus-color: #009688;
+    -jfx-unfocus-color: #4d4d4d;
+}
 
+.raw-secondary-label {
+    -fx-font-size: 10px;
+    -fx-padding: 0px 16px 0px 18px;
+    /*-fx-text-fill: #455A64;*/
+    -fx-prompt-text-fill: #808080;
+    -fx-alignment: top-left;
+    -jfx-focus-color: #009688;
+    -jfx-unfocus-color: #4d4d4d;
+}
+.jfx-list-view-icon{
+   -fx-fill: RED;
+    -jfx-unfocus-color: #009688;
+}
 .custom-jfx-list-view .jfx-list-cell:odd:selected > .jfx-rippler > StackPane,
 .custom-jfx-list-view .jfx-list-cell:even:selected > .jfx-rippler > StackPane {
     -fx-background-color: rgba(255, 0, 0, 0.2);
@@ -492,21 +515,12 @@ jfx-decorator {
     -fx-background-color: transparent;
 }
 
-.custom-jfx-list-view-icon,
-.jfx-list-cell:selected .label .custom-jfx-list-view-icon {
-    /*-fx-text-fill: #5264AE;*/
-    -fx-fill: #009688;
-    -fx-padding: 0.0 10.0 0.0 5.0;
-    -fx-cursor: hand;
-}
 
-.custom-jfx-list-view-icon-container {
-    -fx-pref-width: 40px;
-}fx-list-view-icon,
+.jfx-list-view-icon:selected,
 .jfx-list-cell:selected .label .custom-jfx-list-view-icon {
     /*-fx-text-fill: #5264AE;*/
-    -fx-fill: #009688;
-    -fx-padding: 0.0 10.0 0.0 5.0;
+    -fx-fill: WHITE;
+    /*-fx-padding: 0.0 10.0 0.0 5.0;*/
     -fx-cursor: hand;
 }
 
@@ -938,10 +952,10 @@ jfx-decorator {
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** Scroll Bar			                                                       **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** Scroll Bar			                                                       **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .scroll-bar:vertical > .track-background, .scroll-bar:horizontal > .track-background {
     -fx-background-color: #F1F1F1;
@@ -975,10 +989,10 @@ jfx-decorator {
 }
 
 /*!********************************************************************************/
- /**                                                                             **/
- /** Scroll Pane			                                                       **/
- /**                                                                             **/
- /*******************************************************************************!*/
+/**                                                                             **/
+/** Scroll Pane			                                                       **/
+/**                                                                             **/
+/*******************************************************************************!*/
 
 .scroll-pane {
     -fx-background-insets: 0;
@@ -1026,9 +1040,9 @@ jfx-decorator {
 }
 
 /*.jfx-scroll-pane .main-header {*/
-    /*-fx-background-image: url("../bg1.jpg");*/
+/*-fx-background-image: url("../bg1.jpg");*/
 /*}*/
 
 /*.jfx-scroll-pane .condensed-header {*/
-    /*-fx-background-image: url("../bg4.jpg");*/
+/*-fx-background-image: url("../bg4.jpg");*/
 /*}*/

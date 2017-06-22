@@ -142,9 +142,11 @@ public class ControlPanelController {
         Platform.runLater(() -> {
             list.setItems(devices);
             list.setCellFactory(param -> new DeviceItemViewCell());
+            list.setPrefWidth(250);
+            list.setPrefHeight(400);
             JFXPopup popup = new JFXPopup(list);
-            popup.setAutoFix( true );
-            popup.setHideOnEscape( true );
+//            popup.setAutoFix( true );
+//            popup.setHideOnEscape( true );
 
             ripple_device_menu.setOnMouseClicked(e -> popup.show(device_menu, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT));
 

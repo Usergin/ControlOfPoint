@@ -28,14 +28,15 @@
                     <leftItems>
                         <JFXRippler fx:id="back" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
                             <!--<StackPane fx:id="back" >-->
-                                        <FontAwesomeIconView fill="#FFFFFF" glyphName="LONG_ARROW_LEFT" size="2em" styleClass="icon"/>
+                                        <FontAwesomeIconView fill="#FFFFFF" glyphName="LONG_ARROW_LEFT" size="2em" styleClass="icon"
+                            />
                              <!--</StackPane>-->
                         </JFXRippler>
                     </leftItems>
                     <rightItems>
-                        <JFXRippler fx:id="updateRippel" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
+                        <JFXRippler fx:id="updateRippel"  maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
                             <StackPane fx:id="update" >
-                                         <FontAwesomeIconView fill="#FFFFFF" glyphName="REFRESH" size="2em" styleClass="icon"/>
+                                         <FontAwesomeIconView glyphName="REFRESH" size="2em" styleClass="icon"/>
                             </StackPane>
                         </JFXRippler>
                         <JFXRippler fx:id="optionsRippler" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">

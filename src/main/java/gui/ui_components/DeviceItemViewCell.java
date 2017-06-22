@@ -24,7 +24,7 @@ public class DeviceItemViewCell extends ListCell<Device> {
     @FXML
     private Label label_imei;
     @FXML
-    private BorderPane root;
+    private HBox root;
     private FXMLLoader mLLoader;
 
     @Override

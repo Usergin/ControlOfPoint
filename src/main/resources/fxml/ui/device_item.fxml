@@ -21,33 +21,26 @@
 <!--</children>-->
 <!--</GridPane>-->
 
-<?import com.jfoenix.controls.JFXListView?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<BorderPane fx:id="root" styleClass="option-list-view" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" styleClass="jfx-list-cell">
     <!--<children>-->
-      <!---->
-        <!--&lt;!&ndash;<JFXListView prefHeight="200.0" prefWidth="200.0" styleClass="option-list-view">&ndash;&gt;-->
-            <!--&lt;!&ndash;<Label fx:id="label_model" styleClass="option-list-view" text="Model" />&ndash;&gt;-->
-            <!--&lt;!&ndash;<Label fx:id="label_version_os" styleClass="option-list-view" text="Version_Os" />&ndash;&gt;-->
-            <!--&lt;!&ndash;<Label fx:id="label_imei" text="imei" />&ndash;&gt;-->
-        <!--&lt;!&ndash;</JFXListView>&ndash;&gt;-->
+    <!---->
+    <!--&lt;!&ndash;<JFXListView prefHeight="200.0" prefWidth="200.0" styleClass="option-list-view">&ndash;&gt;-->
+    <!--&lt;!&ndash;<Label fx:id="label_model" styleClass="option-list-view" text="Model" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<Label fx:id="label_version_os" styleClass="option-list-view" text="Version_Os" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<Label fx:id="label_imei" text="imei" />&ndash;&gt;-->
+    <!--&lt;!&ndash;</JFXListView>&ndash;&gt;-->
     <!--</children>-->
-   <left>
-       <FontAwesomeIconView fill="#FFFFFF" glyphName="MOBILE_PHONE" size="2em" styleClass="icon" BorderPane.alignment="CENTER_LEFT" />
-
-   </left>
-   <center>
-       <VBox BorderPane.alignment="CENTER" >
-           <children>
-               <Label fx:id="label_model" styleClass="option-list-view" text="Model"/>
-               <Label fx:id="label_version_os" styleClass="option-list-view" text="Version_Os"/>
-               <Label fx:id="label_imei" text="imei"/>
-           </children>
-       </VBox>
-   </center>
-</BorderPane>
+    <FontAwesomeIconView fill="#FFFFFF" glyphName="MOBILE_PHONE" size="2em" styleClass="jfx-list-view-icon"/>
+    <VBox  >
+        <children>
+            <Label fx:id="label_model" text="Model" styleClass="raw-primary-label"/>
+            <Label fx:id="label_version_os" text="Version_Os" styleClass="raw-secondary-label"/>
+            <Label fx:id="label_imei" text="imei" styleClass="raw-secondary-label"/>
+        </children>
+    </VBox>
+</HBox>
