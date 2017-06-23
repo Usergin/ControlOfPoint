@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import com.esri.arcgisruntime.mapping.view.MapView?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
-<WebView fx:id="mapView" xmlns="http://javafx.com/javafx/8.0.112"
-         xmlns:fx="http://javafx.com/fxml/1">
-    <!--<padding><Insets top="100"/></padding>-->
 
-</WebView>
+
+<?import com.lynden.gmapsfx.GoogleMapView?>
+<GoogleMapView fx:id="mapView" minHeight="480.0" minWidth="640.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <!--<padding><Insets top="100"/></padding>-->
+</GoogleMapView>

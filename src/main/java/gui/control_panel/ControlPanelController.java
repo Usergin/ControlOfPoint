@@ -24,8 +24,10 @@ import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import org.apache.log4j.Logger;
@@ -40,7 +42,7 @@ import java.util.Objects;
  */
 
 @ViewController(value = "/fxml/control_panel.fxml")
-public class ControlPanelController implements ControlPanelView {
+public class ControlPanelController implements ControlPanelView, EventHandler<MouseEvent> {
     private static final Logger LOG = Logger.getLogger(ControlPanelController.class);
 
     @FXMLViewFlowContext
@@ -119,7 +121,7 @@ public class ControlPanelController implements ControlPanelView {
         LOG.info("handleSuccess " + devices.size());
         list.setItems(devicesData);
         list.setCellFactory(param -> new DeviceItemViewCell());
-        list.setOnMouseClicked(event -> LOG.info("handleSuccess " + list.getSelectionModel().getSelectedItem().getModel()));
+        list.setOnMouseClicked(this);
         JFXPopup popup = new JFXPopup(list);
         popup.setAutoFix(true);
         popup.setHideOnEscape(true);
@@ -198,5 +200,10 @@ public class ControlPanelController implements ControlPanelView {
             back.setVisible(true);
             fadeInBack.playFromStart();
         }
+    }
+
+    @Override
+    public void handle(MouseEvent event) {
+        LOG.info("handleSuccess " +list.getSelectionModel().getSelectedItem().getModel());
     }
 }

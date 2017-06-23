@@ -24,6 +24,7 @@
     <orderEntry type="library" name="Gradle: io.reactivex.rxjava2:rxjava:2.1.0" level="project" />
     <orderEntry type="library" name="Gradle: io.reactivex.rxjava2:rxjavafx:2.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.lynden:GMapsFX:2.12.0" level="project" />
     <orderEntry type="library" name="Gradle: com.esri.arcgisruntime:arcgis-java:100.0.0" level="project" />
     <orderEntry type="library" name="Gradle: io.datafx:core:8.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.8.0" level="project" />
@@ -31,11 +32,14 @@
     <orderEntry type="library" name="Gradle: com.squareup.dagger:dagger:1.2.2" level="project" />
     <orderEntry type="library" name="Gradle: com.gluonhq:ignite-common:1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.dagger:dagger-compiler:1.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.23" level="project" />
+    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-classic:1.2.1" level="project" />
     <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.2" level="project" />
     <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.9" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.13.0" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup:javawriter:2.5.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:guava:15.0" level="project" />
+    <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.reactivestreams:reactive-streams:1.0.0" level="project" />
   </component>
 </module>
