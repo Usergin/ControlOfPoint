@@ -10,8 +10,8 @@ public interface ControlPanelView {
     void setDeviceList(ObservableList<Device> devices);
     void showSnackBar(String message);
     void showDeviceMenu(boolean val);
-    void showSpinnerFlow();
+    void showSpinner(boolean enable);
     void showMapFlow();
-    void showDeviceFlow();
+    void showDeviceFlow(Device device);
     void showErrorFlow();
 }

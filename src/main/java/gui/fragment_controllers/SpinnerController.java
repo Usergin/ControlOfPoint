@@ -1,7 +1,5 @@
 package gui.fragment_controllers;
 
-import com.esri.arcgisruntime.mapping.ArcGISMap;
-import com.esri.arcgisruntime.mapping.Basemap;
 import io.datafx.controller.ViewController;
 
 import javax.annotation.PostConstruct;

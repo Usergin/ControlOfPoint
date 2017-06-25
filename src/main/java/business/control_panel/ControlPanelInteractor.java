@@ -10,8 +10,8 @@ import java.util.List;
  * Created by oldman on 20.06.17.
  */
 public interface ControlPanelInteractor {
-    void getNewDeviceList();
+    Single<List<Device>> getNewDeviceList();
     void getLocalDeviceList();
-    void getDeviceById(int id);
+    Single<Device> getDeviceById(int id);
 
 }

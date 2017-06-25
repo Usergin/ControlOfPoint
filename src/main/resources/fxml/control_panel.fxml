@@ -3,7 +3,7 @@
 <?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.layout.*?>
-<StackPane fx:id="rootPane" prefHeight="248.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/8"
+<StackPane fx:id="rootPane" prefHeight="248.0" prefWidth="388.0"  style="-fx-background-color: rgba(0, 0, 0);" xmlns="http://javafx.com/javafx/8"
            xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -26,7 +26,7 @@
             <top>
                 <JFXToolbar BorderPane.alignment="TOP_CENTER">
                     <leftItems>
-                        <JFXRippler fx:id="back" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
+                        <JFXRippler fx:id="back" onMouseClicked="#onBack" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
                             <!--<StackPane fx:id="back" >-->
                                         <FontAwesomeIconView fill="#FFFFFF" glyphName="LONG_ARROW_LEFT" size="2em" styleClass="icon"
                             />
@@ -34,7 +34,7 @@
                         </JFXRippler>
                     </leftItems>
                     <rightItems>
-                        <JFXRippler fx:id="updateRippel"  maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
+                        <JFXRippler fx:id="updateRippel"  onMouseClicked="#onUpdate" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
                             <StackPane fx:id="update" >
                                          <FontAwesomeIconView glyphName="REFRESH" size="2em" styleClass="icon"/>
                             </StackPane>
@@ -53,5 +53,12 @@
                 </JFXToolbar>
             </top>
         </BorderPane>
+        <StackPane fx:id="spinnerPane"  visible="false"  maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+            <children>
+                <JFXSpinner styleClass="materialDesign-green, first-spinner" startingAngle="-40"/>
+                <JFXSpinner styleClass="materialDesign-blue, second-spinner" startingAngle="-90"/>
+                <JFXSpinner styleClass="materialDesign-red, third-spinner" startingAngle="-120"/>
+            </children>
+        </StackPane>
     </children>
 </StackPane>

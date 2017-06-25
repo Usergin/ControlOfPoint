@@ -1,7 +1,6 @@
 package gui.menu;
 
 import com.jfoenix.controls.JFXListView;
-import gui.fragment_controllers.MapController;
 import gui.ui_components.ButtonController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.Flow;

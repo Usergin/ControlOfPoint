@@ -1,15 +1,11 @@
 package gui.login;
 
-import business.login.LoginInteractor;
-import business.login.LoginInteractorImpl;
 import com.jfoenix.controls.*;
 import com.jfoenix.svg.SVGGlyphLoader;
-import com.jfoenix.validation.RequiredFieldValidator;
+import dagger.Injector;
+import dagger.application.AppModule;
+import dagger.login.LoginModule;
 import data.remote.model.request.Authentication;
-import data.remote.model.response.UserResponse;
-import de.jensd.fx.glyphs.GlyphsBuilder;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import gui.control_panel.ControlPanelController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.ViewNode;
@@ -17,18 +13,16 @@ import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
-import io.reactivex.schedulers.Schedulers;
 import javafx.animation.PauseTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -36,9 +30,11 @@ import javafx.util.Duration;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Base64;
 
 /**
@@ -49,7 +45,10 @@ import java.util.Base64;
 @Singleton
 public class LoginController implements LoginView {
     @FXMLViewFlowContext
-    private ViewFlowContext flowContext;
+    @Inject
+    ViewFlowContext flowContext;
+    @Inject
+    LoginPresenter loginPresenter;
     @ViewNode
     private StackPane rootPane;
     @ViewNode
@@ -63,8 +62,6 @@ public class LoginController implements LoginView {
     private static final String ERROR = "error";
     private static final String EM1 = "1em";
 
-    LoginInteractor loginInteractor;
-
     private static final Logger LOG = Logger.getLogger(LoginController.class);
     private StringProperty username = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
@@ -73,6 +70,10 @@ public class LoginController implements LoginView {
 
     @PostConstruct
     public void init() throws Exception {
+        Injector.inject(this, Arrays.asList(new LoginModule(), new AppModule()));
+        System.out.println("init " + loginPresenter);
+        loginPresenter.setLoginView(this);
+
         txtUsername.focusedProperty().addListener((o, oldVal, newVal) -> {
             if (!newVal) {
                 txtUsername.validate();
@@ -87,9 +88,8 @@ public class LoginController implements LoginView {
         btnLogin.disableProperty().bind(booleanBind);
         username.bind(txtUsername.textProperty());
         password.bind(txtPassword.textProperty());
-        loginInteractor = new LoginInteractorImpl(this);
         //ToDO delete this
-        loginInteractor.onAuthentication(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="));
+        loginPresenter.onAuthentication(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="));
     }
 
 
@@ -100,8 +100,8 @@ public class LoginController implements LoginView {
     }
 
     @FXML
-    private void login(ActionEvent event) {
-//        loginInteractor.onAuthentication(new Authentication(username.get(), getHashedValue(password.get())));
+    void login(ActionEvent event) {
+//        loginPresenter.onAuthentication(new Authentication(username.get(), getHashedValue(password.get())));
     }
 
     @Override
@@ -157,14 +157,12 @@ public class LoginController implements LoginView {
 
             Flow flow = new Flow(ControlPanelController.class);
             DefaultFlowContainer container = new DefaultFlowContainer();
-            flowContext = new ViewFlowContext();
             flowContext.register("Stage", dashboardStage);
             flow.createHandler(flowContext).start(container);
 
-
             JFXDecorator decorator = new JFXDecorator(dashboardStage, container.getView());
             decorator.setCustomMaximize(true);
-            Scene scene = new Scene(decorator, 1024, 600);
+            Scene scene = new Scene(decorator, 1300, 700);
             final ObservableList<String> stylesheets = scene.getStylesheets();
             stylesheets.addAll(ControlPanelController.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                     ControlPanelController.class.getResource("/css/jfoenix-design.css").toExternalForm(),
@@ -172,6 +170,7 @@ public class LoginController implements LoginView {
             dashboardStage.setMinWidth(640);
             dashboardStage.setMinHeight(480);
             dashboardStage.setScene(scene);
+            dashboardStage.getIcons().addAll( new Image(getClass().getResourceAsStream("/drawables/logo-vs-rf.png")));
             dashboardStage.show();
         } catch (Exception ex) {
             LOG.error(null, ex);

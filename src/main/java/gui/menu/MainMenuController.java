@@ -1,17 +1,13 @@
 package gui.menu;
 
 import com.jfoenix.controls.JFXListView;
-import gui.fragment_controllers.MapController;
-import gui.login.LoginController;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.FlowHandler;
-import io.datafx.controller.flow.action.ActionTrigger;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;

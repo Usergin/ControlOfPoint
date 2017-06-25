@@ -14,6 +14,7 @@ import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
@@ -61,6 +62,9 @@ public class ControlOfPointMain extends Application {
         stylesheets.addAll(ControlPanelController.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                 ControlPanelController.class.getResource("/css/jfoenix-design.css").toExternalForm(),
                 ControlPanelController.class.getResource("/css/login.css").toExternalForm());
+
+        Image applicationIcon = new Image(getClass().getResourceAsStream("/drawables/icon_mo_rf_80x80.png"));
+        primaryStage.getIcons().add(applicationIcon);
 
         primaryStage.setMinWidth(MIN_WIDTH);
         primaryStage.setMinHeight(MIN_HEIGHT);
