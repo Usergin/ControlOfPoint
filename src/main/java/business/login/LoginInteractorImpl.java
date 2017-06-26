@@ -23,9 +23,11 @@ public class LoginInteractorImpl implements LoginInteractor {
 
     @Override
     public Single<UserResponse> sendAuth(Authentication authentication) {
-        LOG.info("sendAuth " + authentication.getLogin() + " " + networkService);
-        return networkService.getUser(authentication)
-                .doOnSuccess(userResponse -> parser.saveObject("user.xml", userResponse.getUser()));
+         return networkService.getUser(authentication)
+                .doOnSuccess(userResponse -> {
+                    LOG.info("sendAuth " + userResponse.getUser());
+                    parser.saveObject("user.xml", userResponse.getUser());
+                });
     }
 }
 

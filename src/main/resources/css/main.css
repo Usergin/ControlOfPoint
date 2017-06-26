@@ -21,11 +21,39 @@
     -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
 }
 
-.radio-button-title-label {
-    -fx-font-size: 16.0px;
-    -fx-padding: 14.0 0.0 -20.0 0.0;
-    -fx-text-fill: rgba(0.0, 0.0, 0.0, 0.87);
+.title-label-settings {
+    -fx-font-size: 16px;
+    -fx-padding: 14px;
+    -fx-text-fill: rgba(255, 255, 255, 0.87);
 }
+
+.radio-button-title-label {
+    -fx-font-size: 12.0px;
+    /*-fx-padding: 14.0 0.0 -20.0 0.0;*/
+    -fx-text-fill: rgba(255, 255, 255, 0.87);
+}
+
+.jfx-combo-box{
+    -fx-text-fill: WHITE;
+    -jfx-focus-color: WHITE;
+    -jfx-unfocus-color: WHITE;
+}
+.jfx-combo-box .cell:selected{
+    -fx-text-fill: WHITE;
+}
+
+.jfx-combo-box:focused {
+    -fx-fill: rgba(255, 0, 0, 0.5);
+
+}
+jfx-combo-box .text {
+    -fx-text-fill: rgba(255, 0, 0, 0.5);
+
+}
+.combo-box .cell:selected {
+    -fx-text-fill: red;
+}
+
 
 /*!********************************************************************************/
 /**                                                                             **/
@@ -81,8 +109,16 @@
 }
 
 .dialog-accept {
+    -fx-font-size:14px;
     -fx-text-fill: #009688;
-    -fx-font-weight: BOLD;
+    /*-fx-font-weight: BOLD;*/
+    -fx-padding: 0.7em 0.8em;
+}
+
+.dialog-degree {
+    -fx-font-size:14px;
+    -fx-text-fill: RED;
+    /*-fx-font-weight: BOLD;*/
     -fx-padding: 0.7em 0.8em;
 }
 
@@ -139,7 +175,7 @@
 }
 
 .icons-rippler1 {
-    -jfx-rippler-fill: #009688;
+    -jfx-rippler-fill: WHITE;
     -jfx-mask-type: CIRCLE;
 }
 
@@ -253,7 +289,8 @@
 }
 
 .custom-jfx-radio-button {
-    -fx-font-size: 16.0px;
+    -fx-font-size: 12.0px;
+    -fx-text-fill: whitesmoke;
 }
 
 .custom-jfx-radio-button .radio {
@@ -380,6 +417,12 @@
     -jfx-checked-color: #009688;
     -jfx-unchecked-color: #009688;
     -fx-text-fill: #009688;
+}
+
+.custom-jfx-check-box-all-colored-settings {
+    /*-jfx-checked-color: #009688;*/
+    -jfx-unchecked-color: WHITE;
+    -fx-text-fill: rgba(255, 255, 255.0, 0.87);
 }
 
 .custom-jfx-check-box-text-colored {
@@ -627,13 +670,13 @@ jfx-decorator {
 }
 
 .toggle-icon1 .icon {
-    -fx-fill: #009688;
-    -fx-padding: 20.0;
+    -fx-fill: #FFF;
+    -fx-padding: 10.0;
 }
 
 .toggle-icon1 {
     -fx-pref-width: 80px;
-    -fx-background-radius: 80px;
+    -fx-background-radius:30px;
     -fx-pref-height: 80px;
     -fx-background-color: transparent;
     -jfx-toggle-color: rgba(66.0, 133.0, 244.0, 0.29885056614875793);
@@ -641,7 +684,7 @@ jfx-decorator {
 }
 
 .toggle-icon1 .jfx-rippler {
-    -jfx-rippler-fill: rgba(66.0, 133.0, 244.0, 0.29885056614875793);
+    -jfx-rippler-fill: WHITE;
     -jfx-mask-type: CIRCLE;
 }
 
@@ -658,11 +701,11 @@ jfx-decorator {
 }
 
 .toggle-icon2 .icon {
-    -fx-fill: RED;
+    -fx-fill: WHITE;
 }
 
 .toggle-icon2 .jfx-rippler {
-    -jfx-rippler-fill: RED;
+    -jfx-rippler-fill: WHITE;
     -jfx-mask-type: CIRCLE;
 }
 

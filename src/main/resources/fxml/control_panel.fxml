@@ -34,8 +34,8 @@
                         </JFXRippler>
                     </leftItems>
                     <rightItems>
-                        <JFXRippler fx:id="updateRippel"  onMouseClicked="#onUpdate" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
-                            <StackPane fx:id="update" >
+                        <JFXRippler fx:id="updateNode"  onMouseClicked="#onUpdate" styleClass="icons-rippler1">
+                            <StackPane fx:id="update" style="-fx-padding: 10;">
                                          <FontAwesomeIconView glyphName="REFRESH" size="2em" styleClass="icon"/>
                             </StackPane>
                         </JFXRippler>

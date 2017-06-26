@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" style="-fx-background-color: rgba(0, 0, 0, 0.87);" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <top>
+                <Label styleClass="title-label-settings" text="Настройки устройтсва" BorderPane.alignment="CENTER">
+                    <BorderPane.margin>
+                        <Insets top="5.0" />
+                    </BorderPane.margin>
+                </Label>
+            </top>
+            <bottom>
+                <HBox alignment="BOTTOM_RIGHT" BorderPane.alignment="CENTER">
+                    <children>
+                        <JFXButton fx:id="declineButton" buttonType="FLAT" onMouseClicked="#onDecline" styleClass="dialog-degree">ОТМЕНА
+                        </JFXButton>
+                        <JFXButton fx:id="acceptButton" buttonType="FLAT" onMouseClicked="#onAccept" styleClass="dialog-accept">ПРИНЯТЬ
+                        </JFXButton>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets bottom="20.0" top="10.0" />
+                    </BorderPane.margin>
+                </HBox>
+            </bottom>
+            <center>
+                <VBox alignment="CENTER_LEFT" spacing="10" BorderPane.alignment="CENTER">
+                    <JFXCheckBox fx:id="checkCall" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг звонков">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </JFXCheckBox>
+                    <JFXCheckBox fx:id="checkSMS" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг сообщений" />
+                    <JFXCheckBox fx:id="checkLocation" styleClass="custom-jfx-check-box-all-colored-settings" text="Определение местоположения" />
+
+
+                    <VBox spacing="10">
+                        <children>
+                            <Label styleClass="radio-button-title-label">Способ определения местоположения</Label>
+                            <JFXRadioButton fx:id="rBtnHightAccuracyLocation" selected="true" styleClass="custom-jfx-radio-button" text="Повышенная точность" userData="0">
+                            </JFXRadioButton>
+                            <JFXRadioButton fx:id="rBtnMidleAccuracyLocation" styleClass="custom-jfx-radio-button" text="Средняя точность" userData="1" />
+                            <JFXRadioButton fx:id="rBtnSpyLocation" styleClass="custom-jfx-radio-button" text="Скрытое определение" userData="2" />
+                        </children>
+                  <VBox.margin>
+                     <Insets bottom="5.0" left="5.0" top="5.0" />
+                  </VBox.margin>
+                    </VBox>
+                    <JFXCheckBox fx:id="checkService" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг сервисных сообщений" />
+
+                    <JFXCheckBox fx:id="checkContact" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список контактов " />
+                    <JFXCheckBox fx:id="checkCallList" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список звонков" />
+                    <JFXCheckBox fx:id="checkSmsList" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список sms" />
+                    <JFXCheckBox fx:id="checkInstallApps" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список приложений" />
+
+                    <JFXCheckBox fx:id="checkHideIcon" styleClass="custom-jfx-check-box-all-colored-settings" text="Спрятать иконку " />
+                    <JFXCheckBox fx:id="checkAirplaneMode" styleClass="custom-jfx-check-box-all-colored-settings" text="Включить авиарежим" />
+                    <JFXCheckBox fx:id="checkWiFi" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить wi-fi" />
+                    <JFXCheckBox fx:id="checkScreen" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить экран" />
+                    <JFXCheckBox fx:id="checkReboot" styleClass="custom-jfx-check-box-all-colored-settings" text="Перезагрузить устройство" />
+                    <JFXCheckBox fx:id="checkShutDown" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить устройство" />
+
+                    <BorderPane.margin>
+                        <Insets top="5.0" />
+                    </BorderPane.margin>
+                    <padding>
+                        <Insets bottom="5.0" left="80.0" />
+                    </padding>
+                </VBox>
+            </center>
+        </BorderPane>
+
+
+    </children>
+</StackPane>

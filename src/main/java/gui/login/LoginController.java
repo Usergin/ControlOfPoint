@@ -162,7 +162,7 @@ public class LoginController implements LoginView {
 
             JFXDecorator decorator = new JFXDecorator(dashboardStage, container.getView());
             decorator.setCustomMaximize(true);
-            Scene scene = new Scene(decorator, 1300, 700);
+            Scene scene = new Scene(decorator, 1300, 750);
             final ObservableList<String> stylesheets = scene.getStylesheets();
             stylesheets.addAll(ControlPanelController.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                     ControlPanelController.class.getResource("/css/jfoenix-design.css").toExternalForm(),

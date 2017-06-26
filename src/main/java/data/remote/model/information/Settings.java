@@ -204,7 +204,7 @@ public class Settings {
         this.contactBook = contact_book;
     }
 
-    public int isLocationMode() {
+    public int getLocationMode() {
         return locationMode;
     }
 

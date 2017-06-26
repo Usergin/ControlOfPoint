@@ -25,7 +25,7 @@ public class RetrofitModule {
     @Singleton
     public Retrofit provideRetrofit(Retrofit.Builder builder) {
         return builder.baseUrl("http://77.247.172.2:10080/").build();
-//        return builder.baseUrl("http://localhost:8080/").build();
+//        return builder.baseUrl("http://localhost:8090/").build();
     }
 
 //    @Provides

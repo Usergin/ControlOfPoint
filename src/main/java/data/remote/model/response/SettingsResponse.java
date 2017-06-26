@@ -8,7 +8,7 @@ import data.remote.model.information.Settings;
  * Created by OldMan on 25.06.2017.
  */
 public class SettingsResponse extends BaseResponse {
-    @SerializedName("settings")
+    @SerializedName("SettingsController")
     @Expose
     private Settings settings;
     public SettingsResponse(int code, Settings settings) {

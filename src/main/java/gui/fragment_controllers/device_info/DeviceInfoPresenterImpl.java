@@ -7,6 +7,7 @@ import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -72,9 +73,10 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
         }
     }
 
-    private void handleSuccessDeviceSettings(Settings settings) {
+    private void handleSuccessDeviceSettings(Settings settings) throws IOException {
         if(deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
+            deviceInfoView.showSettings(settings);
             LOG.info(settings);
         }
     }

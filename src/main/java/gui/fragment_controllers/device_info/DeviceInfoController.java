@@ -13,6 +13,8 @@ import data.model.Device;
 import data.remote.model.information.Call;
 import data.remote.model.information.DeviceInfo;
 import data.remote.model.information.Location;
+import data.remote.model.information.Settings;
+import gui.fragment_controllers.SettingsController;
 import gui.fragment_controllers.SpinnerController;
 import gui.map.MapController;
 import io.datafx.controller.ViewController;
@@ -26,6 +28,9 @@ import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -35,6 +40,7 @@ import utils.RxBus;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -72,6 +78,8 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     private Device device;
     private InfoWindow infoWindow;
     private FlowHandler flowHandler;
+    @FXML
+    private JFXDialog settingsDialog;
 
 
     @PostConstruct
@@ -109,8 +117,6 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
                 .visible(true)
                 .animation(Animation.DROP);
         map.addMarker(new Marker(markerOptions));
-
-
     }
 
     @Override
@@ -201,6 +207,22 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
         devicePopup.setAutoFix(true);
         devicePopup.setHideOnEscape(true);
         devicePopup.show(btnMoreDetail, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT);
+    }
+
+    @Override
+    public void showSettings(Settings settings) throws IOException {
+        LOG.info("showSettings " + settings + settingsDialog);
+        Flow innerFlow = new Flow(SettingsController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("settings", settings);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        final Duration containerAnimationDuration = Duration.millis(320);
+        try {
+            rootPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

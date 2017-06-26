@@ -7,6 +7,7 @@ import dagger.Provides;
 import data.local.parser.Parser;
 import data.local.parser.ParserImpl;
 import gui.control_panel.ControlPanelView;
+import gui.fragment_controllers.SettingsController;
 import gui.fragment_controllers.device_info.DeviceInfoView;
 import gui.login.LoginController;
 import gui.login.LoginView;
@@ -18,7 +19,7 @@ import main.ControlOfPointMain;
  */
 
 @Module(library = true, injects = {ControlOfPointMain.class, LoginView.class,
-        ControlPanelView.class, DeviceInfoView.class}, complete = false)
+        ControlPanelView.class, DeviceInfoView.class, SettingsController.class}, complete = false)
 public class AppModule {
     //    @Provides
 //    FXMLLoader provideFxmlLoader(){

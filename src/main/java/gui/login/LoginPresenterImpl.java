@@ -43,7 +43,7 @@ public class LoginPresenterImpl implements LoginPresenter {
         if (loginView != null) {
             loginView.showBtnLogin(true);
             loginView.showProgress(false);
-            loginView.showSnackBar("Ошибка: " + throwable.getMessage());
+            loginView.showSnackBar("Ошибка: " + throwable);
         }
     }
 

@@ -14,7 +14,7 @@ public class SettingsRequest {
     @SerializedName("device_id")
     @Expose
     private int deviceId;
-    @SerializedName("settings")
+    @SerializedName("SettingsController")
     @Expose
     private Settings settings;
 
