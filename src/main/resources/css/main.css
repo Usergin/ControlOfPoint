@@ -32,7 +32,11 @@
     /*-fx-padding: 14.0 0.0 -20.0 0.0;*/
     -fx-text-fill: rgba(255, 255, 255, 0.87);
 }
-
+.combo-box-button-title-label {
+    -fx-font-size: 14.0px;
+    /*-fx-padding: 14.0 0.0 -20.0 0.0;*/
+    -fx-text-fill: rgba(255, 255, 255, 0.87);
+}
 .jfx-combo-box{
     -fx-text-fill: WHITE;
     -jfx-focus-color: WHITE;

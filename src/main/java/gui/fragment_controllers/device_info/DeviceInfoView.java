@@ -5,7 +5,9 @@ import data.remote.model.information.Call;
 import data.remote.model.information.DeviceInfo;
 import data.remote.model.information.Location;
 import data.remote.model.information.Settings;
+import io.datafx.controller.flow.FlowHandler;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,5 +21,7 @@ public interface DeviceInfoView {
     void showCallFlow(List<Call> lists);
     void showSnackBar(String s);
     void showDeviceInfoPopup(DeviceInfo deviceInfo);
-    void showSettings(Settings settings) throws IOException;
+    void showSettingsView(Settings settings);
+    void closeSettingsView(FlowHandler handler);
+    void onSaveNewSettings(Settings settings);
 }

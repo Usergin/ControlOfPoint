@@ -14,28 +14,25 @@ import data.remote.model.information.Call;
 import data.remote.model.information.DeviceInfo;
 import data.remote.model.information.Location;
 import data.remote.model.information.Settings;
+import data.remote.model.request.SettingsRequest;
 import gui.fragment_controllers.SettingsController;
-import gui.fragment_controllers.SpinnerController;
 import gui.map.MapController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.ViewNode;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.FlowException;
 import io.datafx.controller.flow.FlowHandler;
+import io.datafx.controller.flow.FlowView;
 import io.datafx.controller.flow.container.AnimatedFlowContainer;
 import io.datafx.controller.flow.container.ContainerAnimations;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import org.apache.log4j.Logger;
-import utils.RxBus;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -56,7 +53,6 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     @Inject
     DeviceInfoPresenter deviceInfoPresenter;
     @FXMLViewFlowContext
-    @Inject
     ViewFlowContext context;
     @ViewNode
     private StackPane rootPane;
@@ -78,21 +74,19 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     private Device device;
     private InfoWindow infoWindow;
     private FlowHandler flowHandler;
-    @FXML
-    private JFXDialog settingsDialog;
-
 
     @PostConstruct
     public void init() {
 //        LOG.info("device info " + deviceInfoPresenter);
+        Injector.inject(this, Arrays.asList(new DeviceInfoModule(), new AppModule()));
         mapView.addMapInializedListener(this);
         Objects.requireNonNull(context, "device");
         this.device = (Device) context.getRegisteredObject("device");
+        LOG.info("showSettings" +device);
         model.setText(device.getModel());
         imei.setText(device.getImei());
         os.setText(device.getVersion_os());
         spinnerPane.setVisible(false);
-        Injector.inject(this, Arrays.asList(new DeviceInfoModule(), new AppModule()));
         deviceInfoPresenter.setDeviceInfoView(this);
     }
 
@@ -210,19 +204,42 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     }
 
     @Override
-    public void showSettings(Settings settings) throws IOException {
-        LOG.info("showSettings " + settings + settingsDialog);
+    public void showSettingsView(Settings settings) {
+        LOG.info("showSettings" + settings);
         Flow innerFlow = new Flow(SettingsController.class);
         flowHandler = innerFlow.createHandler(context);
-        context.register("settings", settings);
         context.register("ContentInnerFlow", innerFlow);
         context.register("ContentInnerFlowHandler", flowHandler);
-        final Duration containerAnimationDuration = Duration.millis(320);
+
         try {
             rootPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
         } catch (FlowException e) {
             e.printStackTrace();
         }
+        FlowView view = flowHandler.getCurrentView();
+        SettingsController settingsController = (SettingsController) view.getViewContext().getController();
+        settingsController.init(this, settings);
+    }
+
+    @Override
+    public void closeSettingsView(FlowHandler handler) {
+        int size = rootPane.getChildren().size();
+        LOG.info("size" + size);
+        if(rootPane.getChildren().get(size-1).isVisible())
+                rootPane.getChildren().remove(size-1);
+//        if(rootPane.getChildren().get(size-2).isVisible())
+//            rootPane.getChildren().remove(size-2);
+//        if(rootPane.getChildren().get(size-3).isVisible())
+//            rootPane.getChildren().remove(size-3);
+//
+//        if(rootPane.getChildren().get(size-4).isVisible())
+//            rootPane.getChildren().remove(size-4);
+    }
+
+
+    @Override
+    public void onSaveNewSettings(Settings settings) {
+        deviceInfoPresenter.setDeviceSettings(new SettingsRequest(device.getImei(), device.getId(), settings));
     }
 
     @Override

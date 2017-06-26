@@ -76,7 +76,7 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     private void handleSuccessDeviceSettings(Settings settings) throws IOException {
         if(deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
-            deviceInfoView.showSettings(settings);
+            deviceInfoView.showSettingsView(settings);
             LOG.info(settings);
         }
     }

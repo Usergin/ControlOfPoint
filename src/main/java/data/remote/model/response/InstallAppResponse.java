@@ -10,7 +10,7 @@ import java.util.List;
  * Created by oldman on 26.06.17.
  */
 public class InstallAppResponse extends BaseResponse {
-    @SerializedName("info")
+    @SerializedName("data")
     @Expose
     private List<InstallApp> data;
 

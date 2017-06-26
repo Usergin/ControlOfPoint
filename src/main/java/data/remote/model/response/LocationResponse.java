@@ -10,7 +10,7 @@ import java.util.List;
  * Created by OldMan on 25.06.2017.
  */
 public class LocationResponse extends BaseResponse {
-    @SerializedName("info")
+    @SerializedName("data")
     @Expose
     private List<Location> data;
 

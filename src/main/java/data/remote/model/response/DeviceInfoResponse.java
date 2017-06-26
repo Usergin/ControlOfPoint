@@ -8,7 +8,7 @@ import data.remote.model.information.DeviceInfo;
  * Created by OldMan on 25.06.2017.
  */
 public class DeviceInfoResponse extends BaseResponse {
-    @SerializedName("info")
+    @SerializedName("data")
     @Expose
     private DeviceInfo data;
 

@@ -11,8 +11,10 @@ import javafx.collections.ObservableList;
  */
 public class RxBus {
     private static RxBus instance;
-    
+
     private PublishSubject<String> subjectInfoDevice = PublishSubject.create();
+    private BehaviorSubject<String> subjectSettingsDevice = BehaviorSubject.create();
+
     private BehaviorSubject<Device> subjectShortInfoDevice = BehaviorSubject.create();
     private BehaviorSubject<ObservableList<Device>> subjectDeviceList = BehaviorSubject.create();
 
@@ -26,9 +28,7 @@ public class RxBus {
     /**
      * Pass any event down to event listeners.
      */
-    public void setShortDeviceInfo(Device object) {
-        subjectShortInfoDevice.onNext(object);
-    }
+    public void setShortDeviceInfo(Device object) {subjectShortInfoDevice.onNext(object);}
     public Observable<Device> getShortDeviceInfo() {return subjectShortInfoDevice;}
     public void setDeviceList(ObservableList<Device> object) {
         subjectDeviceList.onNext(object);
@@ -42,5 +42,6 @@ public class RxBus {
     public Observable<String> getDeviceInfo() {
         return subjectInfoDevice;
     }
-    
+    public BehaviorSubject<String> getSubjectSettingsDevice() {return subjectSettingsDevice;}
+    public void setSubjectSettingsDevice(BehaviorSubject<String> subjectSettingsDevice) {this.subjectSettingsDevice = subjectSettingsDevice;}
 }

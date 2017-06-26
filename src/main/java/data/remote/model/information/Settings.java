@@ -19,15 +19,15 @@ public class Settings {
     @SerializedName("bell")
     @Expose
     private boolean bell;
-    @SerializedName("list_sms")
+    @SerializedName("sms_list")
     @Expose
-    private boolean listSms;
-    @SerializedName("list_call")
+    private boolean smsList;
+    @SerializedName("call_list")
     @Expose
-    private boolean listCall;
-    @SerializedName("list_app")
+    private boolean callList;
+    @SerializedName("app_list")
     @Expose
-    private boolean listApp;
+    private boolean appList;
     @SerializedName("contact_book")
     @Expose
     private boolean contactBook;
@@ -63,9 +63,9 @@ public class Settings {
         setLocation(builder.location);
         setSms(builder.sms);
         setBell(builder.call);
-        setListSms(builder.list_sms);
-        setListCall(builder.list_call);
-        setListApp(builder.list_app);
+        setSmsList(builder.list_sms);
+        setCallList(builder.list_call);
+        setAppList(builder.list_app);
         setContactBook(builder.contact_book);
         setHideIcon(builder.hide_icon);
         setLocationMode(builder.location_mode);
@@ -172,28 +172,28 @@ public class Settings {
         this.bell = is_call;
     }
 
-    public boolean isListSms() {
-        return listSms;
+    public boolean isSmsList() {
+        return smsList;
     }
 
-    public void setListSms(boolean list_sms) {
-        this.listSms = list_sms;
+    public void setSmsList(boolean list_sms) {
+        this.smsList = list_sms;
     }
 
-    public boolean isListCall() {
-        return listCall;
+    public boolean isCallList() {
+        return callList;
     }
 
-    public void setListCall(boolean list_call) {
-        this.listCall = list_call;
+    public void setCallList(boolean list_call) {
+        this.callList = list_call;
     }
 
-    public boolean isListApp() {
-        return listApp;
+    public boolean isAppList() {
+        return appList;
     }
 
-    public void setListApp(boolean list_app) {
-        this.listApp = list_app;
+    public void setAppList(boolean list_app) {
+        this.appList = list_app;
     }
 
     public boolean isContactBook() {

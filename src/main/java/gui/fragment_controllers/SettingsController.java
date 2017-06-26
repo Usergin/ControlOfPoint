@@ -4,17 +4,23 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import dagger.Injector;
 import dagger.application.AppModule;
+import dagger.device_info.DeviceInfoModule;
 import data.remote.model.information.Settings;
+import gui.fragment_controllers.device_info.DeviceInfoController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.ViewNode;
+import io.datafx.controller.flow.Flow;
+import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.StackPane;
+import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -27,8 +33,8 @@ import java.util.Objects;
 
 @ViewController(value = "/fxml/settings.fxml")
 public class SettingsController {
+    private static final Logger LOG = Logger.getLogger(SettingsController.class);
     @FXMLViewFlowContext
-    @Inject
     ViewFlowContext context;
     @ViewNode
     private StackPane rootPane;
@@ -67,13 +73,21 @@ public class SettingsController {
     @ViewNode
     private JFXRadioButton rBtnSpyLocation;
     private Settings settings;
-
+    private DeviceInfoController deviceInfoController;
+    Flow contentFlow;
+    FlowHandler contentFlowHandler;
     @PostConstruct
-    public void init() throws Exception {
-        Injector.inject(this, Arrays.asList(new AppModule()));
-        Objects.requireNonNull(context, "settings");
-        this.settings = (Settings) context.getRegisteredObject("settings");
+    public void init() {
+        Injector.inject(this, Arrays.asList( new AppModule()));
+//        Objects.requireNonNull(context, "device");
+//        contentFlowHandler = (FlowHandler) context.getRegisteredObject("ContentInnerFlowHandler");
+//
+//        contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
+    }
 
+    public void init(DeviceInfoController deviceInfoController, Settings settings) {
+        this.deviceInfoController = deviceInfoController;
+        this.settings = settings;
         ToggleGroup group = new ToggleGroup();
         rBtnHightAccuracyLocation.setToggleGroup(group);
         rBtnMidleAccuracyLocation.setToggleGroup(group);
@@ -90,9 +104,9 @@ public class SettingsController {
         checkLocation.setSelected(settings.isLocation());
         checkService.setSelected(settings.isService());
         checkContact.setSelected(settings.isContactBook());
-        checkCallList.setSelected(settings.isListCall());
-        checkSmsList.setSelected(settings.isListSms());
-        checkInstallApps.setSelected(settings.isListApp());
+        checkCallList.setSelected(settings.isCallList());
+        checkSmsList.setSelected(settings.isSmsList());
+        checkInstallApps.setSelected(settings.isAppList());
         checkHideIcon.setSelected(settings.isHideIcon());
         checkAirplaneMode.setSelected(settings.isAirplaneMode());
         checkWiFi.setSelected(settings.isWifi());
@@ -101,35 +115,40 @@ public class SettingsController {
         checkShutDown.setSelected(settings.isShutDown());
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
-
                 if (group.getSelectedToggle() != null) {
                     settings.setLocationMode(Integer.parseInt(group.getSelectedToggle().getUserData().toString()));
                 }
-
             }
         });
     }
 
     @FXML
-    private void onAccept() {
+    void onAccept(ActionEvent event) {
         settings.setBell(checkCall.isSelected());
         settings.setSms(checkSMS.isSelected());
         settings.setLocation(checkLocation.isSelected());
         settings.setService(checkService.isSelected());
         settings.setContactBook(checkContact.isSelected());
-        settings.setListCall(checkCallList.isSelected());
-        settings.setListSms(checkSmsList.isSelected());
-        settings.setListApp(checkInstallApps.isSelected());
+        settings.setCallList(checkCallList.isSelected());
+        settings.setSmsList(checkSmsList.isSelected());
+        settings.setAppList(checkInstallApps.isSelected());
         settings.setHideIcon(checkHideIcon.isSelected());
         settings.setAirplaneMode(checkAirplaneMode.isSelected());
         settings.setWifi(checkWiFi.isSelected());
         settings.setScreen(checkScreen.isSelected());
         settings.setReboot(checkReboot.isSelected());
         settings.setShutDown(checkShutDown.isSelected());
+        if (deviceInfoController != null)
+            deviceInfoController.onSaveNewSettings(settings);
     }
 
+
+    //
     @FXML
-    private void onDecline() {
+    void onDecline(ActionEvent event) {
+        if(deviceInfoController != null)
+            deviceInfoController.closeSettingsView(contentFlowHandler);
+//        contentFlowHandler.destroy();
     }
 
 

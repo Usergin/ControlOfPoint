@@ -8,7 +8,7 @@ import data.model.User;
  * Created by OldMan on 18.06.2017.
  */
 public class UserResponse extends BaseResponse{
-    @SerializedName("info")
+    @SerializedName("data")
     @Expose
     private User user;
 
