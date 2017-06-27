@@ -15,7 +15,7 @@ public interface ServerApi {
     Single<UserResponse> getUser(@Body Authentication authentication);
 
     @Headers({"Accept: application/json"})
-    @POST("/setting")
+    @POST("/settings")
     Single<StatusResponse> setDeviceSettings(@Body SettingsRequest settingsRequest);
 
     @Headers({"Accept: application/json"})

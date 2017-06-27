@@ -22,6 +22,6 @@ public interface DeviceInfoView {
     void showSnackBar(String s);
     void showDeviceInfoPopup(DeviceInfo deviceInfo);
     void showSettingsView(Settings settings);
-    void closeSettingsView(FlowHandler handler);
+    void closeCurrentView();
     void onSaveNewSettings(Settings settings);
 }

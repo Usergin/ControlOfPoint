@@ -3,6 +3,7 @@ package gui.fragment_controllers.device_info;
 import business.device.DeviceInfoInteractor;
 import data.remote.model.information.*;
 import data.remote.model.request.SettingsRequest;
+import data.remote.model.response.StatusResponse;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
 import org.apache.log4j.Logger;
@@ -29,6 +30,24 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
 
     @Override
     public void setDeviceSettings(SettingsRequest request) {
+        LOG.info("onDeviceSetting" + request.getDevice());
+        if (deviceInfoView != null) {
+            deviceInfoView.showSpinner(true);
+            deviceInfoInteractor.setDeviceSettings(request)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(JavaFxScheduler.platform())
+                    .subscribe(this::handleSuccessSetDeviceSettings, this::handleError);
+        }
+    }
+
+    private void handleSuccessSetDeviceSettings(StatusResponse statusResponse) {
+        if (deviceInfoView != null) {
+            deviceInfoView.showSpinner(false);
+            if (statusResponse.getCode() == 1)
+                deviceInfoView.showSnackBar("Настройки сохранены успешно");
+            else
+                deviceInfoView.showSnackBar("Ответ сервера: " + statusResponse.getCode());
+        }
 
     }
 
@@ -39,7 +58,7 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
 
     @Override
     public void onDeviceInfo(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceInfo(id)
                     .subscribeOn(Schedulers.computation())
@@ -49,7 +68,7 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceInfo(DeviceInfo deviceInfo) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
             deviceInfoView.showDeviceInfoPopup(deviceInfo);
         }
@@ -64,7 +83,7 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
 
     @Override
     public void onDeviceSetting(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceSettings(id)
                     .subscribeOn(Schedulers.computation())
@@ -74,7 +93,7 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceSettings(Settings settings) throws IOException {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
             deviceInfoView.showSettingsView(settings);
             LOG.info(settings);
@@ -83,7 +102,7 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
 
     @Override
     public void onDeviceCalls(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceCalls(id)
                     .subscribeOn(Schedulers.computation())
@@ -93,15 +112,19 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceCalls(List<Call> calls) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
+            if (calls.size() == 0)
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
+            else
+                deviceInfoView.showCallFlow(calls);
             LOG.info(calls);
         }
     }
 
     @Override
     public void onDeviceContacts(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceContacts(id)
                     .subscribeOn(Schedulers.computation())
@@ -111,15 +134,17 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceContacts(List<Contact> contacts) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
+            if (contacts.size() == 0)
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
             LOG.info(contacts);
         }
     }
 
     @Override
     public void onDeviceEvents(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceEvents(id)
                     .subscribeOn(Schedulers.computation())
@@ -129,15 +154,17 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceEvents(List<DeviceEvent> deviceEvents) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
+            if (deviceEvents.size() == 0)
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
             LOG.info(deviceEvents);
         }
     }
 
     @Override
     public void onDeviceBatteryEvents(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceBatteryEvents(id)
                     .subscribeOn(Schedulers.computation())
@@ -147,15 +174,17 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceBatteryEvents(List<BatteryEvent> batteryEvents) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
+            if (batteryEvents.size() == 0)
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
             LOG.info(batteryEvents);
         }
     }
 
     @Override
     public void onDeviceInstallApps(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceInstallApps(id)
                     .subscribeOn(Schedulers.computation())
@@ -165,31 +194,40 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceInstallApps(List<InstallApp> installApps) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
+            if (installApps.size() == 0)
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
             LOG.info(installApps);
         }
     }
 
     @Override
     public void onDeviceLocations(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceLocations(id)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(JavaFxScheduler.platform())
-                    .subscribe(this::handleSuccessDeviceInfo, this::handleError);
+                    .subscribe(this::handleSuccessDeviceLocation, this::handleError);
         }
     }
 
-    private void handleSuccessDeviceInfo(List<Location> locations) {
-        if(deviceInfoView != null)
-            deviceInfoView.showMapFlow(locations);
+    private void handleSuccessDeviceLocation(List<Location> locations) {
+        if (deviceInfoView != null) {
+            deviceInfoView.showSpinner(false);
+            if (locations.size() != 0)
+                deviceInfoView.showMapFlow(locations);
+            else {
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
+            }
+        }
     }
+
 
     @Override
     public void onDeviceMessages(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceMessages(id)
                     .subscribeOn(Schedulers.computation())
@@ -199,15 +237,17 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceMessqges(List<Message> messages) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
+            if (messages.size() == 0)
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
             LOG.info(messages);
         }
     }
 
     @Override
     public void onDeviceNetworkEvents(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceNetworkEvents(id)
                     .subscribeOn(Schedulers.computation())
@@ -217,15 +257,17 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceNetworkEvents(List<NetworkEvent> networkEvents) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
             LOG.info(networkEvents);
+            if (networkEvents.size() == 0)
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
         }
     }
 
     @Override
     public void onDeviceServiceEvents(int id) {
-        if(deviceInfoView!=null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceServiceEvents(id)
                     .subscribeOn(Schedulers.computation())
@@ -235,9 +277,11 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     private void handleSuccessDeviceServiceEvents(List<ServiceEvent> serviceEvents) {
-        if(deviceInfoView != null) {
+        if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
             LOG.info(serviceEvents);
+            if (serviceEvents.size() == 0)
+                deviceInfoView.showSnackBar("Данные отсутсвуют");
         }
     }
 

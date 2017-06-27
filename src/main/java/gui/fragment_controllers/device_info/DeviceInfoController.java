@@ -1,6 +1,9 @@
 package gui.fragment_controllers.device_info;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXSnackbar;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
@@ -15,8 +18,12 @@ import data.remote.model.information.DeviceInfo;
 import data.remote.model.information.Location;
 import data.remote.model.information.Settings;
 import data.remote.model.request.SettingsRequest;
+import gui.fragment_controllers.CallController;
 import gui.fragment_controllers.SettingsController;
-import gui.map.MapController;
+import gui.fragment_controllers.map.BaseMapController;
+import gui.fragment_controllers.map.DeviceMapController;
+import gui.fragment_controllers.map.MainMapController;
+import gui.fragment_controllers.map.MiniMapController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.ViewNode;
 import io.datafx.controller.flow.Flow;
@@ -28,7 +35,6 @@ import io.datafx.controller.flow.container.ContainerAnimations;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -37,7 +43,6 @@ import org.apache.log4j.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +53,7 @@ import java.util.Objects;
  */
 
 @ViewController(value = "/fxml/device_info.fxml")
-public class DeviceInfoController implements DeviceInfoView, MapComponentInitializedListener, MouseEventHandler {
+public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
     private static final Logger LOG = Logger.getLogger(DeviceInfoController.class);
     @Inject
     DeviceInfoPresenter deviceInfoPresenter;
@@ -59,6 +64,8 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     @ViewNode
     private StackPane centerPane;
     @ViewNode
+    private StackPane mapRoot;
+    @ViewNode
     private StackPane spinnerPane;
     @ViewNode
     private Label model;
@@ -66,8 +73,6 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     private Label os;
     @ViewNode
     private Label imei;
-    @ViewNode
-    private GoogleMapView mapView;
     @ViewNode
     private JFXButton btnMoreDetail;
     private GoogleMap map;
@@ -79,39 +84,40 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     public void init() {
 //        LOG.info("device info " + deviceInfoPresenter);
         Injector.inject(this, Arrays.asList(new DeviceInfoModule(), new AppModule()));
-        mapView.addMapInializedListener(this);
+//        mapView.addMapInializedListener(this);
         Objects.requireNonNull(context, "device");
         this.device = (Device) context.getRegisteredObject("device");
-        LOG.info("showSettings" +device);
+        LOG.info("showSettings" + device);
         model.setText(device.getModel());
         imei.setText(device.getImei());
         os.setText(device.getVersion_os());
         spinnerPane.setVisible(false);
         deviceInfoPresenter.setDeviceInfoView(this);
+        showLastLocationMapFlow(new LatLong(device.getLongitude(), device.getLatitude()));
     }
 
-    @Override
-    public void mapInitialized() {
-        MapOptions mapOptions = new MapOptions();
-        LatLong point = new LatLong(device.getLongitude(), device.getLatitude());
-        mapOptions.center(point)
-                .mapType(MapTypeIdEnum.ROADMAP)
-                .overviewMapControl(false)
-                .panControl(false)
-                .rotateControl(false)
-                .scaleControl(false)
-                .mapTypeControl(false)
-                .streetViewControl(false)
-                .scrollWheel(true)
-                .zoomControl(true)
-                .zoom(10);
-        map = mapView.createMap(mapOptions, false);
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(point)
-                .visible(true)
-                .animation(Animation.DROP);
-        map.addMarker(new Marker(markerOptions));
-    }
+//    @Override
+//    public void mapInitialized() {
+//        MapOptions mapOptions = new MapOptions();
+//        LatLong point = new LatLong(device.getLongitude(), device.getLatitude());
+//        mapOptions.center(point)
+//                .mapType(MapTypeIdEnum.ROADMAP)
+//                .overviewMapControl(false)
+//                .panControl(false)
+//                .rotateControl(false)
+//                .scaleControl(false)
+//                .mapTypeControl(false)
+//                .streetViewControl(false)
+//                .scrollWheel(true)
+//                .zoomControl(true)
+//                .zoom(10);
+//        map = mapView.createMap(mapOptions, false);
+//        MarkerOptions markerOptions = new MarkerOptions();
+//        markerOptions.position(point)
+//                .visible(true)
+//                .animation(Animation.DROP);
+//        map.addMarker(new Marker(markerOptions));
+//    }
 
     @Override
     public void handle(GMapMouseEvent mouseEvent) {
@@ -131,49 +137,47 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
         if (deviceInfoPresenter != null)
             deviceInfoPresenter.onDeviceCalls(device.getId());
     }
+
     @FXML
     public void onClickMessages() {
         LOG.info("onClickMoreDetail " + deviceInfoPresenter);
         if (deviceInfoPresenter != null)
             deviceInfoPresenter.onDeviceMessages(device.getId());
     }
+
     @FXML
     public void onClickContacts() {
         LOG.info("onClickMoreDetail " + deviceInfoPresenter);
         if (deviceInfoPresenter != null)
             deviceInfoPresenter.onDeviceContacts(device.getId());
     }
+
     @FXML
     public void onClickInstallApps() {
         LOG.info("onClickMoreDetail " + deviceInfoPresenter);
         if (deviceInfoPresenter != null)
             deviceInfoPresenter.onDeviceInstallApps(device.getId());
     }
+
     @FXML
     public void onClickLocation() {
         LOG.info("onClickMoreDetail " + deviceInfoPresenter);
         if (deviceInfoPresenter != null)
             deviceInfoPresenter.onDeviceLocations(device.getId());
     }
+
     @FXML
     public void onClickSystemEvent() {
         LOG.info("onClickMoreDetail " + deviceInfoPresenter);
         if (deviceInfoPresenter != null)
             deviceInfoPresenter.onDeviceServiceEvents(device.getId());
     }
+
     @FXML
     public void onClickSettings() {
         LOG.info("onClickMoreDetail " + deviceInfoPresenter);
         if (deviceInfoPresenter != null)
             deviceInfoPresenter.onDeviceSetting(device.getId());
-    }
-    @PreDestroy
-    public void cleanup() {
-        if (mapView != null)
-            mapView.removeMapInitializedListener(this);
-        if (map != null)
-            map.clearMarkers();
-
     }
 
     @Override
@@ -205,11 +209,8 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
 
     @Override
     public void showSettingsView(Settings settings) {
-        LOG.info("showSettings" + settings);
         Flow innerFlow = new Flow(SettingsController.class);
         flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
 
         try {
             rootPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
@@ -222,18 +223,10 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     }
 
     @Override
-    public void closeSettingsView(FlowHandler handler) {
+    public void closeCurrentView() {
         int size = rootPane.getChildren().size();
-        LOG.info("size" + size);
-        if(rootPane.getChildren().get(size-1).isVisible())
-                rootPane.getChildren().remove(size-1);
-//        if(rootPane.getChildren().get(size-2).isVisible())
-//            rootPane.getChildren().remove(size-2);
-//        if(rootPane.getChildren().get(size-3).isVisible())
-//            rootPane.getChildren().remove(size-3);
-//
-//        if(rootPane.getChildren().get(size-4).isVisible())
-//            rootPane.getChildren().remove(size-4);
+        if (size != 0 && rootPane.getChildren().get(size - 1).isVisible())
+            rootPane.getChildren().remove(size - 1);
     }
 
 
@@ -248,22 +241,41 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
     }
 
     @Override
-    public void showMapFlow(List<Location> lists) {
-        Flow innerFlow = new Flow(MapController.class);
+    public void showMapFlow(List<Location> list) {
+        Flow innerFlow = new Flow(DeviceMapController.class);
         flowHandler = innerFlow.createHandler(context);
         context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("point_list", list);
         showFlow(flowHandler);
+    }
+//    @Override
+    public void showLastLocationMapFlow(LatLong point) {
+        Flow innerFlow = new Flow(MiniMapController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("latitude", point.getLatitude());
+        context.register("longitude", point.getLongitude());
+        try {
+            mapRoot.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void showCallFlow(List<Call> lists) {
-//        if (devicePopup.isShowing())
-//            devicePopup.hide();
-//        Flow innerFlow = new Flow(DeviceInfoController.class).withLink(DeviceInfoController.class, "back", MapController.class);
-//        flowHandler = innerFlow.createHandler(context);
-//        context.register("device", device);
-//        context.register("ContentFlow", innerFlow);
-//        showFlow(flowHandler);
+    public void showCallFlow(List<Call> list) {
+        Flow innerFlow = new Flow(CallController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("call_list", list);
+        try {
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -276,7 +288,7 @@ public class DeviceInfoController implements DeviceInfoView, MapComponentInitial
             e.printStackTrace();
         }
 
-//        if (flowHandler.getCurrentViewControllerClass().equals(MapController.class) ||
+//        if (flowHandler.getCurrentViewControllerClass().equals(MainMapController.class) ||
 //                flowHandler.getCurrentViewControllerClass().equals(SpinnerController.class)) {
 //            back.setVisible(false);
 //            fadeInBack.playFromStart();

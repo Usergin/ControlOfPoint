@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import dagger.Injector;
 import dagger.application.AppModule;
-import dagger.device_info.DeviceInfoModule;
 import data.remote.model.information.Settings;
 import gui.fragment_controllers.device_info.DeviceInfoController;
 import io.datafx.controller.ViewController;
@@ -23,7 +22,6 @@ import javafx.scene.layout.StackPane;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -74,20 +72,15 @@ public class SettingsController {
     private JFXRadioButton rBtnSpyLocation;
     private Settings settings;
     private DeviceInfoController deviceInfoController;
-    Flow contentFlow;
-    FlowHandler contentFlowHandler;
+
     @PostConstruct
     public void init() {
-        Injector.inject(this, Arrays.asList( new AppModule()));
-//        Objects.requireNonNull(context, "device");
-//        contentFlowHandler = (FlowHandler) context.getRegisteredObject("ContentInnerFlowHandler");
-//
-//        contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
     }
 
     public void init(DeviceInfoController deviceInfoController, Settings settings) {
         this.deviceInfoController = deviceInfoController;
         this.settings = settings;
+        LOG.info("SettingsController" + settings);
         ToggleGroup group = new ToggleGroup();
         rBtnHightAccuracyLocation.setToggleGroup(group);
         rBtnMidleAccuracyLocation.setToggleGroup(group);
@@ -95,12 +88,16 @@ public class SettingsController {
         switch (settings.getLocationMode()) {
             case 0:
                 rBtnHightAccuracyLocation.setSelected(true);
+                break;
             case 1:
                 rBtnMidleAccuracyLocation.setSelected(true);
+                break;
             case 2:
                 rBtnSpyLocation.setSelected(true);
+                break;
         }
         checkCall.setSelected(settings.isBell());
+        checkSMS.setSelected(settings.isSms());
         checkLocation.setSelected(settings.isLocation());
         checkService.setSelected(settings.isService());
         checkContact.setSelected(settings.isContactBook());
@@ -113,11 +110,12 @@ public class SettingsController {
         checkScreen.setSelected(settings.isScreen());
         checkReboot.setSelected(settings.isReboot());
         checkShutDown.setSelected(settings.isShutDown());
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
-                if (group.getSelectedToggle() != null) {
-                    settings.setLocationMode(Integer.parseInt(group.getSelectedToggle().getUserData().toString()));
-                }
+        group.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
+            if (group.getSelectedToggle() != null) {
+
+                settings.setLocationMode(Integer.parseInt(group.getSelectedToggle().getUserData().toString()));
+                LOG.info("SettingsController" + group.getSelectedToggle().getUserData().toString() + settings.getLocationMode());
+
             }
         });
     }
@@ -138,17 +136,16 @@ public class SettingsController {
         settings.setScreen(checkScreen.isSelected());
         settings.setReboot(checkReboot.isSelected());
         settings.setShutDown(checkShutDown.isSelected());
-        if (deviceInfoController != null)
+        if (deviceInfoController != null) {
             deviceInfoController.onSaveNewSettings(settings);
+            deviceInfoController.closeCurrentView();
+        }
     }
 
-
-    //
     @FXML
     void onDecline(ActionEvent event) {
         if(deviceInfoController != null)
-            deviceInfoController.closeSettingsView(contentFlowHandler);
-//        contentFlowHandler.destroy();
+            deviceInfoController.closeCurrentView();
     }
 
 

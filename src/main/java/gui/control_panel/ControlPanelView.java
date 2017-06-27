@@ -12,6 +12,7 @@ public interface ControlPanelView {
     void showDeviceMenu(boolean val);
     void showSpinner(boolean enable);
     void showMapFlow();
+    void onDeviceInfo();
     void showDeviceFlow(Device device);
     void showErrorFlow();
 }

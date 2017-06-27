@@ -126,7 +126,8 @@
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Label>
-                              <fx:include source="map.fxml" />
+                                <StackPane fx:id="mapRoot"></StackPane>
+                              <!--<fx:include fx:id="map" source="map.fxml" />-->
                             </children>
                         </VBox>
                     </children>

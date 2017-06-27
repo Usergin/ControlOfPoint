@@ -74,12 +74,13 @@ public class ControlPanelPresenterImpl implements ControlPanelPresenter {
     }
 
     private void handleSuccessDeviceList(ObservableList<Device> devices) {
-        RxBus.instanceOf().setDeviceList(devices);
+//        RxBus.instanceOf().setDeviceList(devices);
         if (controlPanelView != null) {
             controlPanelView.showSpinner(false);
             controlPanelView.setDeviceList(devices);
             controlPanelView.showDeviceMenu(true);
             controlPanelView.showMapFlow();
+            controlPanelView.onDeviceInfo();
 
         }
     }

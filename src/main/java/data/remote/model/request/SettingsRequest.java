@@ -11,16 +11,16 @@ public class SettingsRequest {
     @SerializedName("imei")
     @Expose
     private String imei;
-    @SerializedName("device_id")
+    @SerializedName("device")
     @Expose
-    private int deviceId;
-    @SerializedName("SettingsController")
+    private int device;
+    @SerializedName("data")
     @Expose
     private Settings settings;
 
     public SettingsRequest(String imei, int device_id, Settings settings) {
         this.imei = imei;
-        this.deviceId = device_id;
+        this.device = device_id;
         this.settings = settings;
     }
 
@@ -32,12 +32,12 @@ public class SettingsRequest {
         this.imei = imei;
     }
 
-    public int getDeviceId() {
-        return deviceId;
+    public int getDevice() {
+        return device;
     }
 
-    public void setDeviceId(int deviceId) {
-        this.deviceId = deviceId;
+    public void setDevice(int device) {
+        this.device = device;
     }
 
     public Settings getSettings() {

@@ -6,8 +6,7 @@ import dagger.application.AppModule;
 import dagger.control_panel.ControlPanelModule;
 import data.model.Device;
 import gui.fragment_controllers.device_info.DeviceInfoController;
-import gui.fragment_controllers.SpinnerController;
-import gui.map.MapController;
+import gui.fragment_controllers.map.MainMapController;
 import gui.menu.MainMenuController;
 import gui.ui_components.DeviceItemViewCell;
 import io.datafx.controller.ViewController;
@@ -69,7 +68,6 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
     private JFXPopup toolbarPopup, devicePopup;
     private FlowHandler flowHandler;
     private ObservableList<Device> devicesData = FXCollections.observableArrayList();
-
     /**
      * init fxml when loaded.
      */
@@ -99,20 +97,9 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
         controlPanelPresenter.onNewDeviceList();
     }
 
-    private FadeTransition getFadeTransition(JFXRippler jfxRippler) {
-        FadeTransition fadeIn = new FadeTransition(
-                Duration.millis(500)
-        );
-        fadeIn.setNode(jfxRippler);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
-        fadeIn.setCycleCount(1);
-        fadeIn.setAutoReverse(false);
-        return fadeIn;
-    }
-
     @Override
     public void setDeviceList(ObservableList<Device> devices) {
+        RxBus.instanceOf().setDeviceList(devices);
         this.devicesData = devices;
         LOG.info("handleSuccess " + devices.size());
         list.setItems(devicesData);
@@ -123,11 +110,6 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
         ripple_device_menu.setOnMouseClicked(e -> devicePopup.show(device_menu, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT));
     }
 
-    public ObservableList<Device> getDevicesData() {
-        LOG.info("handleSuccess " + devicesData.size());
-        return devicesData;
-    }
-
     @FXML
     private void onUpdate() {
         if (controlPanelPresenter != null)
@@ -136,13 +118,27 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
 
     @FXML
     public void onBack() throws VetoException, FlowException {
-        flowHandler.navigateTo(MapController.class);
+        flowHandler.navigateTo(MainMapController.class);
         if (flowHandler.getCurrentViewControllerClass().equals(DeviceInfoController.class)) {
             back.setVisible(true);
         } else
             back.setVisible(false);
     }
 
+    @Override
+    public void handle(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            //Use ListView's getSelected Item
+            LOG.info("getClickCount = 2 " + list.getSelectionModel()
+                    .getSelectedItem());
+            controlPanelPresenter.onDeviceById(list.getSelectionModel()
+                    .getSelectedItem().getId());
+        } else {
+            RxBus.instanceOf().setShortDeviceInfo(list.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    @Override
     public void showSnackBar(String message) {
         JFXSnackbar jfxSnackbar = new JFXSnackbar(rootPane);
         jfxSnackbar.show(message, 5000);
@@ -164,63 +160,68 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
 
     @Override
     public void showMapFlow() {
-        Flow innerFlow = new Flow(MapController.class);
+        Flow innerFlow = new Flow(MainMapController.class);
         flowHandler = innerFlow.createHandler(context);
         context.register("ContentFlow", innerFlow);
-        showFlow(flowHandler);
+        context.register("ContentFlowHandler", flowHandler);
+        context.register("devices", devicesData);
+        try {
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+        back.setVisible(false);
+        fadeInBack.playFromStart();
+
+    }
+
+    @Override
+    public void onDeviceInfo() {
         RxBus.instanceOf().getDeviceInfo().subscribe(device_id -> {
             LOG.info("device_id " + device_id);
             controlPanelPresenter.onDeviceById(Integer.parseInt(device_id));
         });
     }
 
+
     @Override
     public void showDeviceFlow(Device device) {
         if (devicePopup.isShowing())
             devicePopup.hide();
-        Flow innerFlow = new Flow(DeviceInfoController.class).withLink(DeviceInfoController.class, "back", MapController.class);
+        Flow innerFlow = new Flow(DeviceInfoController.class).withLink(DeviceInfoController.class, "back", MainMapController.class);
         flowHandler = innerFlow.createHandler(context);
         context.register("device", device);
         context.register("ContentFlow", innerFlow);
-        showFlow(flowHandler);
-    }
-
-    @Override
-    public void showErrorFlow() {
-        Flow innerFlow =new Flow(MapController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentFlow", innerFlow);
-        showFlow(flowHandler);
-    }
-
-    private void showFlow(FlowHandler flowHandler) {
         context.register("ContentFlowHandler", flowHandler);
-        final Duration containerAnimationDuration = Duration.millis(320);
         try {
             centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
         } catch (FlowException e) {
             e.printStackTrace();
         }
-
-        if (flowHandler.getCurrentViewControllerClass().equals(MapController.class)) {
-            back.setVisible(false);
-            fadeInBack.playFromStart();
-        } else if (flowHandler.getCurrentViewControllerClass().equals(DeviceInfoController.class)) {
-            back.setVisible(true);
-            fadeInBack.playFromStart();
-        }
+        back.setVisible(true);
+        fadeInBack.playFromStart();
     }
 
     @Override
-    public void handle(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            //Use ListView's getSelected Item
-            LOG.info("getClickCount = 2 " + list.getSelectionModel()
-                    .getSelectedItem());
-            controlPanelPresenter.onDeviceById(list.getSelectionModel()
-                    .getSelectedItem().getId());
-        } else {
-            RxBus.instanceOf().setShortDeviceInfo(list.getSelectionModel().getSelectedItem());
-        }
+    public void showErrorFlow() {
+//        Flow innerFlow = new Flow(MainMapController.class);
+//        flowHandler = innerFlow.createHandler(context);
+//        context.register("ContentFlow", innerFlow);
+//        showFlow(flowHandler);
     }
+
+
+    private FadeTransition getFadeTransition(JFXRippler jfxRippler) {
+        FadeTransition fadeIn = new FadeTransition(
+                Duration.millis(500)
+        );
+        fadeIn.setNode(jfxRippler);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.setCycleCount(1);
+        fadeIn.setAutoReverse(false);
+        return fadeIn;
+    }
+
+
 }

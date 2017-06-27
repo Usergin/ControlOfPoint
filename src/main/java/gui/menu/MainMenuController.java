@@ -52,7 +52,7 @@ public class MainMenuController {
 
         Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
 //        bindNodeToController(logout, LoginController.class, contentFlow, contentFlowHandler);
-//        bindNodeToController(aboutProgrammes, MapController.class, contentFlow, contentFlowHandler);
+//        bindNodeToController(aboutProgrammes, MainMapController.class, contentFlow, contentFlowHandler);
     }
 
     private void bindNodeToController(Node node, Class<?> controllerClass, Flow flow, FlowHandler flowHandler) {
