@@ -2,28 +2,19 @@ package gui.fragment_controllers;
 
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
-import dagger.Injector;
-import dagger.application.AppModule;
-import data.remote.model.information.Settings;
+import data.model.information.Settings;
 import gui.fragment_controllers.device_info.DeviceInfoController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.ViewNode;
-import io.datafx.controller.flow.Flow;
-import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.StackPane;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Created by oldman on 26.06.17.

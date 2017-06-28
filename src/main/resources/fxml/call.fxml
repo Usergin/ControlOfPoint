@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableColumn?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="root" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" maxWidth="1000.0" minWidth="800.0" prefWidth="800.0" style="-fx-background-color: fff;" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <VBox maxHeight="600" maxWidth="600" spacing="10">
         <children>
             <HBox alignment="CENTER">
@@ -16,8 +16,7 @@
                 <Label fx:id="treeTableViewCount" minWidth="80" styleClass="title-label" />
              <StackPane HBox.hgrow="ALWAYS">
                     <StackPane maxWidth="200" StackPane.alignment="CENTER_RIGHT">
-                        <!--<JFXTextField fx:id="searchField" promptText="Search..."></JFXTextField>-->
-                        <JFXDatePicker fx:id="dateOverlay" defaultColor="#009688" overLay="false" />
+                        <JFXTextField fx:id="searchField" promptText="Search..." />
 
                     </StackPane>
                 </StackPane>

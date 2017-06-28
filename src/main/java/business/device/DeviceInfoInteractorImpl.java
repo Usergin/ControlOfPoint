@@ -2,7 +2,7 @@ package business.device;
 
 import data.local.parser.Parser;
 import data.remote.NetworkService;
-import data.remote.model.information.*;
+import data.model.information.*;
 import data.remote.model.request.SettingsRequest;
 import data.remote.model.response.*;
 import io.reactivex.Single;

@@ -1,9 +1,7 @@
-package data.remote.model.information;
+package data.model.information;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.Date;
 
 /**
  * Created by OldMan on 25.06.2017.

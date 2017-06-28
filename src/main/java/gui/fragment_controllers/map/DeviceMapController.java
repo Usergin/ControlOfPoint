@@ -3,18 +3,13 @@ package gui.fragment_controllers.map;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
-import com.lynden.gmapsfx.util.MarkerImageFactory;
-import data.model.Device;
-import data.remote.model.information.Location;
+import data.model.information.Location;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.ViewNode;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import javafx.collections.ObservableList;
 import org.apache.log4j.Logger;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -60,13 +55,11 @@ public class DeviceMapController extends BaseMapController {
         for (Location location : locationList) {
             LatLong point = new LatLong(location.getLongitude(), location.getLatitude());
             MarkerOptions markerOptions = new MarkerOptions();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-            try {
-                sdf.parse(location.getDate());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+//            java.util.Calendar cal = Calendar.getInstance();
+//            cal.setTimeInMillis(Long.parseLong(location.getDate()));
+//            java.util.Date date = cal.getTime();
+
             markerOptions.position(point)
                     .title("<font color=\"#009688\"><b>" + location.getDate() + "</b></font>" + "<br>" + location.getMethod() + "<br>" + location.getAccuracy())
                     .visible(true)

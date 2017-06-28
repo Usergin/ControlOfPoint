@@ -1,4 +1,4 @@
-package data.remote.model.information;
+package data.model.information;
 
 /**
  * Created by OldMan on 25.06.2017.

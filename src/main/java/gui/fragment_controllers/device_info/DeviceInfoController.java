@@ -4,8 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXSnackbar;
-import com.lynden.gmapsfx.GoogleMapView;
-import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.MouseEventHandler;
 import com.lynden.gmapsfx.javascript.object.*;
@@ -13,16 +11,14 @@ import dagger.Injector;
 import dagger.application.AppModule;
 import dagger.device_info.DeviceInfoModule;
 import data.model.Device;
-import data.remote.model.information.Call;
-import data.remote.model.information.DeviceInfo;
-import data.remote.model.information.Location;
-import data.remote.model.information.Settings;
+import data.model.information.Call;
+import data.model.information.DeviceInfo;
+import data.model.information.Location;
+import data.model.information.Settings;
 import data.remote.model.request.SettingsRequest;
 import gui.fragment_controllers.CallController;
 import gui.fragment_controllers.SettingsController;
-import gui.fragment_controllers.map.BaseMapController;
 import gui.fragment_controllers.map.DeviceMapController;
-import gui.fragment_controllers.map.MainMapController;
 import gui.fragment_controllers.map.MiniMapController;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.ViewNode;
@@ -41,7 +37,6 @@ import javafx.util.Duration;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -272,6 +267,7 @@ public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
         context.register("ContentInnerFlowHandler", flowHandler);
         context.register("call_list", list);
         try {
+            centerPane.getChildren().clear();
             centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
         } catch (FlowException e) {
             e.printStackTrace();

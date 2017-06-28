@@ -1,9 +1,7 @@
 package business.device;
 
-import data.model.Device;
-import data.remote.model.information.*;
+import data.model.information.*;
 import data.remote.model.request.SettingsRequest;
-import data.remote.model.response.ContactResponse;
 import data.remote.model.response.StatusResponse;
 import io.reactivex.Single;
 

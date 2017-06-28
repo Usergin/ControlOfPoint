@@ -1,10 +1,6 @@
 package gui.fragment_controllers.device_info;
 
-import data.remote.model.information.*;
 import data.remote.model.request.SettingsRequest;
-import io.reactivex.Single;
-
-import java.util.List;
 
 /**
  * Created by OldMan on 25.06.2017.

@@ -2,7 +2,7 @@ package data.remote.model.request;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import data.remote.model.information.Settings;
+import data.model.information.Settings;
 
 /**
  * Created by OldMan on 25.06.2017.

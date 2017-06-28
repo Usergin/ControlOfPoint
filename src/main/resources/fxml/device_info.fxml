@@ -126,7 +126,7 @@
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <StackPane fx:id="mapRoot"></StackPane>
+                                <StackPane fx:id="mapRoot" />
                               <!--<fx:include fx:id="map" source="map.fxml" />-->
                             </children>
                         </VBox>
@@ -139,7 +139,7 @@
         </AnchorPane>
         </top>
             <center>
-                <StackPane fx:id="centerPane" maxWidth="1000.0" prefHeight="150.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                <StackPane fx:id="centerPane" maxWidth="1000.0" minWidth="-Infinity" prefHeight="150.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>

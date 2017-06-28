@@ -2,7 +2,7 @@ package data.remote.model.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import data.remote.model.information.InstallApp;
+import data.model.information.InstallApp;
 
 import java.util.List;
 

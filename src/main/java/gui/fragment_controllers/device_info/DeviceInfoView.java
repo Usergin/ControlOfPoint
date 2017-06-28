@@ -1,15 +1,10 @@
 package gui.fragment_controllers.device_info;
 
-import data.model.Device;
-import data.remote.model.information.Call;
-import data.remote.model.information.DeviceInfo;
-import data.remote.model.information.Location;
-import data.remote.model.information.Settings;
-import io.datafx.controller.flow.FlowHandler;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
+import data.model.information.Call;
+import data.model.information.DeviceInfo;
+import data.model.information.Location;
+import data.model.information.Settings;
 
-import java.io.IOException;
 import java.util.List;
 
 /**

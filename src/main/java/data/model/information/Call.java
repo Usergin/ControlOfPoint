@@ -1,10 +1,7 @@
-package data.remote.model.information;
+package data.model.information;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Created by OldMan on 25.06.2017.
@@ -19,6 +16,12 @@ public class Call extends BaseInfo{
     @SerializedName("type")
     @Expose
     private int type;
+
+    public Call(String number, int duration, int type) {
+        this.number = number;
+        this.duration = duration;
+        this.type = type;
+    }
 
     public int getType() {
         return type;

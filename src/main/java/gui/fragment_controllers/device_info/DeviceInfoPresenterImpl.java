@@ -1,7 +1,7 @@
 package gui.fragment_controllers.device_info;
 
 import business.device.DeviceInfoInteractor;
-import data.remote.model.information.*;
+import data.model.information.*;
 import data.remote.model.request.SettingsRequest;
 import data.remote.model.response.StatusResponse;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

@@ -14,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.inject.Singleton;
+import java.text.DateFormat;
 
 /**
  * Created by OldMan on 18.06.2017.
@@ -24,8 +25,8 @@ public class RetrofitModule {
     @Provides
     @Singleton
     public Retrofit provideRetrofit(Retrofit.Builder builder) {
-//        return builder.baseUrl("http://77.247.172.2:10080/").build();
-        return builder.baseUrl("http://localhost:8090/").build();
+        return builder.baseUrl("http://77.247.172.2:10080/").build();
+//        return builder.baseUrl("http://localhost:8090/").build();
     }
 
 //    @Provides
@@ -61,7 +62,7 @@ public class RetrofitModule {
                 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
                 .setPrettyPrinting()
                 .setLenient()
-                .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
+                .setDateFormat(DateFormat.LONG)
                 .serializeNulls()
                 .create();
     }
