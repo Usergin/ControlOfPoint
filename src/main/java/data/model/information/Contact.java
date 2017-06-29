@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName;
  * Created by OldMan on 25.06.2017.
  */
 public class Contact {
-    @SerializedName("db_id")
-    @Expose
-    private int dbId;
     @SerializedName("number")
     @Expose
     private String number;
@@ -31,15 +28,6 @@ public class Contact {
     @SerializedName("info")
     @Expose
     private String info;
-
-    public int getDbId() {
-        return dbId;
-    }
-
-    public void setDbId(int db_id) {
-        this.dbId = db_id;
-    }
-
     public String getNumber() {
         return number;
     }

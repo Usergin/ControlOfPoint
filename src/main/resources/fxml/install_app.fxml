@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXTreeTableColumn?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<StackPane fx:id="root" maxWidth="1000.0" minWidth="800.0" prefWidth="800.0" style="-fx-background-color: fff;"
+           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox maxWidth="635">
+        <children>
+            <HBox alignment="CENTER">
+                <Label styleClass="title-label">Количество приложений</Label>
+                <Label fx:id="treeTableViewCount" minWidth="80" styleClass="title-label"/>
+                <StackPane HBox.hgrow="ALWAYS">
+                    <StackPane maxWidth="200" StackPane.alignment="CENTER_RIGHT">
+                        <JFXTextField fx:id="searchField" promptText="Поиск..."/>
+                    </StackPane>
+                </StackPane>
+            </HBox>
+            <JFXTreeTableView fx:id="treeTableView" styleClass="tree-table-view">
+                <columns>
+                    <JFXTreeTableColumn fx:id="nameColumn" minWidth="200" prefWidth="133" resizable="false"
+                                        text="Название приложения"/>
+                    <JFXTreeTableColumn fx:id="dateColumn" minWidth="145" resizable="false"
+                                        text="Дата установки"/>
+                    <JFXTreeTableColumn fx:id="infoColumn" minWidth="260" resizable="false" text="Дополнительная информация"/>
+                </columns>
+            </JFXTreeTableView>
+        </children>
+        <StackPane.margin>
+            <Insets bottom="10.0" />
+        </StackPane.margin>
+    </VBox>
+</StackPane>

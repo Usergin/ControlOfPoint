@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import com.jfoenix.controls.JFXTreeTableColumn?>
+<?import javafx.geometry.Insets?>
+<StackPane fx:id="root" maxWidth="1000.0" minWidth="800.0" prefWidth="800.0" style="-fx-background-color: fff;"
+           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox maxWidth="400">
+        <children>
+            <HBox alignment="CENTER">
+                <Label styleClass="title-label">Количество записей</Label>
+                <Label fx:id="treeTableViewCount" minWidth="80" styleClass="title-label"/>
+                <StackPane HBox.hgrow="ALWAYS">
+                    <StackPane maxWidth="200" StackPane.alignment="CENTER_RIGHT">
+                        <JFXTextField fx:id="searchField" promptText="Поиск..."/>
+                    </StackPane>
+                </StackPane>
+            </HBox>
+            <JFXTreeTableView fx:id="treeTableView" styleClass="tree-table-view">
+                <columns>
+                    <JFXTreeTableColumn fx:id="dateColumn" minWidth="120" resizable="false" prefWidth="90.0"
+                                        text="Дата"/>
+                    <JFXTreeTableColumn fx:id="stateColumn" minWidth="130" prefWidth="133" resizable="false"
+                                        text="Статус"/>
+                    <JFXTreeTableColumn fx:id="ipColumn" minWidth="130" resizable="false" text="IP адрес"/>
+                </columns>
+            </JFXTreeTableView>
+        </children>
+        <StackPane.margin>
+            <Insets bottom="10.0"/>
+        </StackPane.margin>
+    </VBox>
+</StackPane>

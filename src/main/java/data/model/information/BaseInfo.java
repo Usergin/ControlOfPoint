@@ -3,6 +3,8 @@ package data.model.information;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,14 +16,16 @@ public class BaseInfo {
     @Expose
     private Date date;
 
-    public Date getDate() {
-        return date;
+    public Date getDate(){
+        return this.date;
     }
-
+    public  String getFormatDate(){
+        SimpleDateFormat formatter = new
+                SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date createDate = formatter.parse(created_at);
+        return formatter.format(date);
+    }
     public void setDate(Date date) {
         this.date = date;
-//        java.util.Calendar cal = Calendar.getInstance();
-//        cal.setTimeInMillis(date);
-//        this.date = cal.getTime();
     }
 }

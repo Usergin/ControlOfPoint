@@ -77,6 +77,6 @@ public interface ServerApi {
     Single<NetworkEventResponse> getDeviceNetworkEvents(@Path("id") int device_id);
 
     @Headers({"Accept: application/json"})
-    @GET("/device/{id}/service")
+    @GET("/device/{id}/services")
     Single<ServiceEventResponse> getDeviceServiceEvents(@Path("id") int device_id);
 }

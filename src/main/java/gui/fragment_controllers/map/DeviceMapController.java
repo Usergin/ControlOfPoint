@@ -61,7 +61,7 @@ public class DeviceMapController extends BaseMapController {
 //            java.util.Date date = cal.getTime();
 
             markerOptions.position(point)
-                    .title("<font color=\"#009688\"><b>" + location.getDate() + "</b></font>" + "<br>" + location.getMethod() + "<br>" + location.getAccuracy())
+                    .title("<font color=\"#009688\"><b>" + location.getFormatDate() + "</b></font>" + "<br>" + location.getMethod() + "<br>" + location.getAccuracy())
                     .visible(true)
                     .animation(Animation.DROP);
 

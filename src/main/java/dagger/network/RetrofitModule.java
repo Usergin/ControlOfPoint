@@ -1,9 +1,6 @@
 package dagger.network;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.FieldNamingStrategy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import dagger.Module;
 import dagger.Provides;
@@ -14,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.inject.Singleton;
-import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * Created by OldMan on 18.06.2017.
@@ -62,9 +59,21 @@ public class RetrofitModule {
                 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
                 .setPrettyPrinting()
                 .setLenient()
-                .setDateFormat(DateFormat.LONG)
                 .serializeNulls()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> {
+                    if (json.isJsonNull()) {
+                        return null;
+                    }
+                    if (!json.isJsonPrimitive() || !json.getAsJsonPrimitive().isNumber()) {
+                        throw new JsonParseException("Invalid type for Date, must be a numeric timestamp!");
+                    }
+
+                    return new Date(json.getAsLong());
+                })
                 .create();
+
+//             .registerTypeAdapter(Date.class, new DateDeserializer()).create();
     }
 
     private static class CustomFieldNamingPolicy implements FieldNamingStrategy {

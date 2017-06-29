@@ -8,6 +8,7 @@ import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -15,9 +16,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import utils.Constants;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -28,7 +34,7 @@ import java.util.function.Function;
  * Created by oldman on 27.06.17.
  */
 
-@ViewController(value = "/fxml/call.fxml")
+@ViewController(value = "/fxml/call_event.fxml")
 public class CallController {
     @FXML
     private StackPane root;
@@ -46,7 +52,7 @@ public class CallController {
     @FXML
     private JFXTreeTableColumn<CallProperty, String> numberColumn;
     @FXML
-    private JFXTreeTableColumn<CallProperty, Integer> typeColumn;
+    private JFXTreeTableColumn<CallProperty, Text> typeColumn;
     @FXML
     private JFXTreeTableColumn<CallProperty, Integer> durationColumn;
     @FXML
@@ -61,7 +67,6 @@ public class CallController {
 
     @PostConstruct
     public void init() {
-
         Objects.requireNonNull(context, "call_list");
         this.callList = (List<Call>) context.getRegisteredObject("call_list");
         setupReadOnlyTableView();
@@ -81,42 +86,41 @@ public class CallController {
             }
         });
     }
-
+//new Image(getClass().getResourceAsStream("/drawables/logo-vs-rf.png"))
     private void setupReadOnlyTableView() {
         setupCellValueFactory(dateColumn, CallProperty::dateProperty);
         setupCellValueFactory(numberColumn, CallProperty::numberProperty);
-        setupCellValueFactory(typeColumn, p -> p.type.asObject());
+        setupCellValueFactory(typeColumn, CallProperty::typeProperty);
+//            return p.type.asObject();});
         setupCellValueFactory(durationColumn, p -> p.duration.asObject());
-
         ObservableList<CallProperty> callData = FXCollections.observableArrayList();
-
+        ImageView icon = null;
         for (Call call : callList) {
+            switch (call.getType()){
+                case Constants.INCOMING_CALL:
+                    icon = new ImageView(new Image(getClass().getResourceAsStream("/drawables/incoming-call.png")));
+                    break;
+                case Constants.OUTGOING_CALL:
+                    icon =  new ImageView(new Image(getClass().getResourceAsStream("/drawables/outgoing-call.png")));
+                    break;
+                case Constants.MISSED_CALL:
+                    icon =  new ImageView(new Image(getClass().getResourceAsStream("/drawables/missed_call.png")));
+                    break;
+                    default:
+                        icon =  new ImageView(new Image(getClass().getResourceAsStream("/drawables/phone.png")));
+            }
             CallProperty callProperty = new CallProperty(call.getNumber(),
-                    call.getDuration(), call.getType(), String.valueOf(call.getDate()));
+                    call.getDuration(), icon, call.getFormatDate());
             callData.add(callProperty);
 
         }
-
         treeTableView.setRoot(new RecursiveTreeItem<>(callData, RecursiveTreeObject::getChildren));
-
         treeTableView.setShowRoot(false);
-        treeTableViewCount.textProperty()
+
+         treeTableViewCount.textProperty()
                 .bind(Bindings.createStringBinding(() -> PREFIX + treeTableView.getCurrentItemsCount() + POSTFIX,
                         treeTableView.currentItemsCountProperty()));
-//        treeTableViewAdd.disableProperty()
-//                .bind(Bindings.notEqual(-1, treeTableView.getSelectionModel().selectedIndexProperty()));
-//        treeTableViewRemove.disableProperty()
-//                .bind(Bindings.equal(-1, treeTableView.getSelectionModel().selectedIndexProperty()));
-//        treeTableViewAdd.setOnMouseClicked((e) -> {
-//            dummyData.add(createNewRandomPerson());
-//            final IntegerProperty currCountProp = treeTableView.currentItemsCountProperty();
-//            currCountProp.set(currCountProp.get() + 1);
-//        });
-//        treeTableViewRemove.setOnMouseClicked((e) -> {
-//            dummyData.remove(treeTableView.getSelectionModel().selectedItemProperty().get().getValue());
-//            final IntegerProperty currCountProp = treeTableView.currentItemsCountProperty();
-//            currCountProp.set(currCountProp.get() - 1);
-//        });
+
         searchField.textProperty().addListener(setupSearchField(treeTableView));
     }
     private ChangeListener<String> setupSearchField(final JFXTreeTableView<CallController.CallProperty> tableView) {
@@ -125,20 +129,19 @@ public class CallController {
                     final CallProperty callProperty = personProp.getValue();
                     return callProperty.date.get().contains(newVal)
                             || callProperty.number.get().contains(newVal)
-                            || Integer.toString(callProperty.duration.get()).contains(newVal)
-                            || Integer.toString(callProperty.type.get()).contains(newVal);
+                            || Integer.toString(callProperty.duration.get()).contains(newVal);
                 });
     }
     static final class CallProperty extends RecursiveTreeObject<CallProperty> {
         final StringProperty number;
         final SimpleIntegerProperty duration;
-        final SimpleIntegerProperty type;
+        final SimpleObjectProperty<Node> type;
         final StringProperty date;
 
-        CallProperty(String number, int duration, int type, String date) {
+        CallProperty(String number, int duration, Node type, String date) {
             this.number = new SimpleStringProperty(number);
             this.duration = new SimpleIntegerProperty(duration);
-            this.type = new SimpleIntegerProperty(type);
+            this.type = new SimpleObjectProperty(type);
             this.date = new SimpleStringProperty(date);
         }
 
@@ -166,15 +169,15 @@ public class CallController {
             this.duration.set(duration);
         }
 
-        public int getType() {
+        public Node getType() {
             return type.get();
         }
 
-        public SimpleIntegerProperty typeProperty() {
+        public SimpleObjectProperty typeProperty() {
             return type;
         }
 
-        public void setType(int type) {
+        public void setType(Node type) {
             this.type.set(type);
         }
 

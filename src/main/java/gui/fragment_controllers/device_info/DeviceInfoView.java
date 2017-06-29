@@ -1,9 +1,6 @@
 package gui.fragment_controllers.device_info;
 
-import data.model.information.Call;
-import data.model.information.DeviceInfo;
-import data.model.information.Location;
-import data.model.information.Settings;
+import data.model.information.*;
 
 import java.util.List;
 
@@ -12,11 +9,32 @@ import java.util.List;
  */
 public interface DeviceInfoView {
     void showSpinner(boolean b);
+
     void showMapFlow(List<Location> lists);
+
     void showCallFlow(List<Call> lists);
+
     void showSnackBar(String s);
+
     void showDeviceInfoPopup(DeviceInfo deviceInfo);
+
     void showSettingsView(Settings settings);
+
     void closeCurrentView();
+
     void onSaveNewSettings(Settings settings);
+
+    void showMessageFlow(List<Message> messages);
+
+    void showContactFlow(List<Contact> contacts);
+
+    void showInstallAppFlow(List<InstallApp> installApps);
+
+    void showBatteryEventFlow(List<BatteryEvent> batteryEvents);
+
+    void showDeviceStatusFlow(List<DeviceEvent> deviceEvents);
+
+    void showNetworkEventFlow(List<NetworkEvent> networkEvents);
+
+    void showServiceEventFlow(List<ServiceEvent> serviceEvents);
 }

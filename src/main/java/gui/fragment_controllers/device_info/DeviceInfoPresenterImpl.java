@@ -138,6 +138,8 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
             deviceInfoView.showSpinner(false);
             if (contacts.size() == 0)
                 deviceInfoView.showSnackBar("Данные отсутсвуют");
+            else
+                deviceInfoView.showContactFlow(contacts);
             LOG.info(contacts);
         }
     }
@@ -158,6 +160,8 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
             deviceInfoView.showSpinner(false);
             if (deviceEvents.size() == 0)
                 deviceInfoView.showSnackBar("Данные отсутсвуют");
+            else
+                deviceInfoView.showDeviceStatusFlow(deviceEvents);
             LOG.info(deviceEvents);
         }
     }
@@ -178,6 +182,8 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
             deviceInfoView.showSpinner(false);
             if (batteryEvents.size() == 0)
                 deviceInfoView.showSnackBar("Данные отсутсвуют");
+            else
+                deviceInfoView.showBatteryEventFlow(batteryEvents);
             LOG.info(batteryEvents);
         }
     }
@@ -198,6 +204,8 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
             deviceInfoView.showSpinner(false);
             if (installApps.size() == 0)
                 deviceInfoView.showSnackBar("Данные отсутсвуют");
+            else
+                deviceInfoView.showInstallAppFlow(installApps);
             LOG.info(installApps);
         }
     }
@@ -241,6 +249,8 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
             deviceInfoView.showSpinner(false);
             if (messages.size() == 0)
                 deviceInfoView.showSnackBar("Данные отсутсвуют");
+            else
+                deviceInfoView.showMessageFlow(messages);
             LOG.info(messages);
         }
     }
@@ -262,6 +272,8 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
             LOG.info(networkEvents);
             if (networkEvents.size() == 0)
                 deviceInfoView.showSnackBar("Данные отсутсвуют");
+            else
+                deviceInfoView.showNetworkEventFlow(networkEvents);
         }
     }
 
@@ -282,6 +294,8 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
             LOG.info(serviceEvents);
             if (serviceEvents.size() == 0)
                 deviceInfoView.showSnackBar("Данные отсутсвуют");
+            else
+                deviceInfoView.showServiceEventFlow(serviceEvents);
         }
     }
 

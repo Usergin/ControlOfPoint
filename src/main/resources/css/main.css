@@ -571,7 +571,7 @@ jfx-decorator {
 
 .custom-jfx-list-view1 {
     -jfx-vertical-gap: 10.0;
-    -fx-pref-width: 150px;
+    /*-fx-pref-width: 150px;*/
     -fx-background-color: transparent;
     -fx-orientation: horizontal;
 }

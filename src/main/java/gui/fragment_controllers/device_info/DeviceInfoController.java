@@ -6,18 +6,18 @@ import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXSnackbar;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.MouseEventHandler;
-import com.lynden.gmapsfx.javascript.object.*;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.InfoWindow;
+import com.lynden.gmapsfx.javascript.object.LatLong;
 import dagger.Injector;
 import dagger.application.AppModule;
 import dagger.device_info.DeviceInfoModule;
 import data.model.Device;
-import data.model.information.Call;
-import data.model.information.DeviceInfo;
-import data.model.information.Location;
-import data.model.information.Settings;
+import data.model.information.*;
 import data.remote.model.request.SettingsRequest;
-import gui.fragment_controllers.CallController;
-import gui.fragment_controllers.SettingsController;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import gui.fragment_controllers.*;
+import gui.fragment_controllers.map.ContactController;
 import gui.fragment_controllers.map.DeviceMapController;
 import gui.fragment_controllers.map.MiniMapController;
 import io.datafx.controller.ViewController;
@@ -30,8 +30,10 @@ import io.datafx.controller.flow.container.AnimatedFlowContainer;
 import io.datafx.controller.flow.container.ContainerAnimations;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import org.apache.log4j.Logger;
@@ -48,7 +50,7 @@ import java.util.Objects;
  */
 
 @ViewController(value = "/fxml/device_info.fxml")
-public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
+public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseEvent>, MouseEventHandler {
     private static final Logger LOG = Logger.getLogger(DeviceInfoController.class);
     @Inject
     DeviceInfoPresenter deviceInfoPresenter;
@@ -69,20 +71,29 @@ public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
     @ViewNode
     private Label imei;
     @ViewNode
+    private JFXListView<?> menuList;
+    @ViewNode
+    private FontAwesomeIconView btnCogs;
+    @ViewNode
     private JFXButton btnMoreDetail;
     private GoogleMap map;
     private Device device;
     private InfoWindow infoWindow;
     private FlowHandler flowHandler;
+    private JFXListView<String> menuServiceEvent;
+    private int lastSelectedMenu = -1;
 
     @PostConstruct
     public void init() {
-//        LOG.info("device info " + deviceInfoPresenter);
         Injector.inject(this, Arrays.asList(new DeviceInfoModule(), new AppModule()));
-//        mapView.addMapInializedListener(this);
         Objects.requireNonNull(context, "device");
         this.device = (Device) context.getRegisteredObject("device");
-        LOG.info("showSettings" + device);
+        menuServiceEvent = new JFXListView<>();
+        menuServiceEvent.getItems().add("Батарея");
+        menuServiceEvent.getItems().add("Статус устройства");
+        menuServiceEvent.getItems().add("Сеть ");
+        menuServiceEvent.getItems().add("Остальное");
+        menuServiceEvent.setOnMouseClicked(this);
         model.setText(device.getModel());
         imei.setText(device.getImei());
         os.setText(device.getVersion_os());
@@ -90,29 +101,6 @@ public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
         deviceInfoPresenter.setDeviceInfoView(this);
         showLastLocationMapFlow(new LatLong(device.getLongitude(), device.getLatitude()));
     }
-
-//    @Override
-//    public void mapInitialized() {
-//        MapOptions mapOptions = new MapOptions();
-//        LatLong point = new LatLong(device.getLongitude(), device.getLatitude());
-//        mapOptions.center(point)
-//                .mapType(MapTypeIdEnum.ROADMAP)
-//                .overviewMapControl(false)
-//                .panControl(false)
-//                .rotateControl(false)
-//                .scaleControl(false)
-//                .mapTypeControl(false)
-//                .streetViewControl(false)
-//                .scrollWheel(true)
-//                .zoomControl(true)
-//                .zoom(10);
-//        map = mapView.createMap(mapOptions, false);
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(point)
-//                .visible(true)
-//                .animation(Animation.DROP);
-//        map.addMarker(new Marker(markerOptions));
-//    }
 
     @Override
     public void handle(GMapMouseEvent mouseEvent) {
@@ -124,55 +112,6 @@ public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
         LOG.info("onClickMoreDetail " + deviceInfoPresenter);
         if (deviceInfoPresenter != null)
             deviceInfoPresenter.onDeviceInfo(device.getId());
-    }
-
-    @FXML
-    public void onClickCalls() {
-        LOG.info("onClickMoreDetail " + deviceInfoPresenter);
-        if (deviceInfoPresenter != null)
-            deviceInfoPresenter.onDeviceCalls(device.getId());
-    }
-
-    @FXML
-    public void onClickMessages() {
-        LOG.info("onClickMoreDetail " + deviceInfoPresenter);
-        if (deviceInfoPresenter != null)
-            deviceInfoPresenter.onDeviceMessages(device.getId());
-    }
-
-    @FXML
-    public void onClickContacts() {
-        LOG.info("onClickMoreDetail " + deviceInfoPresenter);
-        if (deviceInfoPresenter != null)
-            deviceInfoPresenter.onDeviceContacts(device.getId());
-    }
-
-    @FXML
-    public void onClickInstallApps() {
-        LOG.info("onClickMoreDetail " + deviceInfoPresenter);
-        if (deviceInfoPresenter != null)
-            deviceInfoPresenter.onDeviceInstallApps(device.getId());
-    }
-
-    @FXML
-    public void onClickLocation() {
-        LOG.info("onClickMoreDetail " + deviceInfoPresenter);
-        if (deviceInfoPresenter != null)
-            deviceInfoPresenter.onDeviceLocations(device.getId());
-    }
-
-    @FXML
-    public void onClickSystemEvent() {
-        LOG.info("onClickMoreDetail " + deviceInfoPresenter);
-        if (deviceInfoPresenter != null)
-            deviceInfoPresenter.onDeviceServiceEvents(device.getId());
-    }
-
-    @FXML
-    public void onClickSettings() {
-        LOG.info("onClickMoreDetail " + deviceInfoPresenter);
-        if (deviceInfoPresenter != null)
-            deviceInfoPresenter.onDeviceSetting(device.getId());
     }
 
     @Override
@@ -219,6 +158,8 @@ public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
 
     @Override
     public void closeCurrentView() {
+        if (menuList != null)
+            menuList.getSelectionModel().select(lastSelectedMenu);
         int size = rootPane.getChildren().size();
         if (size != 0 && rootPane.getChildren().get(size - 1).isVisible())
             rootPane.getChildren().remove(size - 1);
@@ -227,7 +168,114 @@ public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
 
     @Override
     public void onSaveNewSettings(Settings settings) {
-        deviceInfoPresenter.setDeviceSettings(new SettingsRequest(device.getImei(), device.getId(), settings));
+        if (deviceInfoPresenter != null) {
+            deviceInfoPresenter.setDeviceSettings(new SettingsRequest(device.getImei(), device.getId(), settings));
+        }
+    }
+
+    @Override
+    public void showMessageFlow(List<Message> messages) {
+        Flow innerFlow = new Flow(MessageController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("sms_list", messages);
+        try {
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showContactFlow(List<Contact> contacts) {
+        Flow innerFlow = new Flow(ContactController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("contact_list", contacts);
+        try {
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showInstallAppFlow(List<InstallApp> installApps) {
+        Flow innerFlow = new Flow(InstallAppController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("apps_list", installApps);
+        try {
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showBatteryEventFlow(List<BatteryEvent> batteryEvents) {
+        Flow innerFlow = new Flow(BatteryController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("battery_list", batteryEvents);
+        try {
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showDeviceStatusFlow(List<DeviceEvent> deviceEvents) {
+        Flow innerFlow = new Flow(DeviceStatusController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("device_events_list", deviceEvents);
+        try {
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showNetworkEventFlow(List<NetworkEvent> networkEvents) {
+        Flow innerFlow = new Flow(NetworkEventController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("network_events_list", networkEvents);
+        try {
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showServiceEventFlow(List<ServiceEvent> serviceEvents) {
+        Flow innerFlow = new Flow(ServiceEventController.class);
+        flowHandler = innerFlow.createHandler(context);
+        context.register("ContentInnerFlow", innerFlow);
+        context.register("ContentInnerFlowHandler", flowHandler);
+        context.register("service_events_list", serviceEvents);
+        try {
+            centerPane.getChildren().clear();
+            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
+        } catch (FlowException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -244,7 +292,8 @@ public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
         context.register("point_list", list);
         showFlow(flowHandler);
     }
-//    @Override
+
+    //    @Override
     public void showLastLocationMapFlow(LatLong point) {
         Flow innerFlow = new Flow(MiniMapController.class);
         flowHandler = innerFlow.createHandler(context);
@@ -293,4 +342,74 @@ public class DeviceInfoController implements DeviceInfoView, MouseEventHandler {
 //            fadeInBack.playFromStart();
 //        }
     }
-}
+
+    @FXML
+    public void handleMenuList(MouseEvent event) {
+        switch (menuList.getSelectionModel().getSelectedIndex()) {
+            case 0:
+                lastSelectedMenu = 0;
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceCalls(device.getId());
+                break;
+            case 1:
+                lastSelectedMenu = 1;
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceMessages(device.getId());
+                break;
+            case 2:
+                lastSelectedMenu = 2;
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceContacts(device.getId());
+                break;
+            case 3:
+                lastSelectedMenu = 3;
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceInstallApps(device.getId());
+                break;
+            case 4:
+                lastSelectedMenu = 4;
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceLocations(device.getId());
+                break;
+            case 5:
+                lastSelectedMenu = 5;
+                if (deviceInfoPresenter != null) {
+                    JFXPopup devicePopup = new JFXPopup(menuServiceEvent);
+                    devicePopup.setAutoFix(true);
+                    devicePopup.setHideOnEscape(true);
+                    devicePopup.show(menuList, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT,
+                            (menuList.getWidth() / 1.3),
+                            (menuList.getHeight() - menuList.getPrefHeight()) / 2);
+                }
+                break;
+            case 6:
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceSetting(device.getId());
+                break;
+        }
+
+        }
+
+        @Override
+        public void handle (MouseEvent event){
+            LOG.info("onClickMoreDetail " + menuServiceEvent.getSelectionModel().getSelectedIndex());
+            switch (menuServiceEvent.getSelectionModel().getSelectedIndex()) {
+                case 0:
+                    if (deviceInfoPresenter != null)
+                        deviceInfoPresenter.onDeviceBatteryEvents(device.getId());
+                    break;
+                case 1:
+                    if (deviceInfoPresenter != null)
+                        deviceInfoPresenter.onDeviceEvents(device.getId());
+                    break;
+                case 2:
+                    if (deviceInfoPresenter != null)
+                        deviceInfoPresenter.onDeviceNetworkEvents(device.getId());
+                    break;
+                case 3:
+                    if (deviceInfoPresenter != null)
+                        deviceInfoPresenter.onDeviceServiceEvents(device.getId());
+                    break;
+            }
+        }
+    }
