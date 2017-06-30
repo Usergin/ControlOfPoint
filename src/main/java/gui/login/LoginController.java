@@ -5,6 +5,7 @@ import com.jfoenix.svg.SVGGlyphLoader;
 import dagger.Injector;
 import dagger.application.AppModule;
 import dagger.login.LoginModule;
+import data.model.User;
 import data.remote.model.request.Authentication;
 import gui.control_panel.ControlPanelController;
 import io.datafx.controller.ViewController;
@@ -105,12 +106,12 @@ public class LoginController implements LoginView {
     }
 
     @Override
-    public void onAuthenticationSuccess() {
+    public void onAuthenticationSuccess(User user) {
         PauseTransition pauseTransition = new PauseTransition();
         //ToDo change second
         pauseTransition.setDuration(Duration.seconds(0));
         pauseTransition.setOnFinished(ev -> {
-            completeLogin();
+            completeLogin(user);
         });
         pauseTransition.play();
     }
@@ -140,7 +141,7 @@ public class LoginController implements LoginView {
         }
     }
 
-    private void completeLogin() {
+    private void completeLogin(User user) {
         btnLogin.getScene().getWindow().hide();
         imgProgress.setVisible(false);
         try {
@@ -158,6 +159,7 @@ public class LoginController implements LoginView {
             Flow flow = new Flow(ControlPanelController.class);
             DefaultFlowContainer container = new DefaultFlowContainer();
             flowContext.register("Stage", dashboardStage);
+            flowContext.register("user", user);
             flow.createHandler(flowContext).start(container);
 
             JFXDecorator decorator = new JFXDecorator(dashboardStage, container.getView());

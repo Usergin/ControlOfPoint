@@ -1,13 +1,13 @@
 package gui.menu;
 
 import com.jfoenix.controls.JFXListView;
+import gui.control_panel.ControlPanelView;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
@@ -23,17 +23,22 @@ public class MainMenuController {
     private JFXListView<?> toolbarPopupList;
 
     private static final Logger LOG = Logger.getLogger(MainMenuController.class);
+    private ControlPanelView controlPanel;
 
     @FXML
     private void submit() {
+        int menuIndex = toolbarPopupList.getSelectionModel().getSelectedIndex();
         LOG.info("submit " + toolbarPopupList.getSelectionModel().getSelectedIndex());
-        if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 2) {
+        if (menuIndex == 3) {
             LOG.info("exit");
             Platform.exit();
-        } else if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 1) {
+        } else if (menuIndex == 2) {
             LOG.info("logout");
-        } else if (toolbarPopupList.getSelectionModel().getSelectedIndex() == 0) {
+        } else if (menuIndex == 1) {
             LOG.info("about");
+        } else if (menuIndex == 0) {
+            if (controlPanel != null)
+                controlPanel.onUpdateDeviceList();
         }
 
     }
@@ -49,13 +54,13 @@ public class MainMenuController {
     public void init() {
         Objects.requireNonNull(context, "context");
         FlowHandler contentFlowHandler = (FlowHandler) context.getRegisteredObject("ContentFlowHandler");
-
         Flow contentFlow = (Flow) context.getRegisteredObject("ContentFlow");
 //        bindNodeToController(logout, LoginController.class, contentFlow, contentFlowHandler);
 //        bindNodeToController(aboutProgrammes, MainMapController.class, contentFlow, contentFlowHandler);
     }
 
-    private void bindNodeToController(Node node, Class<?> controllerClass, Flow flow, FlowHandler flowHandler) {
-        flow.withGlobalLink(node.getId(), controllerClass);
+    public void setControlPanelContext(ControlPanelView panelContext) {
+        this.controlPanel = panelContext;
     }
+
 }

@@ -74,7 +74,6 @@ public class DeviceStatusController {
         });
     }
 
-    //new Image(getClass().getResourceAsStream("/drawables/logo-vs-rf.png"))
     private void setupTableView() {
         setupCellValueFactory(dateColumn, DeviceStatusController.DeviceStatusProperty::dateProperty);
         setupCellValueFactory(statusColumn, DeviceStatusController.DeviceStatusProperty::statusProperty);

@@ -1,194 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<StackPane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.112"
-           xmlns:fx="http://javafx.com/fxml/1">
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Region style="-fx-background-color: #546E7A;"/>
+        <Region style="-fx-background-color: #546E7A;" />
         <BorderPane prefHeight="200.0" prefWidth="200.0">
             <top>
-                <AnchorPane maxHeight="-Infinity" maxWidth="1000.0" minHeight="-Infinity" minWidth="-Infinity"
-                            prefHeight="310.0" prefWidth="800.0" style="-fx-background-color: #FFF;"
-                            BorderPane.alignment="TOP_CENTER">
+                <AnchorPane maxHeight="-Infinity" maxWidth="1000.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="800.0" style="-fx-background-color: #FFF;" BorderPane.alignment="TOP_CENTER">
                     <children>
-                        <GridPane layoutX="275.0" layoutY="10.0" prefWidth="900.0" AnchorPane.bottomAnchor="10.0"
-                                  AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
-                                  AnchorPane.topAnchor="10.0">
+                        <GridPane layoutX="275.0" layoutY="10.0" prefWidth="900.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="200.0"
-                                                   prefWidth="200.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0"
-                                                   prefWidth="150.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="200.0" prefWidth="200.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
-                                                vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
-                                                vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
-                                                vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <VBox GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1"
-                                      GridPane.valignment="CENTER">
+                                <VBox GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                     <children>
                                         <Label text="OC:">
                                             <font>
-                                                <Font name="System Bold" size="12.0"/>
+                                                <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
                                         <Label text="Imei:">
                                             <font>
-                                                <Font name="System Bold" size="12.0"/>
+                                                <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </VBox>
-                                <HBox alignment="BOTTOM_CENTER" maxHeight="70.0" minHeight="70.0" prefHeight="70.0"
-                                      prefWidth="908.0" GridPane.columnSpan="4" GridPane.rowIndex="2">
+                                <HBox alignment="BOTTOM_CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="1100.0" GridPane.columnSpan="4" GridPane.rowIndex="2">
                                     <children>
-                                        <JFXListView fx:id="menuList"  onMouseClicked="#handleMenuList" maxWidth="-Infinity" minWidth="-Infinity"
-                                                     userData="menuList"
-                                                     orientation="HORIZONTAL" prefWidth="908.0"
-                                                     styleClass="custom-jfx-list-view1">
-                                            <Label fx:id="btnCall" text="Звонки" textAlignment="CENTER" prefHeight="50"
-                                                   prefWidth="90">
+                                        <JFXListView fx:id="menuList" maxWidth="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMenuList" orientation="HORIZONTAL"
+                                                     prefHeight="80.0" prefWidth="900.0" styleClass="custom-jfx-list-view" userData="menuList">
+                                            <Label fx:id="btnCall" prefHeight="50" prefWidth="70" text="Звонки" textAlignment="CENTER">
                                                 <graphic>
-                                                    <FontAwesomeIconView glyphName="PHONE" size="1.5em"
-                                                                         styleClass="icon-info"/>
+                                                    <FontAwesomeIconView glyphName="PHONE" size="1.5em" styleClass="icon-info" />
                                                 </graphic>
                                             </Label>
-                                            <Label fx:id="btnSMS" text="Сообщения" textAlignment="CENTER" prefHeight="50"
-                                                   prefWidth="90">
+                                            <Label fx:id="btnSMS" prefHeight="50" prefWidth="100" text="Сообщения" textAlignment="CENTER">
                                                 <graphic>
-                                                    <FontAwesomeIconView glyphName="ENVELOPE" size="1.5em"
-                                                                         styleClass="icon-info"/>
+                                                    <FontAwesomeIconView glyphName="ENVELOPE" size="1.5em" styleClass="icon-info" />
                                                 </graphic>
                                             </Label>
-                                            <Label fx:id="btnContact" text="Контакты" textAlignment="CENTER" prefHeight="50"
-                                                   prefWidth="100">
+                                            <Label fx:id="btnContact" prefHeight="50" prefWidth="90" text="Контакты" textAlignment="CENTER">
                                                 <graphic>
-                                                    <FontAwesomeIconView glyphName="USERS" size="1.5em"
-                                                                         styleClass="icon-info"/>
+                                                    <FontAwesomeIconView glyphName="USERS" size="1.5em" styleClass="icon-info" />
                                                 </graphic>
                                             </Label>
-                                            <Label fx:id="btnInstallApp" textAlignment="CENTER" prefHeight="50"
-                                                   prefWidth="120" text="Установленные &#10;приложения">
+                                            <Label fx:id="btnInstallApp" prefHeight="50" prefWidth="130" text="Установленные &#10;приложения" textAlignment="CENTER">
                                                 <graphic>
-                                                    <FontAwesomeIconView glyphName="ANDROID" size="1.5em"
-                                                                         styleClass="icon-info"/>
+                                                    <FontAwesomeIconView glyphName="ANDROID" size="1.5em" styleClass="icon-info" />
                                                 </graphic>
                                             </Label>
-                                            <Label fx:id="btnMap" text="Местоположение" textAlignment="CENTER" prefHeight="50"
-                                                   prefWidth="120">
+                                            <Label fx:id="btnMap" prefHeight="50" prefWidth="140" text="Местоположение" textAlignment="CENTER">
                                                 <graphic>
-                                                    <FontAwesomeIconView glyphName="MAP" size="1.5em"
-                                                                         styleClass="icon-info"/>
+                                                    <FontAwesomeIconView glyphName="MAP" size="1.5em" styleClass="icon-info" />
                                                 </graphic>
                                             </Label>
-                                            <Label  textAlignment="CENTER" prefHeight="50"
-                                                   prefWidth="100" text="Системные &#10;события" wrapText="true">
+                                            <Label prefHeight="50" prefWidth="100" text="Системные &#10;события" textAlignment="CENTER" wrapText="true">
                                                 <graphic>
-                                                    <FontAwesomeIconView id="btnCogs" glyphName="COGS" size="1.5em"
-                                                                         styleClass="icon-info"/>
+                                                    <FontAwesomeIconView id="btnCogs" glyphName="COGS" size="1.5em" styleClass="icon-info" />
                                                 </graphic>
                                             </Label>
-                                            <Label fx:id="btnSettings" textAlignment="CENTER" prefHeight="50"
-                                                   prefWidth="100" text="Настройки &#10;устройства">
+                                            <Label fx:id="btnSettings" prefHeight="50" prefWidth="100" text="Настройки &#10;устройства" textAlignment="CENTER">
                                                 <graphic>
-                                                    <FontAwesomeIconView glyphName="COG" size="1.5em"
-                                                                         styleClass="icon-info"/>
+                                                    <FontAwesomeIconView glyphName="COG" size="1.5em" styleClass="icon-info" />
                                                 </graphic>
                                             </Label>
                                         </JFXListView>
-
-
-                                        <!--<JFXButton fx:id="btnCall" buttonType="FLAT" onAction="#onClickCalls" prefHeight="50" text="Звонки">-->
-
-                                        <!--</JFXButton>-->
-                                        <!--<JFXButton buttonType="FLAT" onAction="#onClickMessages" prefHeight="50" text="СМС">-->
-                                        <!--<graphic>-->
-                                        <!--<FontAwesomeIconView glyphName="ENVELOPE" size="1.5em" styleClass="icon-info" />-->
-                                        <!--</graphic>-->
-                                        <!--</JFXButton>-->
-                                        <!--<JFXButton buttonType="FLAT" onAction="#onClickContacts" prefHeight="50" text="Контакты">-->
-                                        <!--<graphic>-->
-                                        <!--<FontAwesomeIconView glyphName="USERS" size="1.5em" styleClass="icon-info" />-->
-                                        <!--</graphic>-->
-                                        <!--</JFXButton>-->
-                                        <!--<JFXButton buttonType="FLAT" onAction="#onClickInstallApps" prefHeight="50" text="Установленные&#10;приложения" textAlignment="CENTER">-->
-                                        <!--<graphic>-->
-                                        <!--<FontAwesomeIconView glyphName="ANDROID" size="1.5em" styleClass="icon-info" />-->
-                                        <!--</graphic>-->
-                                        <!--</JFXButton>-->
-                                        <!--<JFXButton buttonType="FLAT" onAction="#onClickLocation" prefHeight="50" text="Местоположение">-->
-                                        <!--<graphic>-->
-                                        <!--<FontAwesomeIconView glyphName="MAP" size="1.5em" styleClass="icon-info" />-->
-                                        <!--</graphic>-->
-                                        <!--</JFXButton>-->
-                                        <!--<JFXButton buttonType="FLAT" onAction="#onClickSystemEvent" prefHeight="50" text="Системные&#10;события" textAlignment="CENTER">-->
-                                        <!--<graphic>-->
-                                        <!--<FontAwesomeIconView glyphName="COGS" size="1.5em" styleClass="icon-info" />-->
-                                        <!--</graphic>-->
-                                        <!--</JFXButton>-->
-                                        <!--<JFXButton buttonType="FLAT" onAction="#onClickSettings" prefHeight="50" text="Настройки&#10;устройства" textAlignment="CENTER">-->
-                                        <!--<graphic>-->
-                                        <!--<FontAwesomeIconView glyphName="COG" size="1.5em" styleClass="icon-info" />-->
-                                        <!--</graphic>-->
-                                        <!--</JFXButton>-->
                                     </children>
                                     <GridPane.margin>
-                                        <Insets bottom="5.0"/>
+                                        <Insets bottom="5.0" />
                                     </GridPane.margin>
                                 </HBox>
-                                <Label prefHeight="80.0" prefWidth="80.0" GridPane.halignment="RIGHT"
-                                       GridPane.valignment="BOTTOM">
+                                <Label prefHeight="80.0" prefWidth="80.0" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
                                     <graphic>
-                                        <FontAwesomeIconView glyphName="MOBILE" size="7em" styleClass="icon-info"/>
+                                        <FontAwesomeIconView glyphName="MOBILE" size="7em" styleClass="icon-info" />
                                     </graphic>
                                 </Label>
-                                <Label fx:id="model" prefHeight="27.0" text="Model" GridPane.columnIndex="1"
-                                       GridPane.columnSpan="2">
+                                <Label fx:id="model" prefHeight="27.0" text="Model" GridPane.columnIndex="1" GridPane.columnSpan="2">
                                     <font>
-                                        <Font name="System Bold" size="18.0"/>
+                                        <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Label>
                                 <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
                                     <children>
-                                        <Label fx:id="os" text="OC:"/>
-                                        <Label fx:id="imei" text="Imei:"/>
-                                        <JFXButton fx:id="btnMoreDetail" buttonType="RAISED"
-                                                   onAction="#onClickMoreDetail" text="Смотреть детали"
-                                                   textFill="#00aacf">
+                                        <Label fx:id="os" text="OC:" />
+                                        <Label fx:id="imei" text="Imei:" />
+                                        <JFXButton fx:id="btnMoreDetail" buttonType="RAISED" onAction="#onClickMoreDetail" text="Смотреть детали" textFill="#00aacf">
                                             <font>
-                                                <Font name="System Italic" size="12.0"/>
+                                                <Font name="System Italic" size="12.0" />
                                             </font>
                                             <VBox.margin>
-                                                <Insets top="10.0"/>
+                                                <Insets top="10.0" />
                                             </VBox.margin>
                                         </JFXButton>
                                     </children>
                                 </VBox>
-                                <VBox minHeight="200.0" minWidth="300.0" prefHeight="200.0" prefWidth="100.0"
-                                      GridPane.columnIndex="3" GridPane.rowSpan="2">
+                                <VBox minHeight="200.0" minWidth="300.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowSpan="2">
                                     <children>
                                         <Label text="Последнее местоположение">
                                             <font>
-                                                <Font name="System Bold" size="18.0"/>
+                                                <Font name="System Bold" size="18.0" />
                                             </font>
                                             <VBox.margin>
-                                                <Insets top="10.0"/>
+                                                <Insets top="10.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <StackPane fx:id="mapRoot"/>
+                                        <StackPane fx:id="mapRoot" />
                                         <!--<fx:include fx:id="map" source="map.fxml" />-->
                                     </children>
                                 </VBox>
@@ -196,28 +138,26 @@
                         </GridPane>
                     </children>
                     <BorderPane.margin>
-                        <Insets top="30.0"/>
+                        <Insets top="30.0" />
                     </BorderPane.margin>
                 </AnchorPane>
             </top>
             <center>
-                <StackPane fx:id="centerPane" maxWidth="1000.0" minWidth="-Infinity" prefHeight="150.0"
-                           prefWidth="800.0" BorderPane.alignment="CENTER">
+                <StackPane fx:id="centerPane" maxHeight="1.7976931348623157E308" maxWidth="1000.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                     <opaqueInsets>
-                        <Insets/>
+                        <Insets />
                     </opaqueInsets>
                     <BorderPane.margin>
-                        <Insets top="5.0"/>
+                        <Insets top="5.0" />
                     </BorderPane.margin>
                 </StackPane>
             </center>
         </BorderPane>
-        <StackPane fx:id="spinnerPane" maxHeight="200" maxWidth="300" prefHeight="200.0" prefWidth="300.0"
-                   style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+        <StackPane fx:id="spinnerPane" maxHeight="200" maxWidth="300" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
             <children>
-                <JFXSpinner startingAngle="-40" styleClass="materialDesign-green, first-spinner"/>
-                <JFXSpinner startingAngle="-90" styleClass="materialDesign-blue, second-spinner"/>
-                <JFXSpinner startingAngle="-120" styleClass="materialDesign-red, third-spinner"/>
+                <JFXSpinner startingAngle="-40" styleClass="materialDesign-green, first-spinner" />
+                <JFXSpinner startingAngle="-90" styleClass="materialDesign-blue, second-spinner" />
+                <JFXSpinner startingAngle="-120" styleClass="materialDesign-red, third-spinner" />
             </children>
         </StackPane>
     </children>

@@ -15,4 +15,5 @@ public interface ControlPanelView {
     void onDeviceInfo();
     void showDeviceFlow(Device device);
     void showErrorFlow();
+    void onUpdateDeviceList();
 }

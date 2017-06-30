@@ -3,7 +3,10 @@
 <?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.layout.*?>
-<StackPane fx:id="rootPane" prefHeight="248.0" prefWidth="388.0"  style="-fx-background-color: rgba(0, 0, 0);" xmlns="http://javafx.com/javafx/8"
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<StackPane fx:id="rootPane" prefHeight="248.0" prefWidth="388.0" style="-fx-background-color: rgba(0, 0, 0);" xmlns="http://javafx.com/javafx/8"
            xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -34,11 +37,17 @@
                         </JFXRippler>
                     </leftItems>
                     <rightItems>
-                        <JFXRippler fx:id="updateNode"  onMouseClicked="#onUpdate" styleClass="icons-rippler1">
-                            <StackPane fx:id="update" style="-fx-padding: 10;">
-                                         <FontAwesomeIconView glyphName="REFRESH" size="2em" styleClass="icon"/>
-                            </StackPane>
-                        </JFXRippler>
+                        <JFXButton fx:id="btnUser" onMouseClicked="#onShowUser" text="User" styleClass="custom-jfx-button-toolbar" textAlignment="CENTER">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="USER" size="1.5em"
+                                                     styleClass="icon"/>
+                            </graphic>
+                        </JFXButton>
+                        <!--<JFXRippler fx:id="updateNode"  onMouseClicked="#onUpdate" styleClass="icons-rippler1">-->
+                            <!--<StackPane fx:id="update" style="-fx-padding: 10;">-->
+                                         <!--<FontAwesomeIconView glyphName="REFRESH" size="2em" styleClass="icon"/>-->
+                            <!--</StackPane>-->
+                        <!--</JFXRippler>-->
                         <JFXRippler fx:id="optionsRippler" maskType="CIRCLE" style="-fx-ripple-color:WHITE;">
                             <control>
                                 <StackPane fx:id="optionsBurger">
@@ -61,4 +70,42 @@
             </children>
         </StackPane>
     </children>
+    <JFXDialog fx:id="dialog">
+        <JFXDialogLayout fx:id="dialogUser">
+            <heading>
+                <ImageView fitHeight="80.0" fitWidth="80.0" StackPane.alignment="CENTER" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@../drawables/login_icon.png"/>
+                    </image>
+                </ImageView>
+            </heading>
+            <body>
+                <HBox StackPane.alignment="CENTER">
+                    <children>
+                        <VBox spacing="10" prefWidth="150.0">
+                            <children>
+                                <Label>Учетная запись</Label>
+                                <Label>ФИО:</Label>
+                                <Label>Подразделение:</Label>
+                                <Label>Звание:</Label>
+                            </children>
+                        </VBox>
+                        <VBox spacing="10" prefWidth="100.0">
+                            <children>
+                                <Label fx:id="login"></Label>
+                                <Label fx:id="username"></Label>
+                                <Label fx:id="department"></Label>
+                                <Label fx:id="rank"></Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </body>
+            <actions>
+                <JFXButton fx:id="acceptButton" styleClass="dialog-accept">ACCEPT
+                </JFXButton>
+            </actions>
+        </JFXDialogLayout>
+    </JFXDialog>
 </StackPane>

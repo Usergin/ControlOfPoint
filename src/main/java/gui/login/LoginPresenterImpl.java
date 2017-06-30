@@ -1,15 +1,10 @@
 package gui.login;
 
 import business.login.LoginInteractor;
-import dagger.Injector;
-import dagger.application.AppModule;
-import dagger.login.LoginModule;
 import data.remote.model.request.Authentication;
 import data.remote.model.response.UserResponse;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
-
-import java.util.Arrays;
 
 /**
  * Created by OldMan on 23.06.2017.
@@ -21,8 +16,9 @@ public class LoginPresenterImpl implements LoginPresenter {
     public LoginPresenterImpl(LoginInteractor loginInteractor) {
         this.loginInteractor = loginInteractor;
     }
+
     @Override
-    public void setLoginView(LoginView loginView){
+    public void setLoginView(LoginView loginView) {
         this.loginView = loginView;
     }
 
@@ -54,7 +50,8 @@ public class LoginPresenterImpl implements LoginPresenter {
 
             loginView.showSnackBar("Добро пожаловать: " + userResponse.getUser().getRank()
                     + " " + userResponse.getUser().getUsername());
-            loginView.onAuthenticationSuccess();
+            if (userResponse.getCode() == 1)
+                loginView.onAuthenticationSuccess(userResponse.getUser());
 
         }
     }

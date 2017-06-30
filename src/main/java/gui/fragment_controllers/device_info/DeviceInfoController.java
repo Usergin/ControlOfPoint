@@ -175,107 +175,46 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
 
     @Override
     public void showMessageFlow(List<Message> messages) {
-        Flow innerFlow = new Flow(MessageController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
         context.register("sms_list", messages);
-        try {
-            centerPane.getChildren().clear();
-            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
-        } catch (FlowException e) {
-            e.printStackTrace();
-        }
+        showFlow(new Flow(MessageController.class));
     }
 
     @Override
     public void showContactFlow(List<Contact> contacts) {
-        Flow innerFlow = new Flow(ContactController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
         context.register("contact_list", contacts);
-        try {
-            centerPane.getChildren().clear();
-            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
-        } catch (FlowException e) {
-            e.printStackTrace();
-        }
+        showFlow(new Flow(ContactController.class));
     }
 
     @Override
     public void showInstallAppFlow(List<InstallApp> installApps) {
-        Flow innerFlow = new Flow(InstallAppController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
         context.register("apps_list", installApps);
-        try {
-            centerPane.getChildren().clear();
-            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
-        } catch (FlowException e) {
-            e.printStackTrace();
-        }
+        showFlow(new Flow(InstallAppController.class));
+
     }
 
     @Override
     public void showBatteryEventFlow(List<BatteryEvent> batteryEvents) {
-        Flow innerFlow = new Flow(BatteryController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
         context.register("battery_list", batteryEvents);
-        try {
-            centerPane.getChildren().clear();
-            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
-        } catch (FlowException e) {
-            e.printStackTrace();
-        }
+        showFlow(new Flow(BatteryController.class));
     }
 
     @Override
     public void showDeviceStatusFlow(List<DeviceEvent> deviceEvents) {
-        Flow innerFlow = new Flow(DeviceStatusController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
         context.register("device_events_list", deviceEvents);
-        try {
-            centerPane.getChildren().clear();
-            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
-        } catch (FlowException e) {
-            e.printStackTrace();
-        }
+        showFlow(new Flow(DeviceStatusController.class));
     }
 
     @Override
     public void showNetworkEventFlow(List<NetworkEvent> networkEvents) {
-        Flow innerFlow = new Flow(NetworkEventController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
         context.register("network_events_list", networkEvents);
-        try {
-            centerPane.getChildren().clear();
-            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
-        } catch (FlowException e) {
-            e.printStackTrace();
-        }
+        showFlow(new Flow(NetworkEventController.class));
     }
 
     @Override
     public void showServiceEventFlow(List<ServiceEvent> serviceEvents) {
-        Flow innerFlow = new Flow(ServiceEventController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
         context.register("service_events_list", serviceEvents);
-        try {
-            centerPane.getChildren().clear();
-            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
-        } catch (FlowException e) {
-            e.printStackTrace();
-        }
+        showFlow(new Flow(ServiceEventController.class));
+
     }
 
     @Override
@@ -285,12 +224,8 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
 
     @Override
     public void showMapFlow(List<Location> list) {
-        Flow innerFlow = new Flow(DeviceMapController.class);
-        flowHandler = innerFlow.createHandler(context);
-        context.register("ContentInnerFlow", innerFlow);
-        context.register("ContentInnerFlowHandler", flowHandler);
         context.register("point_list", list);
-        showFlow(flowHandler);
+        showFlow(new Flow(DeviceMapController.class));
     }
 
     //    @Override
@@ -310,37 +245,22 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
 
     @Override
     public void showCallFlow(List<Call> list) {
-        Flow innerFlow = new Flow(CallController.class);
+        context.register("call_list", list);
+        showFlow(new Flow(CallController.class));
+    }
+
+
+    private void showFlow(Flow innerFlow) {
         flowHandler = innerFlow.createHandler(context);
         context.register("ContentInnerFlow", innerFlow);
         context.register("ContentInnerFlowHandler", flowHandler);
-        context.register("call_list", list);
         try {
             centerPane.getChildren().clear();
             centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
         } catch (FlowException e) {
             e.printStackTrace();
         }
-    }
 
-
-    private void showFlow(FlowHandler flowHandler) {
-        context.register("ContentInnerFlowHandler", flowHandler);
-        final Duration containerAnimationDuration = Duration.millis(320);
-        try {
-            centerPane.getChildren().add(flowHandler.start(new AnimatedFlowContainer(Duration.millis(320), ContainerAnimations.ZOOM_OUT)));
-        } catch (FlowException e) {
-            e.printStackTrace();
-        }
-
-//        if (flowHandler.getCurrentViewControllerClass().equals(MainMapController.class) ||
-//                flowHandler.getCurrentViewControllerClass().equals(SpinnerController.class)) {
-//            back.setVisible(false);
-//            fadeInBack.playFromStart();
-//        } else if (flowHandler.getCurrentViewControllerClass().equals(DeviceInfoController.class)) {
-//            back.setVisible(true);
-//            fadeInBack.playFromStart();
-//        }
     }
 
     @FXML
@@ -388,28 +308,28 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
                 break;
         }
 
-        }
+    }
 
-        @Override
-        public void handle (MouseEvent event){
-            LOG.info("onClickMoreDetail " + menuServiceEvent.getSelectionModel().getSelectedIndex());
-            switch (menuServiceEvent.getSelectionModel().getSelectedIndex()) {
-                case 0:
-                    if (deviceInfoPresenter != null)
-                        deviceInfoPresenter.onDeviceBatteryEvents(device.getId());
-                    break;
-                case 1:
-                    if (deviceInfoPresenter != null)
-                        deviceInfoPresenter.onDeviceEvents(device.getId());
-                    break;
-                case 2:
-                    if (deviceInfoPresenter != null)
-                        deviceInfoPresenter.onDeviceNetworkEvents(device.getId());
-                    break;
-                case 3:
-                    if (deviceInfoPresenter != null)
-                        deviceInfoPresenter.onDeviceServiceEvents(device.getId());
-                    break;
-            }
+    @Override
+    public void handle(MouseEvent event) {
+        LOG.info("onClickMoreDetail " + menuServiceEvent.getSelectionModel().getSelectedIndex());
+        switch (menuServiceEvent.getSelectionModel().getSelectedIndex()) {
+            case 0:
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceBatteryEvents(device.getId());
+                break;
+            case 1:
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceEvents(device.getId());
+                break;
+            case 2:
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceNetworkEvents(device.getId());
+                break;
+            case 3:
+                if (deviceInfoPresenter != null)
+                    deviceInfoPresenter.onDeviceServiceEvents(device.getId());
+                break;
         }
     }
+}

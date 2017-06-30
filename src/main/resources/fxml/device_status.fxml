@@ -10,13 +10,15 @@
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <StackPane fx:id="root" maxWidth="1000.0" minWidth="800.0" prefWidth="800.0" style="-fx-background-color: fff;"
            xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox maxWidth="340">
+    <VBox maxWidth="360">
         <children>
-            <HBox alignment="CENTER">
-                <Label styleClass="title-label">Количество записей</Label>
-                <Label fx:id="treeTableViewCount" minWidth="80" styleClass="title-label"/>
+            <HBox alignment="CENTER" styleClass="title-label-inner-flow">
+            <Label>Количество записей</Label>
+                <Label fx:id="treeTableViewCount" minWidth="80"/>
                 <StackPane HBox.hgrow="ALWAYS">
                     <StackPane maxWidth="200" StackPane.alignment="CENTER_RIGHT">
                         <JFXTextField fx:id="searchField" promptText="Поиск..."/>
@@ -25,7 +27,7 @@
             </HBox>
             <JFXTreeTableView fx:id="treeTableView" styleClass="tree-table-view">
                 <columns>
-                    <JFXTreeTableColumn fx:id="dateColumn" minWidth="120" resizable="false" prefWidth="90.0"
+                    <JFXTreeTableColumn fx:id="dateColumn" minWidth="140" resizable="false" prefWidth="90.0"
                                         text="Дата"/>
                     <JFXTreeTableColumn fx:id="statusColumn" minWidth="200" prefWidth="133" resizable="false"
                                         text="Статус"/>
@@ -36,5 +38,10 @@
             <Insets bottom="10.0"/>
         </StackPane.margin>
     </VBox>
+    <JFXButton fx:id="btnUser" styleClass="custom-jfx-button-raised" text="Загрузить" textAlignment="CENTER" StackPane.alignment="TOP_RIGHT">
+        <graphic>
+            <FontAwesomeIconView glyphName="CLOUD_DOWNLOAD" size="2.0em" styleClass="icon" />
+        </graphic>
+    </JFXButton>
 </StackPane>
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<StackPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1"
+           xmlns="http://javafx.com/javafx/2.2">
+    <JFXDialog fx:id="dialog">
+    <JFXDialogLayout fx:id="dialogUser">
+        <heading>
+            <ImageView fitHeight="163.0" fitWidth="163.0" layoutX="160.0" layoutY="21.0" pickOnBounds="true"
+                       preserveRatio="true">
+                <image>
+                    <Image url="@../drawables/login_icon.png"/>
+                </image>
+            </ImageView>
+        </heading>
+        <body>
+            <HBox spacing="10">
+                <children>
+                    <VBox  spacing="10">
+                        <children>
+                            <Label>Учетная запись</Label>
+                            <Label>ФИО:</Label>
+                            <Label>Подразделение:</Label>
+                            <Label>Звание:</Label>
+                        </children>
+                    </VBox>
+                    <VBox spacing="10">
+                        <children>
+                            <Label fx:id="login"></Label>
+                            <Label fx:id="username"></Label>
+                            <Label fx:id="department"></Label>
+                            <Label fx:id="rank"></Label>
+                        </children>
+                    </VBox>
+                </children>
+            </HBox>
+        </body>
+        <actions>
+            <JFXButton fx:id="acceptButton" styleClass="dialog-accept">ACCEPT
+            </JFXButton>
+        </actions>
+    </JFXDialogLayout>
+</JFXDialog>
+</StackPane>

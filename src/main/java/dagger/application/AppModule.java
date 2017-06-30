@@ -19,7 +19,7 @@ import main.ControlOfPointMain;
  */
 
 @Module(library = true, injects = {ControlOfPointMain.class, LoginView.class,
-        ControlPanelView.class, DeviceInfoView.class, SettingsController.class}, complete = false)
+        DeviceInfoView.class, SettingsController.class}, complete = false)
 public class AppModule {
     //    @Provides
 //    FXMLLoader provideFxmlLoader(){

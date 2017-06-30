@@ -105,7 +105,7 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
         if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
             deviceInfoInteractor.getDeviceCalls(id)
-                    .subscribeOn(Schedulers.computation())
+                    .subscribeOn(Schedulers.io())
                     .observeOn(JavaFxScheduler.platform())
                     .subscribe(this::handleSuccessDeviceCalls, this::handleError);
         }

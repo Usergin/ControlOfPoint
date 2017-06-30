@@ -38,7 +38,7 @@ public class ControlOfPointMain extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         LOG.info("Application started");
-        Injector.inject(this, Arrays.asList(new AppModule(), new NetworkModule() ));
+        Injector.inject(this, Arrays.asList(new AppModule() ));
         new Thread(() -> {
             try {
                 //he just loaded some svg from a font file

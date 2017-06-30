@@ -3,9 +3,15 @@ package data.model.information;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * Created by OldMan on 25.06.2017.
  */
+@XmlRootElement(name = "call")
+@XmlType(propOrder = {"number", "duration", "type", "date"})
 public class Call extends BaseInfo{
     @SerializedName("number")
     @Expose
@@ -17,16 +23,11 @@ public class Call extends BaseInfo{
     @Expose
     private int type;
 
-    public Call(String number, int duration, int type) {
-        this.number = number;
-        this.duration = duration;
-        this.type = type;
-    }
-
     public int getType() {
         return type;
     }
 
+    @XmlElement
     public void setType(int type) {
         this.type = type;
     }
@@ -35,6 +36,7 @@ public class Call extends BaseInfo{
         return number;
     }
 
+    @XmlElement
     public void setNumber(String number) {
         this.number = number;
     }
@@ -43,6 +45,7 @@ public class Call extends BaseInfo{
         return duration;
     }
 
+    @XmlElement
     public void setDuration(int duration) {
         this.duration = duration;
     }

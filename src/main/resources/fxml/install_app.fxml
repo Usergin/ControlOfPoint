@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableColumn?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<StackPane fx:id="root" maxWidth="1000.0" minWidth="800.0" prefWidth="800.0" style="-fx-background-color: fff;"
-           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.jfoenix.controls.JFXButton?>
+<StackPane fx:id="root" maxWidth="1000.0" minWidth="800.0" prefWidth="800.0" style="-fx-background-color: fff;" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <VBox maxWidth="635">
         <children>
-            <HBox alignment="CENTER">
-                <Label styleClass="title-label">Количество приложений</Label>
-                <Label fx:id="treeTableViewCount" minWidth="80" styleClass="title-label"/>
+            <HBox alignment="CENTER" styleClass="title-label-inner-flow">
+            <Label>Количество приложений</Label>
+                <Label fx:id="treeTableViewCount" minWidth="80"/>
                 <StackPane HBox.hgrow="ALWAYS">
                     <StackPane maxWidth="200" StackPane.alignment="CENTER_RIGHT">
-                        <JFXTextField fx:id="searchField" promptText="Поиск..."/>
+                        <JFXTextField fx:id="searchField" promptText="Поиск..." />
                     </StackPane>
                 </StackPane>
             </HBox>
-            <JFXTreeTableView fx:id="treeTableView" styleClass="tree-table-view">
+            <JFXTreeTableView fx:id="treeTableView" maxHeight="1.7976931348623157E308" prefHeight="600.0" styleClass="tree-table-view">
                 <columns>
-                    <JFXTreeTableColumn fx:id="nameColumn" minWidth="200" prefWidth="133" resizable="false"
-                                        text="Название приложения"/>
-                    <JFXTreeTableColumn fx:id="dateColumn" minWidth="145" resizable="false"
-                                        text="Дата установки"/>
-                    <JFXTreeTableColumn fx:id="infoColumn" minWidth="260" resizable="false" text="Дополнительная информация"/>
+                    <JFXTreeTableColumn fx:id="nameColumn" minWidth="200" prefWidth="133" resizable="false" text="Название&#10;приложения" />
+                    <JFXTreeTableColumn fx:id="dateColumn" minWidth="145" resizable="false" text="Дата&#10;установки" />
+                    <JFXTreeTableColumn fx:id="infoColumn" minWidth="260" resizable="false" text="Дополнительная&#10;информация" />
                 </columns>
             </JFXTreeTableView>
         </children>
@@ -37,4 +35,9 @@
             <Insets bottom="10.0" />
         </StackPane.margin>
     </VBox>
+    <JFXButton fx:id="btnUser" styleClass="custom-jfx-button-raised" text="Загрузить" textAlignment="CENTER" StackPane.alignment="TOP_RIGHT">
+        <graphic>
+            <FontAwesomeIconView glyphName="CLOUD_DOWNLOAD" size="2.0em" styleClass="icon" />
+        </graphic>
+    </JFXButton>
 </StackPane>

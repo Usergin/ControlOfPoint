@@ -2,9 +2,9 @@ package gui.control_panel;
 
 import com.jfoenix.controls.*;
 import dagger.Injector;
-import dagger.application.AppModule;
 import dagger.control_panel.ControlPanelModule;
 import data.model.Device;
+import data.model.User;
 import gui.fragment_controllers.device_info.DeviceInfoController;
 import gui.fragment_controllers.map.MainMapController;
 import gui.menu.MainMenuController;
@@ -25,6 +25,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -33,8 +34,8 @@ import utils.RxBus;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.Objects;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by OldMan on 04.06.2017.
@@ -46,7 +47,6 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
     @Inject
     ControlPanelPresenter controlPanelPresenter;
     @FXMLViewFlowContext
-    @Inject
     ViewFlowContext context;
     @ViewNode
     private StackPane rootPane;
@@ -57,17 +57,31 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
     @ViewNode
     private JFXHamburger device_menu;
     @ViewNode
+    private JFXButton btnUser;
+    @ViewNode
+    private JFXDialog dialog;
+    @ViewNode
     private StackPane optionsBurger;
-    @FXML
+    @ViewNode
     private JFXRippler back;
     @ViewNode
     private JFXRippler ripple_device_menu;
     @ViewNode
-    private StackPane update;
+    private JFXButton acceptButton;
+    @ViewNode
+    private Label login;
+    @ViewNode
+    private Label username;
+    @ViewNode
+    private Label department;
+    @ViewNode
+    private Label rank;
+
     private JFXListView<Device> list;
     private JFXPopup toolbarPopup, devicePopup;
     private FlowHandler flowHandler;
     private ObservableList<Device> devicesData = FXCollections.observableArrayList();
+    private User user;
     /**
      * init fxml when loaded.
      */
@@ -75,20 +89,11 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
 
     @PostConstruct
     public void init() throws Exception {
-        Injector.inject(this, Arrays.asList(new ControlPanelModule(), new AppModule()));
+        Injector.inject(this, Arrays.asList(new ControlPanelModule()));
         Objects.requireNonNull(context, "context");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui/main_menu.fxml"));
-        loader.setController(new MainMenuController());
-        toolbarPopup = new JFXPopup(loader.load());
-        optionsBurger.setOnMouseClicked(e -> toolbarPopup.show(optionsBurger,
-                JFXPopup.PopupVPosition.TOP,
-                JFXPopup.PopupHPosition.RIGHT,
-                -12,
-                15));
-
-        list = new JFXListView<>();
-        list.setOnMouseClicked(this);
-
+        initMenu();
+        this.user = (User) context.getRegisteredObject("user");
+        btnUser.setText(user.getLogin());
         fadeInBack = getFadeTransition(back);
         fadeInDeviceMenu = getFadeTransition(ripple_device_menu);
         // create the inner flow and content
@@ -101,7 +106,6 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
     public void setDeviceList(ObservableList<Device> devices) {
         RxBus.instanceOf().setDeviceList(devices);
         this.devicesData = devices;
-        LOG.info("handleSuccess " + devices.size());
         list.setItems(devicesData);
         list.setCellFactory(param -> new DeviceItemViewCell());
         devicePopup = new JFXPopup(list);
@@ -110,8 +114,8 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
         ripple_device_menu.setOnMouseClicked(e -> devicePopup.show(device_menu, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT));
     }
 
-    @FXML
-    private void onUpdate() {
+    @Override
+    public void onUpdateDeviceList() {
         if (controlPanelPresenter != null)
             controlPanelPresenter.onNewDeviceList();
     }
@@ -210,7 +214,33 @@ public class ControlPanelController implements ControlPanelView, EventHandler<Mo
 //        showFlow(flowHandler);
     }
 
+    private void initMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui/main_menu.fxml"));
+        loader.setController(new MainMenuController());
+        toolbarPopup = new JFXPopup(loader.load());
+        optionsBurger.setOnMouseClicked(e -> toolbarPopup.show(optionsBurger,
+                JFXPopup.PopupVPosition.TOP,
+                JFXPopup.PopupHPosition.RIGHT,
+                -12,
+                15));
+        MainMenuController menuController = loader.getController();
+        menuController.setControlPanelContext(this);
 
+        list = new JFXListView<>();
+        list.setOnMouseClicked(this);
+    }
+
+    @FXML
+    void onShowUser(){
+        dialog.setTransitionType(JFXDialog.DialogTransition.CENTER);
+        dialog.show(rootPane);
+        login.setText(user.getLogin());
+        username.setText(user.getUsername());
+        department.setText(user.getDepartment());
+        rank.setText(user.getRank());
+        acceptButton.setOnMouseClicked((e) -> dialog.close());
+
+    }
     private FadeTransition getFadeTransition(JFXRippler jfxRippler) {
         FadeTransition fadeIn = new FadeTransition(
                 Duration.millis(500)
