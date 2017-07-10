@@ -39,13 +39,22 @@ public class Settings {
     private boolean service;
     @SerializedName("airplane_mode")
     @Expose
-    private boolean airplaneMode;
+    private int airplaneMode;
     @SerializedName("wifi")
     @Expose
-    private boolean wifi;
+    private int wifi;
     @SerializedName("screen")
     @Expose
-    private boolean screen;
+    private int screen;
+    @SerializedName("flash")
+    @Expose
+    private boolean flash;
+    @SerializedName("vibrate")
+    @Expose
+    private boolean vibrate;
+    @SerializedName("sound")
+    @Expose
+    private int sound;
     @SerializedName("reboot")
     @Expose
     private boolean reboot;
@@ -58,6 +67,10 @@ public class Settings {
     @SerializedName("passwd")
     @Expose
     private int passwd;
+    @SerializedName("sync_time")
+    @Expose
+    private long syncTime;
+
 
     private Settings(Builder builder) {
         setLocation(builder.location);
@@ -77,11 +90,16 @@ public class Settings {
         setReboot(builder.reboot);
         setShutDown(builder.shut_down);
         setRmApps(builder.rm_apps);
+        setFlash(builder.flash);
+        setSound(builder.sound);
+        setVibrate(builder.vibrate);
+        setSyncTime(builder.syncTime);
     }
 
     public static Builder newBuilder() {
         return new Builder();
     }
+
 
     public boolean isReboot() {
         return reboot;
@@ -115,30 +133,61 @@ public class Settings {
         this.passwd = passwd;
     }
 
-    public boolean isScreen() {
+    public int getScreen() {
         return screen;
     }
 
-    public void setScreen(boolean is_screen) {
+    public void setScreen(int is_screen) {
         this.screen = is_screen;
     }
 
-    public boolean isWifi() {
+    public int getWifi() {
         return wifi;
     }
 
-    public void setWifi(boolean is_wifi) {
+    public void setWifi(int is_wifi) {
         this.wifi = is_wifi;
     }
 
-    public boolean isAirplaneMode() {
+    public int getAirplaneMode() {
         return airplaneMode;
     }
 
-    public void setAirplaneMode(boolean airplane_mode) {
+    public void setAirplaneMode(int airplane_mode) {
         this.airplaneMode = airplane_mode;
     }
 
+    public boolean getFlash() {
+        return flash;
+    }
+
+    public void setFlash(boolean flash) {
+        this.flash = flash;
+    }
+
+    public boolean getVibrate() {
+        return vibrate;
+    }
+
+    public void setVibrate(boolean vibrate) {
+        this.vibrate = vibrate;
+    }
+
+    public int getSound() {
+        return sound;
+    }
+
+    public void setSound(int sound) {
+        this.sound = sound;
+    }
+
+    public long getSyncTime() {
+        return syncTime;
+    }
+
+    public void setSyncTime(long syncTime) {
+        this.syncTime = syncTime;
+    }
 
     public boolean isLocation() {
         return location;
@@ -231,15 +280,40 @@ public class Settings {
         private boolean hide_icon;
         private int location_mode;
         private boolean service;
-        private boolean airplane_mode;
-        private boolean wifi;
-        private boolean screen;
+        private int airplane_mode;
+        private int wifi;
+        private int screen;
         private boolean reboot;
         private boolean shut_down;
         private String rm_apps;
         private int password;
+        private long syncTime;
+        private boolean flash;
+        private boolean vibrate;
+        private int sound;
+
 
         private Builder() {
+        }
+
+        public Builder syncTime(long val) {
+            syncTime = val;
+            return this;
+        }
+
+        public Builder flash(boolean flash) {
+            flash = flash;
+            return this;
+        }
+
+        public Builder vibrate(boolean val) {
+            vibrate = val;
+            return this;
+        }
+
+        public Builder sound(int val) {
+            sound = val;
+            return this;
         }
 
         public Builder reboot(boolean val) {
@@ -257,17 +331,17 @@ public class Settings {
             return this;
         }
 
-        public Builder airplane_mode(boolean val) {
+        public Builder airplane_mode(int val) {
             airplane_mode = val;
             return this;
         }
 
-        public Builder wifi(boolean val) {
+        public Builder wifi(int val) {
             wifi = val;
             return this;
         }
 
-        public Builder screen(boolean val) {
+        public Builder screen(int val) {
             screen = val;
             return this;
         }

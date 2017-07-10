@@ -49,13 +49,13 @@ public class DeviceInfoInteractorImpl implements DeviceInfoInteractor {
     public Single<List<Call>> getDeviceCalls(int id) {
         LOG.debug("parser " + parser);
         return networkService.getDeviceCalls(id)
-                .doOnSuccess(calls -> parser.saveObject("call" + id +".xml", calls))
-                .map(callResponse -> {
-                    List<Call> calls = callResponse.getData();
-//                    parser.saveObject("call" + id +".xml", calls);
-                    return calls;
-                });
-//                .map(CallResponse::getData);
+//                .doOnSuccess(calls -> parser.saveObject("call" + id +".xml", calls))
+//                .map(callResponse -> {
+//                    List<Call> calls = callResponse.getData();
+////                    parser.saveObject("call" + id +".xml", calls);
+//                    return calls;
+//                });
+                .map(CallResponse::getData);
 //                .doOnSuccess(calls -> parser.saveObject("call" + "id.xml", calls));
     }
 

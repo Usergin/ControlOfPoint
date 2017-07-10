@@ -102,14 +102,14 @@ public class LoginController implements LoginView {
 
     @FXML
     void login(ActionEvent event) {
-//        loginPresenter.onAuthentication(new Authentication(username.get(), getHashedValue(password.get())));
+        loginPresenter.onAuthentication(new Authentication(username.get(), getHashedValue(password.get())));
     }
 
     @Override
     public void onAuthenticationSuccess(User user) {
         PauseTransition pauseTransition = new PauseTransition();
         //ToDo change second
-        pauseTransition.setDuration(Duration.seconds(0));
+        pauseTransition.setDuration(Duration.seconds(2));
         pauseTransition.setOnFinished(ev -> {
             completeLogin(user);
         });
@@ -118,12 +118,12 @@ public class LoginController implements LoginView {
 
     @Override
     public void showProgress(boolean val) {
-        imgProgress.setVisible(false);
+        imgProgress.setVisible(val);
     }
 
     @Override
     public void showBtnLogin(boolean val) {
-        btnLogin.setVisible(false);
+        btnLogin.setVisible(val);
     }
 
     private String getHashedValue(String inputData) {

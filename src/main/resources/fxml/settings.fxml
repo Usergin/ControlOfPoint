@@ -2,20 +2,24 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" style="-fx-background-color: rgba(0, 0, 0, 0.87);" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" style="-fx-background-color: rgba(224, 224, 224, 0.99);" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0">
             <top>
-                <Label styleClass="title-label-settings" text="Настройки устройтсва" BorderPane.alignment="CENTER">
+                <Label styleClass="title-label-settings" text="Настройки устройства" BorderPane.alignment="CENTER">
                     <BorderPane.margin>
                         <Insets top="5.0" />
                     </BorderPane.margin>
@@ -37,60 +41,225 @@
                 </HBox>
             </bottom>
             <center>
-                <VBox alignment="CENTER_LEFT" spacing="8.0" BorderPane.alignment="CENTER">
-                    <JFXCheckBox fx:id="checkCall" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг звонков">
-                        <VBox.margin>
-                            <Insets />
-                        </VBox.margin>
-                    </JFXCheckBox>
-                    <JFXCheckBox fx:id="checkSMS" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг сообщений" />
-                    <JFXCheckBox fx:id="checkLocation" styleClass="custom-jfx-check-box-all-colored-settings" text="Определение местоположения" />
+                <VBox spacing="8.0" BorderPane.alignment="CENTER">
+               <GridPane alignment="CENTER_LEFT" minHeight="450.0" prefHeight="600.0" prefWidth="600.0">
+                 <columnConstraints>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                 </columnConstraints>
+                 <rowConstraints>
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 </rowConstraints>
+                  <children>
+                          <JFXCheckBox fx:id="checkCall" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг звонков" />
+                          <JFXCheckBox fx:id="checkSMS" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг сообщений" GridPane.columnIndex="1" />
+                          <JFXCheckBox fx:id="checkLocation" styleClass="custom-jfx-check-box-all-colored-settings" text="Определение местоположения" GridPane.rowIndex="1" />
+                          <JFXCheckBox fx:id="checkService" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг сервисных сообщений" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
+                          <JFXCheckBox fx:id="checkContact" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список контактов " GridPane.rowIndex="12" />
+                          <JFXCheckBox fx:id="checkCallList" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список звонков" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                          <JFXCheckBox fx:id="checkSmsList" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список sms" GridPane.rowIndex="13" />
+                          <JFXCheckBox fx:id="checkInstallApps" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список приложений" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                          <JFXCheckBox fx:id="checkHideIcon" maxWidth="-Infinity" styleClass="custom-jfx-check-box-all-colored-settings" text="Спрятать иконку " GridPane.rowIndex="2" />
 
-                    <VBox spacing="10">
+                          <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" styleClass="combo-box-button-title-label-settings" text="Разовые функции" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="11" />
+                          <JFXCheckBox fx:id="checkVibrate" styleClass="custom-jfx-check-box-all-colored-settings" text="Включить вибрацию" GridPane.rowIndex="14" />
+                          <JFXCheckBox fx:id="checkReboot" styleClass="custom-jfx-check-box-all-colored-settings" text="Перезагрузить устройство" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                          <JFXCheckBox fx:id="checkShutDown" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить устройство" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+
+                          <JFXCheckBox fx:id="checkFlash" styleClass="custom-jfx-check-box-all-colored-settings" text="Включить фонарик" GridPane.rowIndex="15" />
+                     <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
                         <children>
-                            <Label styleClass="radio-button-title-label">Способ определения местоположения</Label>
-                            <JFXRadioButton fx:id="rBtnHightAccuracyLocation" selected="true" styleClass="custom-jfx-radio-button" text="Повышенная точность" userData="0">
-                            </JFXRadioButton>
-                            <JFXRadioButton fx:id="rBtnMidleAccuracyLocation" styleClass="custom-jfx-radio-button" text="Средняя точность" userData="1" />
-                            <JFXRadioButton fx:id="rBtnSpyLocation" styleClass="custom-jfx-radio-button" text="Скрытое определение" userData="2" />
-                        </children>
-                        <VBox.margin>
-                            <Insets bottom="5.0" left="5.0" top="5.0" />
-                        </VBox.margin>
-                    </VBox>
-                    <JFXCheckBox fx:id="checkService" styleClass="custom-jfx-check-box-all-colored-settings" text="Мониторинг сервисных сообщений" />
+                                  <Label alignment="CENTER" contentDisplay="BOTTOM" styleClass="radio-button-title-label">Способ определения местоположения</Label>
+                        </children></VBox>
+                            <JFXComboBox id="comboBoxLocationProvider" prefWidth="300.0" promptText="Select Item" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <Label>
+                                            Высокая точность
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="MAP_MARKER" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Средняя точность
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="SIGNAL" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Скрытое определение
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="EYE_SLASH" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                    </FXCollections>
+                                </items>
+                            </JFXComboBox>
+                            <Label styleClass="radio-button-title-label" GridPane.rowIndex="5">Состояние авиарежима</Label>
+                            <JFXComboBox id="comboBoxAirplaneMode" prefWidth="300" promptText="Select Item" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <Label>
+                                            Установка пользователя
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="USER" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Выключить авиарежим
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="SIGNAL" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Включить авиарежим
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="PLANE" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                    </FXCollections>
+                                </items>
+                            </JFXComboBox>
+                            <Label styleClass="radio-button-title-label" GridPane.rowIndex="6">Установить состояние WiFi</Label>
+                            <JFXComboBox id="comboBoxStateWifi" prefWidth="300" promptText="Select Item" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <Label>
+                                            Установка пользователя
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="USER" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Выключить WiFi
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="TIMES" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Включить WiFi
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="WIFI" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                    </FXCollections>
+                                </items>
+                            </JFXComboBox>
+                            <Label styleClass="radio-button-title-label" GridPane.rowIndex="7">Установить состояние экрана</Label>
+                            <JFXComboBox id="comboBoxScreen" prefWidth="300" promptText="Select Item" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <Label>
+                                            Установка пользователя
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="USER" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Выключить экран
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="EYE_SLASH" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Включить экран
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="EYE" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                    </FXCollections>
+                                </items>
+                            </JFXComboBox>
+                            <Label styleClass="radio-button-title-label" GridPane.rowIndex="8">Режим звука</Label>
+                            <JFXComboBox id="comboBoxVolume" prefWidth="300" promptText="Select Item" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <Label>
+                                            Установка пользователя
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="USER" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Режим беззвучный
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="VOLUME_OFF" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                        <Label>
+                                            Включить звук
+                                            <graphic>
+                                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                                    <FontAwesomeIconView glyphName="VOLUME_UP" size="1.5em" styleClass="custom-jfx-list-view-icon" />
+                                                </StackPane>
+                                            </graphic>
+                                        </Label>
+                                    </FXCollections>
+                                </items>
+                            </JFXComboBox>
+                  </children>
+               </GridPane>
 
-                    <JFXCheckBox fx:id="checkHideIcon" styleClass="custom-jfx-check-box-all-colored-settings" text="Спрятать иконку " />
-                    <Label alignment="CENTER" contentDisplay="CENTER" styleClass="combo-box-button-title-label" text="Разовые функции" textAlignment="CENTER">
-                  <VBox.margin>
-                     <Insets left="70.0" />
-                  </VBox.margin></Label>
 
-                    <JFXCheckBox fx:id="checkContact" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список контактов " />
-                    <JFXCheckBox fx:id="checkCallList" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список звонков" />
-                    <JFXCheckBox fx:id="checkSmsList" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список sms" />
-                    <JFXCheckBox fx:id="checkInstallApps" styleClass="custom-jfx-check-box-all-colored-settings" text="Получить список приложений" />
-                    <JFXCheckBox fx:id="checkAirplaneMode" styleClass="custom-jfx-check-box-all-colored-settings" text="Включить авиарежим" />
-                    <JFXCheckBox fx:id="checkWiFi" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить wi-fi" />
-                    <JFXCheckBox fx:id="checkScreen" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить экран" />
-                    <JFXCheckBox fx:id="checkReboot" styleClass="custom-jfx-check-box-all-colored-settings" text="Перезагрузить устройство" />
-                    <JFXCheckBox fx:id="checkShutDown" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить устройство" />
 
                     <BorderPane.margin>
-                        <Insets top="5.0" />
+                        <Insets left="10.0" right="10.0" top="5.0" />
                     </BorderPane.margin>
                     <padding>
-                        <Insets bottom="5.0" left="80.0" />
+                        <Insets bottom="5.0" />
                     </padding>
                 </VBox>
             </center>
-         <!--<right>-->
-                 <!--<FontAwesomeIconView glyphName="TRASH" size="3.0em" styleClass="icon-settings" BorderPane.alignment="TOP_CENTER">-->
-               <!--<BorderPane.margin>-->
-                  <!--<Insets right="10.0" />-->
-               <!--</BorderPane.margin></FontAwesomeIconView>-->
-          <!--</right>-->
+            <!--<right>-->
+            <!--<FontAwesomeIconView glyphName="TRASH" size="3.0em" styleClass="icon-settings" BorderPane.alignment="TOP_CENTER">-->
+            <!--<BorderPane.margin>-->
+            <!--<Insets right="10.0" />-->
+            <!--</BorderPane.margin></FontAwesomeIconView>-->
+            <!--</right>-->
         </BorderPane>
     </children>
 </StackPane>

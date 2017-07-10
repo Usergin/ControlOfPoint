@@ -51,9 +51,11 @@ public class MainMapController extends BaseMapController implements MainMapView 
     public void setContent() {
         RxBus.instanceOf().getDeviceList().subscribe(this::setMarkers);
         RxBus.instanceOf().getShortDeviceInfo().subscribe(deviceConsumer -> {
-            mapView.panBy(deviceConsumer.getLatitude(), deviceConsumer.getLongitude());
-            Marker marker = markerList.stream().filter(marker1 -> marker1.getTitle().contains(deviceConsumer.getImei())).findFirst().get();
-            showInfo(marker);
+            if(deviceConsumer.getLatitude()!=null && deviceConsumer.getLongitude() != null) {
+                mapView.panBy(deviceConsumer.getLatitude(), deviceConsumer.getLongitude());
+                Marker marker = markerList.stream().filter(marker1 -> marker1.getTitle().contains(deviceConsumer.getImei())).findFirst().get();
+                showInfo(marker);
+            }
         });
     }
 
@@ -83,19 +85,20 @@ public class MainMapController extends BaseMapController implements MainMapView 
         if (mapView != null)
             mapView.getMap().clearMarkers();
         for (Device device : devicesData) {
-            LatLong point = new LatLong(device.getLongitude(), device.getLatitude());
-            MarkerOptions markerOptions = new MarkerOptions();
+            if (device.getLongitude() != null && device.getLatitude() != null) {
+                LatLong point = new LatLong(device.getLongitude(), device.getLatitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(point)
+                        .title("<font color=\"#009688\"><b>" + device.getModel() + "</b></font>" + "<br>" + device.getImei() + "<br>" + device.getVersion_os()
+                                + "<br>id:" + device.getId())
+                        .visible(true)
+                        .animation(Animation.DROP);
 
-            markerOptions.position(point)
-                    .title("<font color=\"#009688\"><b>" + device.getModel() + "</b></font>" + "<br>" + device.getImei() + "<br>" + device.getVersion_os()
-                            + "<br>id:" + device.getId())
-                    .visible(true)
-                    .animation(Animation.DROP);
-
-            Marker marker = new Marker(markerOptions);
-            markerList.add(marker);
-            map.addUIEventHandler(marker, UIEventType.click, jsObject -> showInfo(marker));
-            map.addUIEventHandler(marker, UIEventType.dblclick, jsObject -> onDeviceInfo(marker));
+                Marker marker = new Marker(markerOptions);
+                markerList.add(marker);
+                map.addUIEventHandler(marker, UIEventType.click, jsObject -> showInfo(marker));
+                map.addUIEventHandler(marker, UIEventType.dblclick, jsObject -> onDeviceInfo(marker));
+            }
         }
         map.addMarkers(markerList);
     }

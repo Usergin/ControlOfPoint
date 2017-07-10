@@ -30,18 +30,23 @@
 .title-label-settings {
     -fx-font-size: 16px;
     -fx-padding: 14px;
-    -fx-text-fill: rgba(255, 255, 255, 0.87);
+    -fx-text-fill: rgba(0, 0, 0, 0.87);
 }
 
 .radio-button-title-label {
     -fx-font-size: 12.0px;
     /*-fx-padding: 14.0 0.0 -20.0 0.0;*/
-    -fx-text-fill: rgba(255, 255, 255, 0.87);
+    -fx-text-fill: rgba(0, 0, 0, 0.87);
 }
 .combo-box-button-title-label {
     -fx-font-size: 14.0px;
     /*-fx-padding: 14.0 0.0 -20.0 0.0;*/
     -fx-text-fill: rgba(255, 255, 255, 0.87);
+}
+.combo-box-button-title-label-settings {
+    -fx-font-size: 14.0px;
+    /*-fx-padding: 14.0 0.0 -20.0 0.0;*/
+    -fx-text-fill: rgba(0, 0, 0, 0.87);
 }
 .jfx-combo-box{
     -fx-text-fill: WHITE;
@@ -311,7 +316,7 @@ jfx-combo-box .text {
 
 .custom-jfx-radio-button {
     -fx-font-size: 12.0px;
-    -fx-text-fill: whitesmoke;
+    -fx-text-fill: black;
 }
 
 .custom-jfx-radio-button .radio {
@@ -439,7 +444,7 @@ jfx-combo-box .text {
 /********************************************************************************!*/
 
 .jfx-check-box {
-    -fx-font-weight: BOLD;
+    -fx-font-weight: lighter;
 }
 
 .custom-jfx-check-box {
@@ -455,8 +460,8 @@ jfx-combo-box .text {
 
 .custom-jfx-check-box-all-colored-settings {
     /*-jfx-checked-color: #009688;*/
-    -jfx-unchecked-color: WHITE;
-    -fx-text-fill: rgba(255, 255, 255.0, 0.87);
+    -jfx-unchecked-color: BLACK;
+    -fx-text-fill: rgba(0, 0, 0, 0.87);
 }
 
 .custom-jfx-check-box-text-colored {

@@ -1,6 +1,7 @@
 package gui.fragment_controllers;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import data.model.information.Settings;
 import gui.fragment_controllers.device_info.DeviceInfoController;
@@ -46,21 +47,20 @@ public class SettingsController {
     @ViewNode
     private JFXCheckBox checkHideIcon;
     @ViewNode
-    private JFXCheckBox checkAirplaneMode;
-    @ViewNode
-    private JFXCheckBox checkWiFi;
-    @ViewNode
-    private JFXCheckBox checkScreen;
-    @ViewNode
     private JFXCheckBox checkReboot;
     @ViewNode
     private JFXCheckBox checkShutDown;
     @ViewNode
-    private JFXRadioButton rBtnHightAccuracyLocation;
+    private JFXComboBox comboBoxLocationProvider;
     @ViewNode
-    private JFXRadioButton rBtnMidleAccuracyLocation;
+    private JFXComboBox comboBoxAirplaneMode;
     @ViewNode
-    private JFXRadioButton rBtnSpyLocation;
+    private JFXComboBox comboBoxStateWifi;
+    @ViewNode
+    private JFXComboBox comboBoxScreen;
+    @ViewNode
+    private JFXComboBox comboBoxVolume;
+
     private Settings settings;
     private DeviceInfoController deviceInfoController;
 
@@ -72,19 +72,76 @@ public class SettingsController {
         this.deviceInfoController = deviceInfoController;
         this.settings = settings;
         LOG.info("SettingsController" + settings);
-        ToggleGroup group = new ToggleGroup();
-        rBtnHightAccuracyLocation.setToggleGroup(group);
-        rBtnMidleAccuracyLocation.setToggleGroup(group);
-        rBtnSpyLocation.setToggleGroup(group);
         switch (settings.getLocationMode()) {
             case 0:
-                rBtnHightAccuracyLocation.setSelected(true);
+                comboBoxLocationProvider.setValue(comboBoxLocationProvider.getItems().get(0));
                 break;
             case 1:
-                rBtnMidleAccuracyLocation.setSelected(true);
+                comboBoxLocationProvider.setValue(comboBoxLocationProvider.getItems().get(1));
                 break;
             case 2:
-                rBtnSpyLocation.setSelected(true);
+                comboBoxLocationProvider.setValue(comboBoxLocationProvider.getItems().get(2));
+                break;
+        }
+
+        switch (settings.getAirplaneMode()) {
+            case 0:
+                comboBoxAirplaneMode.setValue(comboBoxAirplaneMode.getItems().get(0));
+                break;
+            case 1:
+                comboBoxAirplaneMode.setValue(comboBoxAirplaneMode.getItems().get(1));
+                break;
+            case 2:
+                comboBoxAirplaneMode.setValue(comboBoxAirplaneMode.getItems().get(2));
+                break;
+        }
+
+        switch (settings.getWifi()) {
+            case 0:
+                comboBoxStateWifi.setValue(comboBoxStateWifi.getItems().get(0));
+                break;
+            case 1:
+                comboBoxStateWifi.setValue(comboBoxStateWifi.getItems().get(1));
+                break;
+            case 2:
+                comboBoxStateWifi.setValue(comboBoxStateWifi.getItems().get(2));
+                break;
+        }
+
+        switch (settings.getScreen()) {
+            case 0:
+                comboBoxScreen.setValue(comboBoxScreen.getItems().get(0));
+                break;
+            case 1:
+                comboBoxScreen.setValue(comboBoxScreen.getItems().get(1));
+                break;
+            case 2:
+                comboBoxScreen.setValue(comboBoxScreen.getItems().get(2));
+                break;
+        }
+
+
+        switch (settings.getSound()) {
+            case 0:
+                comboBoxVolume.setValue(comboBoxVolume.getItems().get(0));
+                break;
+            case 1:
+                comboBoxVolume.setValue(comboBoxVolume.getItems().get(1));
+                break;
+            case 2:
+                comboBoxVolume.setValue(comboBoxVolume.getItems().get(2));
+                break;
+        }
+
+        switch (settings.getScreen()) {
+            case 0:
+                comboBoxScreen.setValue(comboBoxScreen.getItems().get(0));
+                break;
+            case 1:
+                comboBoxScreen.setValue(comboBoxScreen.getItems().get(1));
+                break;
+            case 2:
+                comboBoxScreen.setValue(comboBoxScreen.getItems().get(2));
                 break;
         }
         checkCall.setSelected(settings.isBell());
@@ -96,19 +153,9 @@ public class SettingsController {
         checkSmsList.setSelected(settings.isSmsList());
         checkInstallApps.setSelected(settings.isAppList());
         checkHideIcon.setSelected(settings.isHideIcon());
-        checkAirplaneMode.setSelected(settings.isAirplaneMode());
-        checkWiFi.setSelected(settings.isWifi());
-        checkScreen.setSelected(settings.isScreen());
         checkReboot.setSelected(settings.isReboot());
         checkShutDown.setSelected(settings.isShutDown());
-        group.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
-            if (group.getSelectedToggle() != null) {
 
-                settings.setLocationMode(Integer.parseInt(group.getSelectedToggle().getUserData().toString()));
-                LOG.info("SettingsController" + group.getSelectedToggle().getUserData().toString() + settings.getLocationMode());
-
-            }
-        });
     }
 
     @FXML
@@ -122,9 +169,10 @@ public class SettingsController {
         settings.setSmsList(checkSmsList.isSelected());
         settings.setAppList(checkInstallApps.isSelected());
         settings.setHideIcon(checkHideIcon.isSelected());
-        settings.setAirplaneMode(checkAirplaneMode.isSelected());
-        settings.setWifi(checkWiFi.isSelected());
-        settings.setScreen(checkScreen.isSelected());
+        settings.setAirplaneMode(comboBoxAirplaneMode.getSelectionModel().getSelectedIndex());
+        settings.setLocationMode(comboBoxLocationProvider.getSelectionModel().getSelectedIndex());
+        settings.setWifi(comboBoxStateWifi.getSelectionModel().getSelectedIndex());
+        settings.setScreen(comboBoxScreen.getSelectionModel().getSelectedIndex());
         settings.setReboot(checkReboot.isSelected());
         settings.setShutDown(checkShutDown.isSelected());
         if (deviceInfoController != null) {

@@ -99,7 +99,8 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
         os.setText(device.getVersion_os());
         spinnerPane.setVisible(false);
         deviceInfoPresenter.setDeviceInfoView(this);
-        showLastLocationMapFlow(new LatLong(device.getLongitude(), device.getLatitude()));
+        if (device.getLongitude() != null && device.getLatitude() != null)
+            showLastLocationMapFlow(new LatLong(device.getLongitude(), device.getLatitude()));
     }
 
     @Override
