@@ -21,7 +21,7 @@ public interface DeviceInfoInteractor {
     Single<List<DeviceEvent>> getDeviceEvents(int id);
     Single<List<BatteryEvent>> getDeviceBatteryEvents(int id);
     Single<List<InstallApp>> getDeviceInstallApps(int id);
-    Single<List<Location>> getDeviceLocations(int id);
+    Single<List<Location>> getDeviceLocations(int id, String date);
     Single<List<Message>> getDeviceMessages(int id);
     Single<List<NetworkEvent>> getDeviceNetworkEvents(int id);
     Single<List<ServiceEvent>> getDeviceServiceEvents(int id);

@@ -6,6 +6,8 @@ import data.remote.model.response.*;
 import io.reactivex.Single;
 import retrofit2.http.*;
 
+import java.util.Date;
+
 /**
  * Created by OldMan on 17.06.2017.
  */
@@ -65,8 +67,8 @@ public interface ServerApi {
     Single<DeviceInfoResponse> getDeviceInfoById(@Path("id") int device_id);
 
     @Headers({"Accept: application/json"})
-    @GET("/device/{id}/locations")
-    Single<LocationResponse> getDeviceLocations(@Path("id") int device_id);
+    @GET("/device/{id}/locations/{date}")
+    Single<LocationResponse> getDeviceLocations(@Path("id") int device_id, @Path("date") String date);
 
     @Headers({"Accept: application/json"})
     @GET("/device/{id}/messages")

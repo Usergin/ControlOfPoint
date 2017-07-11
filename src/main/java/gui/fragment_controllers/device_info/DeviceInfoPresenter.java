@@ -17,7 +17,7 @@ public interface DeviceInfoPresenter {
     void onDeviceEvents(int id);
     void onDeviceBatteryEvents(int id);
     void onDeviceInstallApps(int id);
-    void onDeviceLocations(int id);
+    void onDeviceLocations(int id, String date);
     void onDeviceMessages(int id);
     void onDeviceNetworkEvents(int id);
     void onDeviceServiceEvents(int id);

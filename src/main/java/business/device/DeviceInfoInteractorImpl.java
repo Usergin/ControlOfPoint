@@ -84,8 +84,8 @@ public class DeviceInfoInteractorImpl implements DeviceInfoInteractor {
     }
 
     @Override
-    public Single<List<Location>> getDeviceLocations(int id) {
-        return networkService.getDeviceLocations(id)
+    public Single<List<Location>> getDeviceLocations(int id, String date) {
+        return networkService.getDeviceLocations(id, date)
                 .map(LocationResponse::getData);
     }
 

@@ -8,6 +8,7 @@ import main.ControlOfPointMain;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
+import java.util.Date;
 
 /**
  * Created by OldMan on 18.06.2017.
@@ -91,9 +92,9 @@ public class NetworkService {
         return serverApi.getDeviceStatus(id);
     }
 
-    public Single<LocationResponse> getDeviceLocations(int id) {
+    public Single<LocationResponse> getDeviceLocations(int id, String date) {
         LOG.info("LocationResponse");
-        return serverApi.getDeviceLocations(id);
+        return serverApi.getDeviceLocations(id, date);
     }
 
     public Single<MessageResponse> getDeviceMessages(int id) {

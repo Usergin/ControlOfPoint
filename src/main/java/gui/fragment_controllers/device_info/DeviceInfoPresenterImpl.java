@@ -211,10 +211,10 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     }
 
     @Override
-    public void onDeviceLocations(int id) {
+    public void onDeviceLocations(int id, String date) {
         if (deviceInfoView != null) {
             deviceInfoView.showSpinner(true);
-            deviceInfoInteractor.getDeviceLocations(id)
+            deviceInfoInteractor.getDeviceLocations(id, date)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(JavaFxScheduler.platform())
                     .subscribe(this::handleSuccessDeviceLocation, this::handleError);
@@ -224,11 +224,9 @@ public class DeviceInfoPresenterImpl implements DeviceInfoPresenter {
     private void handleSuccessDeviceLocation(List<Location> locations) {
         if (deviceInfoView != null) {
             deviceInfoView.showSpinner(false);
-            if (locations.size() != 0)
                 deviceInfoView.showMapFlow(locations);
-            else {
+            if (locations.size() == 0)
                 deviceInfoView.showSnackBar("Данные отсутсвуют");
-            }
         }
     }
 

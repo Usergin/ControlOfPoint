@@ -4,8 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXSnackbar;
-import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
-import com.lynden.gmapsfx.javascript.event.MouseEventHandler;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.LatLong;
@@ -30,8 +28,11 @@ import io.datafx.controller.flow.container.AnimatedFlowContainer;
 import io.datafx.controller.flow.container.ContainerAnimations;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import javafx.event.EventHandler;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
+import io.reactivex.schedulers.Schedulers;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -41,7 +42,10 @@ import org.apache.log4j.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,7 +54,7 @@ import java.util.Objects;
  */
 
 @ViewController(value = "/fxml/device_info.fxml")
-public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseEvent>, MouseEventHandler {
+public class DeviceInfoController implements DeviceInfoView {
     private static final Logger LOG = Logger.getLogger(DeviceInfoController.class);
     @Inject
     DeviceInfoPresenter deviceInfoPresenter;
@@ -82,6 +86,7 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
     private FlowHandler flowHandler;
     private JFXListView<String> menuServiceEvent;
     private int lastSelectedMenu = -1;
+    private DeviceMapController deviceMapController;
 
     @PostConstruct
     public void init() {
@@ -93,7 +98,7 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
         menuServiceEvent.getItems().add("Статус устройства");
         menuServiceEvent.getItems().add("Сеть ");
         menuServiceEvent.getItems().add("Остальное");
-        menuServiceEvent.setOnMouseClicked(this);
+        menuServiceEvent.setOnMouseClicked(this::handleMouseEvent);
         model.setText(device.getModel());
         imei.setText(device.getImei());
         os.setText(device.getVersion_os());
@@ -103,10 +108,6 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
             showLastLocationMapFlow(new LatLong(device.getLongitude(), device.getLatitude()));
     }
 
-    @Override
-    public void handle(GMapMouseEvent mouseEvent) {
-        LOG.info("latLong " + mouseEvent);
-    }
 
     @FXML
     public void onClickMoreDetail() {
@@ -226,11 +227,20 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
     @Override
     public void showMapFlow(List<Location> list) {
         context.register("point_list", list);
-        showFlow(new Flow(DeviceMapController.class));
+        LOG.info("location list" + list);
+        if (flowHandler.getCurrentView().getViewContext().getController().getClass().equals(DeviceMapController.class)) {
+            LOG.info("location list2" + list);
+            deviceMapController.setMarkers(list)
+                    .subscribeOn(Schedulers.io());
+        } else {
+            showFlow(new Flow(DeviceMapController.class));
+            deviceMapController = (DeviceMapController) flowHandler.getCurrentView().getViewContext().getController();
+            deviceMapController.setDeviceController(this);
+        }
     }
 
     //    @Override
-    public void showLastLocationMapFlow(LatLong point) {
+    private void showLastLocationMapFlow(LatLong point) {
         Flow innerFlow = new Flow(MiniMapController.class);
         flowHandler = innerFlow.createHandler(context);
         context.register("ContentInnerFlow", innerFlow);
@@ -261,7 +271,6 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
         } catch (FlowException e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -289,8 +298,11 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
                 break;
             case 4:
                 lastSelectedMenu = 4;
-                if (deviceInfoPresenter != null)
-                    deviceInfoPresenter.onDeviceLocations(device.getId());
+                if (deviceInfoPresenter != null) {
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = new Date();
+                    deviceInfoPresenter.onDeviceLocations(device.getId(), dateFormat.format(date));
+                }
                 break;
             case 5:
                 lastSelectedMenu = 5;
@@ -311,26 +323,34 @@ public class DeviceInfoController implements DeviceInfoView, EventHandler<MouseE
 
     }
 
-    @Override
-    public void handle(MouseEvent event) {
-        LOG.info("onClickMoreDetail " + menuServiceEvent.getSelectionModel().getSelectedIndex());
-        switch (menuServiceEvent.getSelectionModel().getSelectedIndex()) {
-            case 0:
-                if (deviceInfoPresenter != null)
-                    deviceInfoPresenter.onDeviceBatteryEvents(device.getId());
-                break;
-            case 1:
-                if (deviceInfoPresenter != null)
-                    deviceInfoPresenter.onDeviceEvents(device.getId());
-                break;
-            case 2:
-                if (deviceInfoPresenter != null)
-                    deviceInfoPresenter.onDeviceNetworkEvents(device.getId());
-                break;
-            case 3:
-                if (deviceInfoPresenter != null)
-                    deviceInfoPresenter.onDeviceServiceEvents(device.getId());
-                break;
+    public void handleActionEvent(ActionEvent event) {
+        DatePicker datePicker = (DatePicker) event.getSource();
+        if (datePicker != null && deviceInfoPresenter != null) {
+            deviceInfoPresenter.onDeviceLocations(device.getId(), String.valueOf(datePicker.getValue()));
         }
     }
+
+    private void handleMouseEvent(MouseEvent event) {
+        if (event.getSource().equals(menuServiceEvent)) {
+            switch (menuServiceEvent.getSelectionModel().getSelectedIndex()) {
+                case 0:
+                    if (deviceInfoPresenter != null)
+                        deviceInfoPresenter.onDeviceBatteryEvents(device.getId());
+                    break;
+                case 1:
+                    if (deviceInfoPresenter != null)
+                        deviceInfoPresenter.onDeviceEvents(device.getId());
+                    break;
+                case 2:
+                    if (deviceInfoPresenter != null)
+                        deviceInfoPresenter.onDeviceNetworkEvents(device.getId());
+                    break;
+                case 3:
+                    if (deviceInfoPresenter != null)
+                        deviceInfoPresenter.onDeviceServiceEvents(device.getId());
+                    break;
+            }
+        }
+    }
+
 }

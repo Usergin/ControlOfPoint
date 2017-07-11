@@ -78,11 +78,11 @@
                           <JFXCheckBox fx:id="checkHideIcon" maxWidth="-Infinity" styleClass="custom-jfx-check-box-all-colored-settings" text="Спрятать иконку " GridPane.rowIndex="2" />
 
                           <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="16.0" styleClass="combo-box-button-title-label-settings" text="Разовые функции" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="11" />
-                          <JFXCheckBox fx:id="checkVibrate" styleClass="custom-jfx-check-box-all-colored-settings" text="Включить вибрацию" GridPane.rowIndex="14" />
+                          <JFXCheckBox fx:id="checkVibrate" styleClass="custom-jfx-check-box-all-colored-settings" text="Включить вибрацию" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                           <JFXCheckBox fx:id="checkReboot" styleClass="custom-jfx-check-box-all-colored-settings" text="Перезагрузить устройство" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                          <JFXCheckBox fx:id="checkShutDown" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить устройство" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                          <JFXCheckBox fx:id="checkShutDown" GridPane.halignment="CENTER" styleClass="custom-jfx-check-box-all-colored-settings" text="Выключить устройство" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="15" />
 
-                          <JFXCheckBox fx:id="checkFlash" styleClass="custom-jfx-check-box-all-colored-settings" text="Включить фонарик" GridPane.rowIndex="15" />
+                          <JFXCheckBox fx:id="checkFlash" styleClass="custom-jfx-check-box-all-colored-settings" text="Включить фонарик" GridPane.rowIndex="14" />
                      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
                         <children>
                                   <Label alignment="CENTER" contentDisplay="BOTTOM" styleClass="radio-button-title-label">Способ определения местоположения</Label>
