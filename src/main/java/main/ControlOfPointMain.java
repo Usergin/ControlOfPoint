@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXDecorator;
 import com.jfoenix.svg.SVGGlyphLoader;
 import dagger.Injector;
 import dagger.application.AppModule;
-import dagger.network.NetworkModule;
 import gui.control_panel.ControlPanelController;
 import gui.login.LoginController;
 import io.datafx.controller.flow.Flow;
@@ -12,12 +11,10 @@ import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,7 +25,7 @@ import java.util.Arrays;
  */
 @Singleton
 public class ControlOfPointMain extends Application {
-    private static final Logger LOG = Logger.getLogger(ControlOfPointMain.class);
+    //    private static final Logger LOG = Logger.getLogger(ControlOfPointMain.class);
     @FXMLViewFlowContext
     @Inject
     ViewFlowContext viewFlowContext;
@@ -37,8 +34,8 @@ public class ControlOfPointMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        LOG.info("Application started");
-        Injector.inject(this, Arrays.asList(new AppModule() ));
+//        LOG.info("Application started");
+        Injector.inject(this, Arrays.asList(new AppModule()));
         new Thread(() -> {
             try {
                 //he just loaded some svg from a font file
@@ -48,7 +45,7 @@ public class ControlOfPointMain extends Application {
                 e.printStackTrace();
             }
         }).start();
-        LOG.info("Application started" + viewFlowContext);
+//        LOG.info("Application started" + viewFlowContext);
 
         viewFlowContext.register("stage", primaryStage);
 
@@ -77,9 +74,10 @@ public class ControlOfPointMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void stop() throws Exception {
-        LOG.info("Application stop");
+//        LOG.info("Application stop");
 
     }
 

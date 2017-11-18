@@ -4,19 +4,30 @@ version '1.0-SNAPSHOT'
 apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'javafx-gradle-plugin'
 
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-//buildscript {
+buildscript {
+    dependencies {
+        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
-//        maven {
-////            url 'https://esri.bintray.com/arcgis'
 }
-//}
+tasks.withType(JavaCompile) {
+    options.deprecation = false
+}
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'com.jfoenix:jfoenix:1.5.0'
@@ -49,12 +60,44 @@ dependencies {
 idea.module.downloadJavadoc = true
 ext.buildTimestamp = new Date().format('yyyy-MM-dd HH:mm:ss')
 
-mainClassName = 'main.ControlOfPointMain'
+//mainClassName = 'main.ControlOfPointMain'
+jfx {
+    verbose = true
+    mainClass = "main.ControlOfPointMain"
+    jfxAppOutputDir = "build/jfx/app"
+    jfxMainAppJarName = "project-jfx.jar"
+    deployDir = "src/main/deploy"
+    useEnvironmentRelativeExecutables = true
+    libFolderName = "lib"
 
+// gradle jfxJar
+    css2bin = false
+    preLoader = null // String
+    updateExistingJar = false
+    allPermissions = false
+    manifestAttributes = null // Map<String, String>
+    addPackagerJar = true
+    copyAdditionalAppResourcesToJar = false
+    skipCopyingDependencies = false
+    useLibFolderContentForManifestClasspath = false
+    fixedManifestClasspath = null
 
-run {
-    mainClassName = project.hasProperty("main") ? mainClass : 'src.main.java.main.ControlOfPointMain'
+// gradle jfxRun
+    runJavaParameter = null // String
+    runAppParameter = null // String
+
+// per default the outcome of the gradle "jarTask" will be used, set this to specify otherwise (like proguard-output)
+    alternativePathToJarFile = null // String
+
+// to disable patching of ant-javafx.jar, set this to false
+    usePatchedJFXAntLib = true
+
+// making it able to support absolute paths, defaults to "false" for maintaining old behaviour
+    checkForAbsolutePaths = false
 }
+//run {
+//    mainClassName = project.hasProperty("main") ? mainClass : 'ControlOfPointMain'
+//}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'

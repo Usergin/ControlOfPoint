@@ -13,7 +13,7 @@ public class DeviceResponse extends BaseResponse {
     @Expose
     private Device device;
 
-    public DeviceResponse(int code, Device devices) {
+    public DeviceResponse(int code, Device device) {
         super(code);
         this.device = device;
     }

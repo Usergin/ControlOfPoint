@@ -90,7 +90,7 @@ public class LoginController implements LoginView {
         username.bind(txtUsername.textProperty());
         password.bind(txtPassword.textProperty());
         //ToDO delete this
-        loginPresenter.onAuthentication(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="));
+//        loginPresenter.onAuthentication(new Authentication("operator46", "jLIjfQZ5yojbZGTqxg2pY0VROWQ="));
     }
 
 
@@ -107,13 +107,13 @@ public class LoginController implements LoginView {
 
     @Override
     public void onAuthenticationSuccess(User user) {
-        PauseTransition pauseTransition = new PauseTransition();
-        //ToDo change second
-        pauseTransition.setDuration(Duration.seconds(2));
-        pauseTransition.setOnFinished(ev -> {
+//        PauseTransition pauseTransition = new PauseTransition();
+//        //ToDo change second
+//        pauseTransition.setDuration(Duration.seconds(2));
+//        pauseTransition.setOnFinished(ev -> {
             completeLogin(user);
-        });
-        pauseTransition.play();
+//        });
+//        pauseTransition.play();
     }
 
     @Override

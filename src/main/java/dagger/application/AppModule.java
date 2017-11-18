@@ -1,15 +1,11 @@
 package dagger.application;
 
-import business.control_panel.ControlPanelInteractorImpl;
-import business.login.LoginInteractorImpl;
 import dagger.Module;
 import dagger.Provides;
 import data.local.parser.Parser;
 import data.local.parser.ParserImpl;
-import gui.control_panel.ControlPanelView;
 import gui.fragment_controllers.SettingsController;
 import gui.fragment_controllers.device_info.DeviceInfoView;
-import gui.login.LoginController;
 import gui.login.LoginView;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import main.ControlOfPointMain;

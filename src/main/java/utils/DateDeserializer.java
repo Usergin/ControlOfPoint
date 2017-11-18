@@ -23,7 +23,6 @@ public class DateDeserializer implements JsonDeserializer<Date> {
         Long date = element.getAsJsonPrimitive().getAsLong();
 
         SimpleDateFormat newFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        Date date1 = new Date(date);
         newFormatter.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         try {
